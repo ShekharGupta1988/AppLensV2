@@ -14,7 +14,7 @@
                 </div>
             </md-card-content>
 
-            <table style="width: 100%; border-spacing: 1px; padding-right: 25px; border-collapse: separate;" ng-if="detectorviewctrl.info.Name == 'instanceallocations' && !detectorviewctrl.showtabs && detectorviewctrl.issia)">
+            <table style="width: 100%; border-spacing: 1px; padding-right: 25px; border-collapse: separate;" ng-if="detectorviewctrl.info.Name == 'instanceallocations' && !detectorviewctrl.showtabs && detectorviewctrl.issia">
                 <tr ng-repeat="instance in detectorviewctrl.chartdata">
                     <td class="small" style="width: 55px;">
                         <span style="font-size: 10px;">{{instance.key|worker}}</span>
