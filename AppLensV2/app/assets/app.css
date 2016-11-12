@@ -235,6 +235,7 @@ md-badge{
     border-radius:50%;
     margin:0 auto;
     z-index:1;
+    background-color:#00695c;
 }
 .discussion-timeline-nodata-icon{
     width:30px;
@@ -259,4 +260,13 @@ md-badge{
     border-radius:10px;
     border-bottom-left-radius:0;
     max-width:65%;
+}
+
+/*[role="tabpanel"],
+md-tabs {
+  transition: none; 
+}*/
+
+.clickable-toolbar {
+    cursor:pointer;
 }

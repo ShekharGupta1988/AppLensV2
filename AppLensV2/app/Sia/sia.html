@@ -18,8 +18,9 @@
 
     <md-divider></md-divider>
 
-    <md-subheader class="md-sticky" style="background-color:lightgrey;color:black;" ng-click="timePeriod.Visible = !timePeriod.Visible">
-        <ng-md-icon icon="query_builder" style="fill: rgb(100, 100, 100)" size="23"></ng-md-icon> 
+    <md-subheader class="md-sticky clickable-toolbar" style="background-color:lightgrey;color:black;" ng-click="timePeriod.Visible = !timePeriod.Visible">
+        <ng-md-icon icon="expand_more" style="fill: rgb(100, 100, 100)" size="23" ng-if="!timePeriod.Visible"></ng-md-icon> 
+        <ng-md-icon icon="expand_less" style="fill: rgb(100, 100, 100)" size="23" ng-if="timePeriod.Visible"></ng-md-icon> 
         Start Time : {{:: timePeriod.StartTime | date: 'EEE MMM-dd, hh:mm a': 'UTC'}} (UTC), End Time : {{:: timePeriod.EndTime | date: 'EEE MMM-dd, hh:mm a': 'UTC'}} (UTC)
     </md-subheader>
     <div ng-if="timePeriod.Visible">
@@ -48,7 +49,7 @@
 
         <div ng-repeat="event in ::timePeriod.Events">
 
-            <md-list-item layout="row" style="padding:0">
+            <!--<md-list-item layout="row" style="padding:0">
 
                 <div class="discussion-timeline"></div>
                 <div layout="column" flex="5">
@@ -93,14 +94,15 @@
 
                 </div>
 
-            </md-list-item>
+            </md-list-item>-->
 
             <md-list-item layout="row" style="padding:0;padding-bottom:30px">
 
                 <div class="discussion-timeline"></div>
                 <div layout="column" flex="5">
                     <div class="discussion-timeline-data-icon">
-                        <md-icon md-svg-icon="evidence" style="height:100%;width:100%"></md-icon>
+                        <ng-md-icon icon="add" size="30" ng-if="!event.Visible" ng-click="event.Visible = true"></ng-md-icon>
+                        <ng-md-icon icon="remove" size="30" ng-if="event.Visible" ng-click="event.Visible = false"></ng-md-icon> 
                     </div>
 
                 </div>
@@ -115,7 +117,10 @@
                                        info="::sia.DetectorData[event.Source].info" ,
                                        responsemetadata="::sia.DetectorData[event.Source].responsemetadata"
                                        wiki="::sia.DetectorData[event.Source].wiki"
-                                       solution="::sia.DetectorData[event.Source].solution">
+                                       solution="::sia.DetectorData[event.Source].solution"
+                                       problemstatement="::event.Message"
+                                       issia="true"
+                                       isvisible="event.Visible">
                         </detector-view>
 
                     </div>
