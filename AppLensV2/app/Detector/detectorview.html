@@ -1,102 +1,136 @@
 ﻿<md-card>
     <div flex>
-        <md-toolbar style="min-height:40px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0">
-            <h5 style="margin:auto 10px auto;font-weight:500">{{::detectorviewctrl.info.DisplayName}}</h5>
-        </md-toolbar>
-        <div layout-padding>
-
-            <div ng-if="detectorviewctrl.loading" layout="row" layout-sm="column" layout-align="space-around" style="height:30%">
-
-                <div layout="column" layout-align="center center">
-                    <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
-                </div>
+        <md-toolbar ng-class="{'clickable-toolbar': detectorviewctrl.isvisible && detectorviewctrl.issia}" style="min-height:40px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0" ng-click="detectorviewctrl.showtabs = !detectorviewctrl.showtabs">
+            <div class="md-toolbar-tools" style="height:50px">
+                <h5 style="margin:auto 10px auto;font-weight:500">{{::detectorviewctrl.info.DisplayName}}</h5>
+                <span flex></span>
+                <h7 style="margin:auto 10px auto;font-weight:200;color:#646464;font-size:12px" ng-if="detectorviewctrl.isvisible && detectorviewctrl.issia">Click to toggle between graph and addition information</h7>
             </div>
+        </md-toolbar>
+        <div flex ng-if="detectorviewctrl.isvisible || !detectorviewctrl.issia">
+            <md-card-content ng-if="detectorviewctrl.issia && !detectorviewctrl.loading && !detectorviewctrl.showtabs && detectorviewctrl.info.Name != 'instanceallocations'" flex layout-align="space-between">
+                <div flex>
+                    <nvd3 options="::detectorviewctrl.chartoptions" data="::detectorviewctrl.chartdata"></nvd3>
+                </div>
+            </md-card-content>
 
-            <md-tabs md-dynamic-height md-border-bottom ng-if="!detectorviewctrl.loading">
-                <md-tab label="Metrics">
-                    <md-tab-label>
-                        Metrics
-                    </md-tab-label>
-                    <md-tab-body>
-                        <nvd3 options="detectorviewctrl.chartoptions" data="detectorviewctrl.chartdata"
-                              ng-if="detectorviewctrl.info.Name != 'instanceallocations'"></nvd3>
-                        <table style="width: 100%; border-spacing: 1px; padding-right: 25px; border-collapse: separate;" 
-                               ng-if="detectorviewctrl.info.Name == 'instanceallocations'">
-                            <tr ng-repeat="instance in detectorviewctrl.chartdata">
-                                <td class="small" style="width: 55px;">
-                                    <span style="font-size: 10px;">{{instance.key|worker}}</span>
-                                </td>
-                                <td ng-repeat="change in instance.values" data-toggle="tooltip"
-                                     ng-style="{'background-color':(change.y == 1?'#009933':'#efefef')}"
-                                    data-placement="top" title="{{instance.key}} | {{change.x | date: 'EEE MMM-dd, hh:mm a'}} (UTC)">
-                                    <span style="font-size: 1px;">.</span>
-                                </td>
+            <table style="width: 100%; border-spacing: 1px; padding-right: 25px; border-collapse: separate;" ng-if="detectorviewctrl.info.Name == 'instanceallocations' && !detectorviewctrl.showtabs && detectorviewctrl.issia">
+                <tr ng-repeat="instance in detectorviewctrl.chartdata">
+                    <td class="small" style="width: 55px;">
+                        <span style="font-size: 10px;">{{instance.key|worker}}</span>
+                    </td>
+                    <td ng-repeat="change in instance.values" data-toggle="tooltip"
+                        ng-style="{'background-color':(change.y == 1?'#009933':'#efefef')}"
+                        data-placement="top" title="{{instance.key}} | {{change.x | date: 'EEE MMM-dd, hh:mm a'}} (UTC)">
+                        <span style="font-size: 1px;">.</span>
+                    </td>
 
-                            </tr>
-                        </table>
-                    </md-tab-body>
+                </tr>
+            </table>
 
-                </md-tab>
-                <md-tab>
-                    <md-tab-label>
-                        Additional Data
-                    </md-tab-label>
-                    <md-tab-body>
-                        <table>
-                            <tr ng-repeat="data in ::detectorviewctrl.additionaldata[0]">
-                                <td> {{::data.Name }} :</td>
-                                <td> {{::data.Value }}</td>
-                            </tr>
-                       </table>
-                    </md-tab-body>
-                </md-tab>
-                <md-tab>
-                    <md-tab-label>
-                        Solution <md-badge ng-show="detectorviewctrl.solution === ''" class="md-warn">!</md-badge>
-                    </md-tab-label>
-                     <md-tab-body>
-                         <md-button class="md-raised" style="position:absolute;right:0;top:0;width:auto" href="https://github.com/PraveenTB/AppLensDocs/blob/master/Documents/{{::detectorviewctrl.info.Name}}/solution.md" target="_blank">
-                             Edit on Github
-                             <ng-md-icon icon="github-circle" style="fill: #303030" size="24"></ng-md-icon>
-                         </md-button>
-                         <div btf-markdown="::detectorviewctrl.solution" class="markdown" style="padding-top:20px">
-                         </div>
-                     </md-tab-body>
+            <div layout-padding ng-if="detectorviewctrl.showtabs || !detectorviewctrl.issia">
+                <div ng-if="detectorviewctrl.loading" layout="row" layout-sm="column" layout-align="space-around" style="height:30%">
 
-                </md-tab>
-                <md-tab>
-                    <md-tab-label>
-                        Data source
-                    </md-tab-label>
-                    <md-tab-body>
-                        <ul>
-                            <li ng-repeat="instruction in ::detectorviewctrl.responsemetadata.DataSource.Instructions">
-                                {{::instruction}}
-                            </li>
-                            <li ng-repeat="uri in ::detectorviewctrl.responsemetadata.DataSource.DataSourceUri">
-                                <a href="{{::uri.Value}}" target="_blank">{{::uri.Name}}</a>
-                            </li>
-                        </ul>
-                        
-                    </md-tab-body>
-                </md-tab>
-                <md-tab>
-                    <md-tab-label>
-                        Wiki <md-badge ng-show="detectorviewctrl.wiki === ''" class="md-warn">!</md-badge>
-                    </md-tab-label>
-                    
-                    <md-tab-body>
-                        <md-button class="md-raised" style="position:absolute;right:0;top:0;width:auto" href="https://github.com/PraveenTB/AppLensDocs/blob/master/Documents/{{::detectorviewctrl.info.Name}}/wiki.md" target="_blank">
-                            Edit on Github
-                            <ng-md-icon icon="github-circle" style="fill: #303030" size="24"></ng-md-icon>
-                        </md-button>
-                        <div btf-markdown="::detectorviewctrl.wiki" class="markdown" style="padding-top:20px">
-                        </div>
-                    </md-tab-body>
+                    <div layout="column" layout-align="center center">
+                        <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
+                    </div>
+                </div>
 
-                </md-tab>
-            </md-tabs>
+                <md-tabs md-dynamic-height md-border-bottom ng-if="!detectorviewctrl.loading">
+                    <md-tab label="Metrics" ng-if="!detectorviewctrl.issia">
+                        <md-tab-label>
+                            Metrics
+                        </md-tab-label>
+                        <md-tab-body>
+                            <nvd3 options="detectorviewctrl.chartoptions" data="detectorviewctrl.chartdata"
+                                  ng-if="detectorviewctrl.info.Name != 'instanceallocations'"></nvd3>
+                            <table style="width: 100%; border-spacing: 1px; padding-right: 25px; border-collapse: separate;"
+                                   ng-if="detectorviewctrl.info.Name == 'instanceallocations'">
+                                <tr ng-repeat="instance in detectorviewctrl.chartdata">
+                                    <td class="small" style="width: 55px;">
+                                        <span style="font-size: 10px;">{{instance.key|worker}}</span>
+                                    </td>
+                                    <td ng-repeat="change in instance.values" data-toggle="tooltip"
+                                        ng-style="{'background-color':(change.y == 1?'#009933':'#efefef')}"
+                                        data-placement="top" title="{{instance.key}} | {{change.x | date: 'EEE MMM-dd, hh:mm a'}} (UTC)">
+                                        <span style="font-size: 1px;">.</span>
+                                    </td>
 
+                                </tr>
+                            </table>
+                        </md-tab-body>
+
+                    </md-tab>
+                    <md-tab label="Metrics" ng-if="detectorviewctrl.issia">
+                        <md-tab-label>
+                            Problem Statement
+                        </md-tab-label>
+                        <md-tab-body layout-padding>
+                            <h4>{{detectorviewctrl.problemstatement}}</h4>
+                        </md-tab-body>
+
+                    </md-tab>
+                    <md-tab>
+                        <md-tab-label>
+                            Additional Data
+                        </md-tab-label>
+                        <md-tab-body>
+                            <table>
+                                <tr ng-repeat="data in ::detectorviewctrl.additionaldata[0]">
+                                    <td> {{::data.Name }} :</td>
+                                    <td> {{::data.Value }}</td>
+                                </tr>
+                            </table>
+                        </md-tab-body>
+                    </md-tab>
+                    <md-tab>
+                        <md-tab-label>
+                            Solution <md-badge ng-show="detectorviewctrl.solution === ''" class="md-warn">!</md-badge>
+                        </md-tab-label>
+                        <md-tab-body>
+                            <md-button class="md-raised" style="position:absolute;right:0;top:0;width:auto" href="https://github.com/PraveenTB/AppLensDocs/blob/master/Documents/{{::detectorviewctrl.info.Name}}/solution.md" target="_blank">
+                                Edit on Github
+                                <ng-md-icon icon="github-circle" style="fill: #303030" size="24"></ng-md-icon>
+                            </md-button>
+                            <div btf-markdown="::detectorviewctrl.solution" class="markdown" style="padding-top:20px">
+                            </div>
+                        </md-tab-body>
+
+                    </md-tab>
+                    <md-tab>
+                        <md-tab-label>
+                            Data source
+                        </md-tab-label>
+                        <md-tab-body>
+                            <ul>
+                                <li ng-repeat="instruction in ::detectorviewctrl.responsemetadata.DataSource.Instructions">
+                                    {{::instruction}}
+                                </li>
+                                <li ng-repeat="uri in ::detectorviewctrl.responsemetadata.DataSource.DataSourceUri">
+                                    <a href="{{::uri.Value}}" target="_blank">{{::uri.Name}}</a>
+                                </li>
+                            </ul>
+
+                        </md-tab-body>
+                    </md-tab>
+                    <md-tab>
+                        <md-tab-label>
+                            Wiki <md-badge ng-show="detectorviewctrl.wiki === ''" class="md-warn">!</md-badge>
+                        </md-tab-label>
+
+                        <md-tab-body>
+                            <md-button class="md-raised" style="position:absolute;right:0;top:0;width:auto" href="https://github.com/PraveenTB/AppLensDocs/blob/master/Documents/{{::detectorviewctrl.info.Name}}/wiki.md" target="_blank">
+                                Edit on Github
+                                <ng-md-icon icon="github-circle" style="fill: #303030" size="24"></ng-md-icon>
+                            </md-button>
+                            <div btf-markdown="::detectorviewctrl.wiki" class="markdown" style="padding-top:20px">
+                            </div>
+                        </md-tab-body>
+
+                    </md-tab>
+                </md-tabs>
+
+            </div>
         </div>
     </div>
 </md-card>

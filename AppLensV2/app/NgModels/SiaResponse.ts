@@ -17,7 +17,8 @@ module SupportCenter {
         constructor(
             public StartTime: string,
             public EndTime: string,
-            public Events: DetectorAbnormalTimePeriod[]
+            public Events: DetectorAbnormalTimePeriod[],
+            public Visible?: boolean
         ) {
         }
     }

@@ -80,11 +80,11 @@
                     </div>
                 </div>
 
-                <md-card-content ng-if="!main.dataLoading" flex layout-align="space-between" layout="column">
+                <md-content ng-if="!main.dataLoading" flex layout-align="space-between" layout="column">
                     <div flex>
                         <nvd3 options="::main.availabilityChartOptions" data="::main.avaiabilityChartData"></nvd3>
                     </div>
-                </md-card-content>
+                </md-content>
 
             </md-card>
         </div>

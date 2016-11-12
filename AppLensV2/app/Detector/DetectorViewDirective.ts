@@ -12,6 +12,10 @@ module SupportCenter {
         wiki: string;
         solution: string;
         additionaldata: any;
+        problemstatment: string;
+        issia: boolean;
+        isvisible: boolean;
+        height: string;
     }
 
     export class DetectorViewCtrl {
@@ -31,6 +35,7 @@ module SupportCenter {
         public controllerAs: string = 'detectorviewctrl';
         public controller = DetectorViewCtrl;
         public link = function (scope: IDetectorViewScope) {
+            scope.height = scope.issia ? scope.chartoptions.chart.height : "100%";
         }
 
         public scope: { [boundProperty: string]: string } = {
@@ -41,7 +46,10 @@ module SupportCenter {
             responsemetadata: '=',
             wiki: '=',
             solution: '=',
-            additionaldata: '='
+            additionaldata: '=',
+            problemstatement: '=',
+            issia: '=',
+            isvisible: '='
         };
     }
 }

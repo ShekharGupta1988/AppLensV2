@@ -20,7 +20,8 @@ module SupportCenter {
             public EndTime: string,
             public Message: string = '',
             public Source: string = '',
-            public Priority: number = 0
+            public Priority: number = 0,
+            public Visible?: boolean
         ) {
         }
     }

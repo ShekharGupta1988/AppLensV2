@@ -59,6 +59,11 @@ module SupportCenter {
                 this.DetectorData[detectorAnalysisData.Source].responsemetadata = detectorAnalysisData.DetectorMetaData;
                 this.DetectorData[detectorAnalysisData.Source].info = detectorAnalysisData.DetectorDefinition;
 
+                this.SiaResponse.AbnormalTimePeriods.forEach(x => {
+                    x.Visible = false;
+                    x.Events.forEach(detector => detector.Visible = false);
+                });
+
                 var self = this;
 
                 this.DetectorsService.getDetectorWiki(detectorAnalysisData.Source).then(function (wikiResponse) {
