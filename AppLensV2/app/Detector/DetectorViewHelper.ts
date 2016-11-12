@@ -108,31 +108,32 @@ module SupportCenter {
                     };
                 }
 
-                for (var d = roundedStartTime; d < roundedEndTime; d.setTime(d.getTime() + coeff)) {
+                for (let worker in workerChartData) {
 
-                    let xDate = new Date(d.getTime());
-                    
-                    let workerName = Constants.aggregatedWorkerName;
-
-                    let elements = _.filter(metric.Values, function (item) {
-                        var itemDate = new Date(item.Timestamp);
-
-                        return itemDate.getTime() == xDate.getTime();
+                    var workerData = _.filter(metric.Values, function (item) {
+                        return item.RoleInstance === worker || worker === Constants.aggregatedWorkerName;
                     });
 
-                    for (let worker in workerChartData) {
+                    workerData.reverse();
+
+                    var nextElementToAdd = workerData.pop();
+
+                    for (var d = new Date(roundedStartTime.getTime()); d < roundedEndTime; d.setTime(d.getTime() + coeff)) {
+
+                        let xDate = new Date(d.getTime());
                         let yValue = defaultValue;
-                        let element = _.find(elements, function (element) {
-                            return element.RoleInstance === worker || !perWorkerGraph;
-                        });
 
-                        if (angular.isDefined(element)) {
-                            if ((!angular.isDefined(element.IsAggregated) || element.IsAggregated === false) && angular.isDefined(element.RoleInstance)) {
-                                perWorkerGraph = true;
-                                workerName = element.RoleInstance;
+                        if (angular.isDefined(nextElementToAdd) && xDate.getTime() === new Date(nextElementToAdd.Timestamp).getTime()) {
+                            yValue = nextElementToAdd.Total;
+
+                            var last = nextElementToAdd;
+
+                            //For bug in CPU data where points are repeated.
+                            do {
+                                nextElementToAdd = workerData.pop();
                             }
-
-                            yValue = element.Total;
+                            while (angular.isDefined(nextElementToAdd) && new Date(nextElementToAdd.Timestamp).getTime() <= new Date(last.Timestamp).getTime());
+                            
                         }
 
                         workerChartData[worker].values.push(
@@ -142,13 +143,6 @@ module SupportCenter {
                             }
                         );
                     }
-                }
-
-                for (let worker in workerChartData) {
-                    if (perWorkerGraph && worker === Constants.aggregatedWorkerName) {
-                        continue;
-                    }
-
                     chartData.push(workerChartData[worker]);
                 }
             }
