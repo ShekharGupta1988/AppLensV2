@@ -57,7 +57,8 @@ module SupportCenter {
             })
                 .success((data: any) => {
 
-                    if (angular.isDefined(data.Value)) {
+
+                    if (angular.isDefined(data) && angular.isDefined(data.Value)) {
 
                         _.each(data.Value, function (item: any) {
 
@@ -72,15 +73,30 @@ module SupportCenter {
 
                                 detectors.push(detector);
                             }
+                            else {
+                                
+                            }
                         });
+                    }
+                    else if (angular.isDefined(data)) {
+                        _.each(data, function (item: any) {
+                            var detector = new DetectorDefinition(
+                                item.Name,
+                                item.DisplayName,
+                                item.Description,
+                                item.Rank,
+                                item.IsEnabled, -1);
 
-                        self.detectorsListCache["detectorList"] = detectors;
-                        self.detectorsList = detectors;
-                        deferred.resolve(self.detectorsList);
+                            detectors.push(detector);
+                        });
                     }
                     else {
-                        deferred.reject(new ErrorModel(0, "Value field not present in Get Detectors Api response"));
+                        deferred.reject(new ErrorModel(0, "Invalid Get Detectors Api response"));
                     }
+
+                    self.detectorsListCache["detectorList"] = detectors;
+                    self.detectorsList = detectors;
+                    deferred.resolve(self.detectorsList);
                 })
                 .error((err: any) => {
                     deferred.reject(ErrorModelBuilder.Build(err));
@@ -119,8 +135,8 @@ module SupportCenter {
 
                     var response = new DetectorResponse(this.TimeParamsService.StartTime, this.TimeParamsService.EndTime, [], [], null);
 
-                    if (angular.isDefined(data.Properties)) {
-                        response = data.Properties;
+                    if (angular.isDefined(data)) {
+                        response = angular.isDefined(data.Properties) ? data.Properties : data;
                         deferred.resolve(response);
 
                         var timeDifferenceInMinutes = 24 * 60;

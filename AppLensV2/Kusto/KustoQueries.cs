@@ -41,7 +41,7 @@ namespace AppLensV2
     public class KustoQueryTemplate
     {
         public static string SupportCenterBladeOpened =
-            @"ClientTelemetry | where TIMESTAMP >= ago(7d) and source =~ ""SupportCenter""
+            @"ClientTelemetry | where TIMESTAMP >= ago(15d) and source =~ ""SupportCenter""
             | parse['data'] with * ""resourceName="" resourceName ';' *
             | where resourceName =~ ""{ResourceName}"" 
             | parse['data'] with * ""ticketBladeWorkflowId="" ticketWorkflowId  ';' *

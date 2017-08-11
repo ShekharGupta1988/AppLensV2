@@ -199,6 +199,8 @@
     <Content Include="app\SupportCenter\Session\session.html" />
     <Content Include="app\SupportCenter\Session\sessionview.html" />
     <Content Include="app\SupportCenter\TicketWorkflow\ticketworkflow.html" />
+    <Content Include="app\TopLevelSignal\deployment-toplevelview.html" />
+    <Content Include="app\TopLevelSignal\placeholder.html" />
     <Content Include="Global.asax" />
     <Content Include="index.html" />
     <Content Include="scripts\ai.0.22.19-build00125.js" />
@@ -282,6 +284,7 @@
     <TypeScriptCompile Include="app\references.ts" />
     <TypeScriptCompile Include="app\Sia\AnalysisResponse\AnalysisResponseFactory.ts" />
     <TypeScriptCompile Include="app\Sia\AnalysisResponse\AseAvailabilityAnalysisResponse.ts" />
+    <TypeScriptCompile Include="app\Sia\AnalysisResponse\DeploymentAnalysisResponse.ts" />
     <TypeScriptCompile Include="app\Sia\AnalysisResponse\IAnalysisResponse.ts" />
     <TypeScriptCompile Include="app\Sia\AnalysisResponse\AppAnalysisResponse.ts" />
     <TypeScriptCompile Include="app\Sia\AnalysisResponse\PerfAnalysisResponse.ts" />
@@ -292,6 +295,7 @@
     <TypeScriptCompile Include="app\SupportCenter\Session\SessionHelper.ts" />
     <TypeScriptCompile Include="app\SupportCenter\Session\SessionViewDirective.ts" />
     <TypeScriptCompile Include="app\SupportCenter\TicketWorkflow\TicketWorkflowCtrl.ts" />
+    <TypeScriptCompile Include="app\TopLevelSignal\TopLevelSignalDir.ts" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />

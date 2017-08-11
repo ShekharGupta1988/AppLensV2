@@ -25,6 +25,7 @@
     "angular-markdown-directive": "^0.3.1",
     "angular-material-data-table": "^0.10.10",
     "angular-bowser": "^0.0.4",
-    "animate.css": "^3.5.2"
+    "animate.css": "^3.5.2",
+    "angular-google-chart": "^0.1.0"
   }
 }

@@ -42,6 +42,15 @@ module SupportCenter {
                                     self.site.numberOfTriggeredWebJobs = data.Properties.TriggeredWebJobsCount;
                                     self.site.sku = data.Properties.Sku;
                                 }
+                                else {
+                                    self.site.stack = data.AppStack;
+                                    self.site.kind = data.Kind === 'app' || data.Kind === null ? 'webapp' : data.Kind;
+                                    self.site.isLinux = data.IsLinux;
+                                    self.site.numberOfSlots = data.NumberOfSlots;
+                                    self.site.numberOfContinousWebJobs = data.ContinuousWebJobsCount;
+                                    self.site.numberOfTriggeredWebJobs = data.TriggeredWebJobsCount;
+                                    self.site.sku = data.Sku;
+                                }
                             });
                     })
                     .error(function (err: any) {

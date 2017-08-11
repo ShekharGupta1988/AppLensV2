@@ -9,6 +9,7 @@ module SupportCenter {
         public static perfAnalysis: string = "perfAnalysis";
         public static appAnalysis: string = "appAnalysis";
         public static aseAvailabilityAnalysis: string = "aseAvailabilityAnalysis";
+        public static deploymentAnalysis: string = "aseDeploymentAnalysis";
     }
 
     export class UriPaths {
@@ -27,6 +28,7 @@ module SupportCenter {
         private static appAnalysis: string = "/appAnalysis?" + UriPaths.commonQueryString;
         private static perfAnalysis: string = "/perfAnalysis?" + UriPaths.commonQueryString;
         private static aseAvailabilityAnalysis: string = "/aseAvailabilityAnalysis?" + UriPaths.commonQueryString;
+        private static aseDeploymentAnalysis: string = "/aseDeploymentAnalysis?" + UriPaths.commonQueryString;
         private static detectors: string = "/detectors";
         private static detectorResource: string = "/detectors/{detectorName}?" + UriPaths.commonQueryString;
         private static siteDiagnosticProperties: string = "/properties";
@@ -98,6 +100,10 @@ module SupportCenter {
 
         public static AseAvailabilityAnalysisPath(resource: Resource, startTime: string, endTime: string, timeGrain: string) {
             return UriPaths.CreateGeoRegionAPIPath(UriPaths.aseAvailabilityAnalysis, resource, startTime, endTime, timeGrain);
+        }
+
+        public static AseDeploymentAnalysisPath(resource: Resource, startTime: string, endTime: string, timeGrain: string) {
+            return UriPaths.CreateGeoRegionAPIPath(UriPaths.aseDeploymentAnalysis, resource, startTime, endTime, timeGrain);
         }
 
         public static SupportCenterSessionsListPath(siteName: string): string {

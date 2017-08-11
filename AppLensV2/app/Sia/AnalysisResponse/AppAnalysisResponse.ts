@@ -18,19 +18,13 @@
                     'IsInternal': this.TimeParamsService.IsInternal
                 }
             }).success((data: any) => {
+                analysis.Response = angular.isDefined(data.Properties) ? data.Properties: data;
 
+                analysis.SelectedAbnormalTimePeriod = {};
+                analysis.SelectedAbnormalTimePeriod.index = analysis.Response.AbnormalTimePeriods.length - 1;
+                analysis.SelectedAbnormalTimePeriod.data = analysis.Response.AbnormalTimePeriods[analysis.SelectedAbnormalTimePeriod.index];
 
-                if (angular.isDefined(data.Properties)) {
-                    analysis.Response = data.Properties;
-                    analysis.SelectedAbnormalTimePeriod = {};
-                    analysis.SelectedAbnormalTimePeriod.index = analysis.Response.AbnormalTimePeriods.length - 1;
-                    analysis.SelectedAbnormalTimePeriod.data = analysis.Response.AbnormalTimePeriods[analysis.SelectedAbnormalTimePeriod.index];
-
-                    deferred.resolve(analysis);
-                }
-                else {
-                    deferred.reject(new ErrorModel(0, "Invalid Data from appanalysis API"));
-                }
+                deferred.resolve(analysis);
             })
                 .error((data: any) => {
                     deferred.reject(new ErrorModel(0, "Error calling appanalysis API"));

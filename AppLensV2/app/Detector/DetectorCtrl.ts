@@ -44,6 +44,16 @@ module SupportCenter {
                         self.chartOptions.chart.yAxis.axisLabel = 'Percent';
                     }
                     self.dataLoading = false;
+                    if (self.detectorName.indexOf('filesystemusage') >= 0) {
+                        let title = "";
+                        for (let metric of data.Metrics) {
+                            if (metric.Name === "Total" || metric.Name === "Used") {
+                                title += metric.Name + ':' + metric.Values[0].Total.toString() + metric.Unit + "\n";
+                            }
+                        }
+                        self.chartOptions.chart.title = title;
+                        
+                    }
                 }, function (err) {
                     self.dataLoading = false;
                     self.ErrorHandlerService.showError(ErrorModelBuilder.Build(err));

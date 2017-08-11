@@ -65,9 +65,11 @@ module SupportCenter {
                 DetectorData[detectorAnalysisData.Source].chartoptions = detectorViewHelper.GetChartOptions(detectorAnalysisData.Source);
                 DetectorData[detectorAnalysisData.Source].chartdata = detectorViewHelper.GetChartData(siaResponse.StartTime, siaResponse.EndTime, detectorAnalysisData.Metrics, detectorAnalysisData.Source);
 
-                DetectorData[detectorAnalysisData.Source].chartoptions.chart.height =
-                    DetectorData[detectorAnalysisData.Source].chartoptions.chart.height + (DetectorData[detectorAnalysisData.Source].chartdata.length / 8) * 20;
-                DetectorData[detectorAnalysisData.Source].chartoptions.chart.margin.top = 20 + (DetectorData[detectorAnalysisData.Source].chartdata.length / 8) * 20;
+                if (detectorAnalysisData.Source !== 'rebootrolesstuck') {
+                    DetectorData[detectorAnalysisData.Source].chartoptions.chart.height =
+                        DetectorData[detectorAnalysisData.Source].chartoptions.chart.height + (DetectorData[detectorAnalysisData.Source].chartdata.length / 8) * 20;
+                    DetectorData[detectorAnalysisData.Source].chartoptions.chart.margin.top = 20 + (DetectorData[detectorAnalysisData.Source].chartdata.length / 8) * 20;
+                }
 
                 DetectorData[detectorAnalysisData.Source].responsemetadata = detectorAnalysisData.DetectorMetaData;
                 DetectorData[detectorAnalysisData.Source].info = detectorAnalysisData.DetectorDefinition;

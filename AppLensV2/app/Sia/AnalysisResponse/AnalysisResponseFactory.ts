@@ -16,6 +16,9 @@
                 case Constants.aseAvailabilityAnalysis:
                     analysis = new AseAvailabilityAnalysisResponse(this.$stateParams, this.$http, this.TimeParamsService, this.AseService, this.$q);
                     break;
+                case Constants.deploymentAnalysis:
+                    analysis = new DeploymentAnalysisResponse(this.$stateParams, this.$http, this.TimeParamsService, this.AseService, this.$q);
+                    break;
             }
             return analysis;
         }

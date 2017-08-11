@@ -12,6 +12,7 @@
                     resourceService = new SiteService(this.$http, this.$stateParams, this.ErrorHandlerService);
                     break;
                 case Constants.aseAvailabilityAnalysis:
+                case Constants.deploymentAnalysis:
                     resourceService = new AseService(this.$http, this.$stateParams, this.ErrorHandlerService);
                     break;
             }

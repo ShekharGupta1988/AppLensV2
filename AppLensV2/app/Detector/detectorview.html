@@ -42,7 +42,8 @@
                         <!--<div flex ng-if="detectorviewctrl.isLoading" ng-style="{'height':detectorviewctrl.chartOptions.chart.height}">
                          </div>-->
                         <nvd3 options="detectorviewctrl.chartoptions" data="detectorviewctrl.chartdata"
-                                  ng-if="!detectorviewctrl.isLoading && detectorviewctrl.info.Name !== 'instanceallocations'" api="detectorviewctrl.api"></nvd3>
+                                  ng-if="!detectorviewctrl.isLoading && detectorviewctrl.info.Name !== 'instanceallocations' && detectorviewctrl.info.Name !== 'rebootrolesstuck'" api="detectorviewctrl.api"></nvd3>
+                        <div google-chart chart="detectorviewctrl.chartdata" ng-if="!detectorviewctrl.isLoading && detectorviewctrl.info.Name === 'rebootrolesstuck'"></div>
                         <detailed-detector-view loading="detectorviewctrl.loading" metricsets="detectorviewctrl.metricsets" selectedworker="detectorviewctrl.selectedworker" detectorsource="detectorviewctrl.detectorsource"
                                                 ng-if="(detectorviewctrl.info.Name.indexOf('cpuanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('memoryanalysis') >= 0) && detectorviewctrl.showDetailedView"></detailed-detector-view>
                         <md-button ng-click="detectorviewctrl.showDetailedView = !detectorviewctrl.showDetailedView" ng-if="detectorviewctrl.info.Name.indexOf('cpuanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('memoryanalysis') >= 0"/>
@@ -168,6 +169,8 @@
 
                 </md-tab>
             </md-tabs>
+
+
 
         </div>
     </div>

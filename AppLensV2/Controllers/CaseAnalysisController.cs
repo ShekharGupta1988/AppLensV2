@@ -22,7 +22,7 @@ namespace AppLensV2
         [Route("api/supportcentersessions/{sessionId}")]
         public async Task<IHttpActionResult> GetSupportCenterSessionData(string sessionId)
         {
-            var result = await CaseAnalysisHelper.GetSupportCenterDataForSession(sessionId, DateTime.UtcNow.AddDays(-7), DateTime.UtcNow);
+            var result = await CaseAnalysisHelper.GetSupportCenterDataForSession(sessionId, DateTime.UtcNow.AddDays(-15), DateTime.UtcNow);
             return Ok(result);
         }
 
@@ -30,7 +30,7 @@ namespace AppLensV2
         [Route("api/supportcenterworkflows/{workflowId}")]
         public async Task<IHttpActionResult> GetSupportCenterWorkflowData(string workflowId)
         {
-            var result = await CaseAnalysisHelper.GetSupportCenterDataForTicketWorkflow(workflowId, DateTime.UtcNow.AddDays(-7), DateTime.UtcNow);
+            var result = await CaseAnalysisHelper.GetSupportCenterDataForTicketWorkflow(workflowId, DateTime.UtcNow.AddDays(-15), DateTime.UtcNow);
             return Ok(result);
         }
     }

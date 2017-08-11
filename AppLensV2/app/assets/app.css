@@ -379,3 +379,6 @@ ng-md-icon.custom-theme-default3 {
     font-weight:600;
     color:#262626;
 }
+.nvd3.nv-pie .nv-pie-title {
+    fill: black !important;
+}

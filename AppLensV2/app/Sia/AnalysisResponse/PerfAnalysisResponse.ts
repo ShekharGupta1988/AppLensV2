@@ -20,21 +20,17 @@
             }).success((data: any) => {
 
 
-                if (angular.isDefined(data.Properties)) {
-                    analysis.Response = data.Properties;
-                    analysis.SelectedAbnormalTimePeriod = {};
-                    analysis.SelectedAbnormalTimePeriod.index = analysis.Response.AbnormalTimePeriods.length - 1;
-                    analysis.SelectedAbnormalTimePeriod.data = analysis.Response.AbnormalTimePeriods[analysis.SelectedAbnormalTimePeriod.index];
+                analysis.Response = angular.isDefined(data.Properties) ? data.Properties: data;
+                analysis.SelectedAbnormalTimePeriod = {};
+                analysis.SelectedAbnormalTimePeriod.index = analysis.Response.AbnormalTimePeriods.length - 1;
+                analysis.SelectedAbnormalTimePeriod.data = analysis.Response.AbnormalTimePeriods[analysis.SelectedAbnormalTimePeriod.index];
 
-                    deferred.resolve(analysis);
-                }
-                else {
-                    deferred.reject(new ErrorModel(0, "Invalid Data from perfanalysis API"));
-                    }
-                })
-                .error((data: any) => {
-                    deferred.reject(new ErrorModel(0, "Error in call to perfanalysis API"));
-                });
+                deferred.resolve(analysis);
+
+            })
+            .error((data: any) => {
+                deferred.reject(new ErrorModel(0, "Error in call to perfanalysis API"));
+            });
 
             return deferred.promise;
         }

@@ -9,7 +9,7 @@ namespace AppLensV2
 {
     public class CaseAnalysisHelper
     {
-        private static List<string> IgnorableEvents = new List<string>() { "StartUp", "AnalysisInitialized" };
+        private static List<string> IgnorableEvents = new List<string>() { "SCIFrameBlade", "StartUp", "AnalysisInitialized" };
 
         private static List<string> CommonEventParams = new List<string>()
         {

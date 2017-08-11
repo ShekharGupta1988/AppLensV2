@@ -19,9 +19,14 @@
         <md-divider></md-divider>
         <md-list>
 
-            <md-list-item class="md-2-line" ng-class="{'selected' : ase.selectedItem === 'sia'}" ng-click="ase.setSelectedItem('sia')">
+            <md-list-item class="md-2-line" ng-class="{'selected' : ase.selectedItem === 'aseAvailabilityAnalysis'}" ng-click="ase.setSelectedItem('aseAvailabilityAnalysis')">
                 <div class="md-list-item-text" layout="column">
-                    <h3>Application Analysis</h3>
+                    <h3>Availability Analysis</h3>
+                </div>
+            </md-list-item>
+            <md-list-item class="md-2-line" ng-class="{'selected' : ase.selectedItem === 'aseDeploymentAnalysis'}" ng-click="ase.setSelectedItem('aseDeploymentAnalysis')">
+                <div class="md-list-item-text" layout="column">
+                    <h3>Deployment Analysis</h3>
                 </div>
             </md-list-item>
             <md-divider></md-divider>
@@ -112,47 +117,11 @@
     </md-toolbar>
 
     <md-content layout="column" flex id="wrapper">
-
         <div flex="25" layout="row" class="md-sticky">
-            <div layout="column" flex="5"></div>
             <md-card flex="95">
-
-                <div ng-if="ase.dataLoading" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':ase.containerHeight}">
-                    <div layout="column" layout-align="center center">
-                        <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
-                    </div>
-                </div>
-
-                <md-card-content ng-if="!ase.dataLoading" flex layout-align="space-between" layout="column">
-                    <div flex>
-                        <downtime-timeline height="'20px'"></downtime-timeline>
-                        <nvd3 options="::ase.availabilityChartOptions" data="::ase.avaiabilityChartData"></nvd3>
-                    </div>
-                </md-card-content>
-
+                <top-level-signal></top-level-signal>
             </md-card>
         </div>
-
-        <div flex="25" layout="row">
-            <div layout="column" flex="5" layout-align="center center"></div>
-            <md-card flex="95">
-
-                <div ng-if="ase.dataLoading" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':ase.containerHeight}">
-                    <div layout="column" layout-align="center center">
-                        <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
-                    </div>
-                </div>
-
-                <md-card-content ng-if="!ase.dataLoading" flex layout-align="space-between" layout="column">
-                    <div flex>
-                        <nvd3 options="::ase.requestsChartOptions" data="::ase.requestsChartData"></nvd3>
-
-                    </div>
-                </md-card-content>
-
-            </md-card>
-        </div>
-
         <div flex layout="row">
 
             <div flex ui-view="childContent"></div>

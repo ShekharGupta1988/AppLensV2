@@ -197,7 +197,6 @@ module SupportCenter {
                     uiModel.icon = "explore";
                     uiModel.iconColor = '#B0BEC5';
                     uiModel.body = event.EventData;
-
                     break;
             }
 

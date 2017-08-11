@@ -1,0 +1,14 @@
+﻿<div ng-if="ctrl.dataLoading" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':ctrl.containerHeight}">
+    <div layout="column" layout-align="center center">
+        <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
+    </div>
+</div>
+
+<md-card-content ng-if="!ctrl.dataLoading" flex layout-align="space-between" layout="column">
+    <div flex>
+        <downtime-timeline height="'20px'"></downtime-timeline>
+        <nvd3 options="ctrl.chartOptions" data="ctrl.chartData"></nvd3>
+    </div>
+</md-card-content>
+
+

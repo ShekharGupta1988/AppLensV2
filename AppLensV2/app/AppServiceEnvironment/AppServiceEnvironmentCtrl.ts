@@ -16,11 +16,7 @@ module SupportCenter {
                 });
             }
 
-            this.avaiabilityChartData = [];
-            this.requestsChartData = [];
             let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
-            this.availabilityChartOptions = helper.GetChartOptions('overallruntimeavailability');
-            this.requestsChartOptions = helper.GetChartOptions('overallruntimeavailability');
             this.containerHeight = this.$window.innerHeight * 0.25 + 'px';
 
             if (!angular.isDefined(this.$stateParams.stamp) || this.$stateParams.stamp === '') {
@@ -43,8 +39,6 @@ module SupportCenter {
 
             this.AseService.promise.then(function (data: any) {
                 self.hostingEnvironment = self.AseService.hostingEnvironment;
-
-                self.getRuntimeAvailability();
 
                 self.DetectorsService.getDetectors(self.hostingEnvironment).then(function (data: DetectorDefinition[]) {
                     self.detectors = data;
@@ -78,15 +72,19 @@ module SupportCenter {
                 // Error in calling ASE Details
 
                 self.detectorListLoaded = true;
-                self.dataLoading = false;
             });
 
-            //if no child route is defined, then set default child route to sia
-            if (this.$state.current.name === "appServiceEnvironment" || this.$state.current.name === "appServiceEnvironment.aseAvailabilityAnalysis") {
-                this.setSelectedItem("sia");
-            }
-            else {
-                this.setSelectedItem(this.$state.params['detectorName']);
+            switch (this.$state.current.name) {
+                case "appServiceEnvironment":
+                case "appServiceEnvironment.aseAvailabilityAnalysis":
+                    this.setSelectedItem("aseAvailabilityAnalysis");
+                    break;
+                case "appServiceEnvironment.aseDeploymentAnalysis":
+                    this.setSelectedItem("aseDeploymentAnalysis");
+                    break;
+                default:
+                    this.setSelectedItem(this.$state.params['detectorName']);
+                    break;
             }
         }
 
@@ -94,11 +92,6 @@ module SupportCenter {
         detectorListLoaded: boolean = false;
         selectedItem: string;
         hostingEnvironment: HostingEnvironment;
-        availabilityChartOptions: any;
-        avaiabilityChartData: any;
-        requestsChartOptions: any;
-        requestsChartData: any;
-        dataLoading: boolean = true;
         containerHeight: string;
 
         toggleSideNav(): void {
@@ -107,8 +100,11 @@ module SupportCenter {
 
         setSelectedItem(name: string): void {
             this.selectedItem = name;
-            if (name === 'sia') {
-                this.$state.go('appServiceEnvironment.aseAvailabilityAnalysis')
+            if (name === 'aseAvailabilityAnalysis') {
+                this.$state.go('appServiceEnvironment.' + name)
+            }
+            else if (name === 'aseDeploymentAnalysis') {
+                this.$state.go('appServiceEnvironment.' + name)
             }
             else {
                 if (this.$state.current.name.indexOf('appServiceEnvironment') >= 0) {
@@ -126,38 +122,6 @@ module SupportCenter {
 
         sendFeedback(): void {
             this.FeedbackService.sendGeneralFeedback();
-        }
-
-        private getRuntimeAvailability(): void {
-
-            var self = this;
-            let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
-
-            this.DetectorsService.getDetectorResponse(self.hostingEnvironment, 'overallruntimeavailability').then(function (data: DetectorResponse) {
-
-                let chartDataList: any = helper.GetChartData(data.StartTime, data.EndTime, data.Metrics, 'overallruntimeavailability');
-                self.dataLoading = false;
-                var iterator = 0;
-                var requestsIterator = 0;
-
-                _.each(chartDataList, function (item: any) {
-                    var f: string;
-                    if (item.key.toLowerCase().indexOf("availability") !== -1) {
-                        item.color = DetectorViewHelper.runtimeAvailabilityColors[iterator];
-                        iterator++;
-                        self.avaiabilityChartData.push(item);
-                    }
-                    else {
-                        item.area = true;
-                        item.color = DetectorViewHelper.requestsColors[requestsIterator];
-                        requestsIterator++;
-                        self.requestsChartData.push(item);
-                    }
-                });
-            }, function (err) {
-                self.dataLoading = false;
-                self.ErrorHandlerService.showError(ErrorModelBuilder.Build(err));
-            });
         }
 
         showCaseFeedbackForm(ev): void {

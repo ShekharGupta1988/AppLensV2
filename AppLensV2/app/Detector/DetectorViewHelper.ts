@@ -103,9 +103,10 @@ module SupportCenter {
                 case 'asehealth':
                 case 'storagehealth':
                 case 'multirolehttperrordisribution':
-                case 'workerrolehttperrordistribution':  
-                case 'outboundnetworkconnections':   
-                case 'functioninstanceallocations':                 
+                case 'workerrolehttperrordistribution':
+                case 'outboundnetworkconnections':
+                case 'functioninstanceallocations':
+                case 'httpqueuelength':
                     options.chart.type = 'lineChart';
                     options.chart.useInteractiveGuideline = true;
                     break;
@@ -124,6 +125,19 @@ module SupportCenter {
                     options.chart.useInteractiveGuideline = true;
                     options.chart.yAxis.axisLabel = 'Milliseconds';
                     break;
+                case 'filesystemusage':
+                    options.chart.type = 'pieChart';
+                    options.chart.showLabels = true;
+                    options.chart.x = function (d) { return d.key; };
+                    options.chart.y = function (d) { return d.y; };
+                    options.chart.height = 400;
+                    options.chart.duration = 500;
+                    options.chart.labelThreshold = 0.0001;
+                    options.chart.labelSunbeamLayout = true;
+                    options.chart.labelsOutside = true;
+                    options.chart.pie = {};
+                    options.chart.donut = true;
+                    break;
             }
             return options;
         }
@@ -132,8 +146,16 @@ module SupportCenter {
 
             var self = this;
             var perWorkerGraph: boolean = false;
+
+            var diskUsageData: any = {};
             
             var chartData = [];
+
+            if (!self.IsNvd3ChartEnabled(detectorName)) {
+                return self.GetGoogleChartData(startTimeStr, endTimeStr, metrics, detectorName);
+            }
+
+            var fileStorageTitle = [];
             
             var startTime = new Date(startTimeStr);
             var endTime = new Date(endTimeStr);
@@ -142,6 +164,17 @@ module SupportCenter {
             for (let metric of metrics) {
 
                 if ((detectorName.indexOf('cpuanalysis') >= 0 && metric.Name !== "PercentTotalProcessorTime") || (detectorName.indexOf('memoryanalysis') >= 0 && metric.Name !== 'PercentOverallMemory')) {
+                    continue;
+                }
+
+                if (detectorName.indexOf('filesystemusage') >= 0) {
+                    diskUsageData = {
+                        key: metric.Name,
+                        y: metric.Values[0].Total
+                    };
+                    if (metric.Name !== "Total" && metric.Name !== "Used") {
+                        chartData.push(diskUsageData);
+                    }
                     continue;
                 }
 
@@ -226,6 +259,47 @@ module SupportCenter {
             }
 
             return chartData;
+        }
+
+        public GetGoogleChartData(startTimeStr: string, endTimeStr: string, metrics: DiagnosticMetricSet[], detectorName: string = ''): any {
+            var chartObject: any = {};
+            chartObject.type = "Timeline";
+            var chartObjectRows = [];
+
+            for (let metric of metrics) {
+                chartObjectRows.push({ c: [{ v: metric.Name.substring(metric.Name.lastIndexOf("-") + 1) }, { v: new Date(metric.StartTime.replace("Z", "")) }, { v: new Date(metric.EndTime.replace("Z", "")) }] });
+            }
+
+            chartObject.data = {
+                "cols": [
+                    { label: "UpgradeDomain", type: "string" },
+                    { label: "Start", type: "datetime" },
+                    { label: "End", type: "datetime" }
+                ],
+                "rows": chartObjectRows
+            };
+
+            chartObject.options = {
+                'title': 'Upgrade Domain',
+                'width': this.$window.innerWidth * 0.75,
+                'height': this.graphHeight * 2
+            };
+
+            return chartObject;
+        }
+
+        public IsNvd3ChartEnabled(detectorName: string): boolean {
+            let isNv3ChartEnabled: boolean = false;
+            switch (detectorName) {
+                case 'rebootrolesstuck':
+                    isNv3ChartEnabled = false;
+                    break;
+                default:
+                    isNv3ChartEnabled = true;
+                    break;
+            }
+
+            return isNv3ChartEnabled;
         }
 
         public GetDetailedChartData(metrics: DiagnosticMetricSet[], detectorName: string = ''): DetailedGraphData {
