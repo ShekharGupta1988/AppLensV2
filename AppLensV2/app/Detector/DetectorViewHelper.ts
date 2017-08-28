@@ -110,6 +110,8 @@ module SupportCenter {
                 case 'functioninstanceallocations':
                 case 'tcpconnectionsusage':
                 case 'tcpconnectionsusagedetailed':
+                case 'tcpopensocketcount':
+                case 'tcpopensocketcountdetailed':
                 case 'httpqueuelength':
                     options.chart.type = 'lineChart';
                     options.chart.useInteractiveGuideline = true;
@@ -175,6 +177,7 @@ module SupportCenter {
                 if ((detectorName.indexOf('cpuanalysis') >= 0 && metric.Name !== "PercentTotalProcessorTime")
                     || (detectorName.indexOf('sitememoryanalysis') >= 0 && metric.Name !== 'PercentOverallMemory')
                     || (detectorName.indexOf('machinememoryusage') >= 0 && metric.Name !== 'Committed MBytes')
+                    || (detectorName.indexOf('tcpopensocketcount') >= 0 && metric.Name !== 'TotalOpenSocketCount')
                     || (detectorName.indexOf('tcpconnectionsusage') >= 0 && metric.Name !== 'Outbound')) {
                     continue;
                 }

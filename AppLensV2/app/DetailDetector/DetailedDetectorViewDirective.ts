@@ -54,6 +54,9 @@ module SupportCenter {
                 case 'tcpconnectionsusage':
                     this.detailedchartoptions.chart.yAxis.axisLabel = 'Connection Count';
                     break;
+                case 'tcpopensocketcount':
+                    this.detailedchartoptions.chart.yAxis.axisLabel = 'Open Sockets Count';
+                    break;
                 case 'sitememoryanalysis':
                 case 'multirolememoryanalysis':
                 case 'workermemoryanalysis':
