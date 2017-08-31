@@ -362,6 +362,19 @@ ng-md-icon.custom-theme-default3 {
     fill:rgb(78,52,46);
 }
 
+div.custom-theme-default4 {
+    background-color:rgb(91, 53, 206);
+    color:white;
+}
+
+p.custom-theme-default4 {
+    color:rgb(91, 53, 206);
+}
+
+ng-md-icon.custom-theme-default4 {
+    fill:rgb(91, 53, 206);
+}
+
 .caseanalysis-timeline-icon{
     width:30px;
     height:30px;
@@ -382,3 +395,52 @@ ng-md-icon.custom-theme-default3 {
 .nvd3.nv-pie .nv-pie-title {
     fill: black !important;
 }
+.page-title{
+    padding-left: 10px;
+    margin-bottom:0;
+    color:#737373;
+}
+.page-description{
+    padding-left: 10px;
+    margin-top:5px;
+}
+
+.restart-section-heading{
+    padding:10px;
+    color:rgb(121, 91, 214);
+    text-decoration:underline;
+}
+.restart-container{
+    margin:10px;
+    background-color:white;
+    border:1px solid #eef;
+    border-radius:5px;
+    min-height:100px;
+}
+    .restart-container.restart-message {
+        border-color: rgb(121, 91, 214);
+        border-left-width: 10px !important;
+        padding:10px;
+    }
+        .restart-container.restart-message.no-restart {
+            border-color: #00E676 !important;
+        }
+        .restart-container.restart-message.no-reason {
+            border-color: #546E7A !important;
+        }
+.evidence{
+    padding:10px;
+    border-radius:10px;
+    width:100px;
+    text-align:center;
+    border:1px solid #795bd6;
+    color:#795bd6;
+    display: inline;
+    outline: none;
+    margin-right:10px;
+}
+    .evidence:hover {
+        cursor: pointer;
+        background-color:#795bd6;
+        color:white;
+    }

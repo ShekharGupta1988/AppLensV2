@@ -18,6 +18,7 @@ module SupportCenter {
         constructor(
             public StartTime: string,
             public EndTime: string,
+            public MetaData: NameValuePair[][],
             public Message: string = '',
             public Source: string = '',
             public Priority: number = 0,

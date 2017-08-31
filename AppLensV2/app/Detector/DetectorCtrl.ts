@@ -40,8 +40,14 @@ module SupportCenter {
                     self.chartOptions.chart.height =
                         self.chartOptions.chart.height + (self.chartData.length / 8) * 20;
                     self.chartOptions.chart.margin.top = 20 + (self.chartData.length / 8) * 20;
-                    if (self.detectorName.indexOf('cpuanalysis') > 0 || self.detectorName.indexOf('memoryanalysis') > 0) {
+                    if (self.detectorName.indexOf('sitecpuanalysis') > 0 || self.detectorName.indexOf('sitememoryanalysis') > 0) {
                         self.chartOptions.chart.yAxis.axisLabel = 'Percent';
+                    }
+                    if (self.detectorName.indexOf('tcpconnectionsusage') > 0) {
+                        self.chartOptions.chart.yAxis.axisLabel = 'Connection Count';
+                    }
+                    if (self.detectorName.indexOf('tcpopensocketcount') > 0) {
+                        self.chartOptions.chart.yAxis.axisLabel = 'Open Sockets Count';
                     }
                     self.dataLoading = false;
                     if (self.detectorName.indexOf('filesystemusage') >= 0) {

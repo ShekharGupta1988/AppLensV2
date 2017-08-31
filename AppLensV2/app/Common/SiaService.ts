@@ -17,10 +17,10 @@ module SupportCenter {
         private analysisPromiseCache: ICache<ng.IPromise<any>>;
         private analysisResultCache: ICache<SiaResponse>;
 
-        public static $inject: string[] = ["DetectorsService", "TimeParamsService", "$http", "$q", "$window", "$state", "$stateParams", "AnalysisResponseFactory"];
+        public static $inject: string[] = ["DetectorsService", "TimeParamsService", "$http", "$q", "$window", "$state", "$stateParams", "ResourceServiceFactory"];
         public selectedAbnormalTimePeriod: any;
 
-        constructor(private DetectorsService: IDetectorsService, private TimeParamsService: ITimeParamsService, private $http: ng.IHttpService, private $q: ng.IQService, private $window: angular.IWindowService, private $state: angular.ui.IStateService, private $stateParams: IStateParams, private AnalysisFactory: AnalysisResponseFactory) {
+        constructor(private DetectorsService: IDetectorsService, private TimeParamsService: ITimeParamsService, private $http: ng.IHttpService, private $q: ng.IQService, private $window: angular.IWindowService, private $state: angular.ui.IStateService, private $stateParams: IStateParams, private ResourceServiceFactory: ResourceServiceFactory) {
             this.analysisPromiseCache = {};
             this.analysisResultCache = {};
             this.analysisCache = {};
@@ -42,8 +42,8 @@ module SupportCenter {
                     deferred.resolve(self.analysisCache[analysisType])
                 });
                 return deferred.promise;
-            }else {
-                this.analysisCache[analysisType].Promise = this.AnalysisFactory.GetAnalysis().getAnalysisResponse();
+            } else {
+                this.analysisCache[analysisType].Promise = this.getAnalysisResponsePromise(analysisType);
                 return this.analysisCache[analysisType].Promise;
             }
         }
@@ -106,6 +106,41 @@ module SupportCenter {
                 this.analysisCache[this.$stateParams.analysisType].SelectedAbnormalTimePeriod.index = index;
                 this.analysisCache[this.$stateParams.analysisType].SelectedAbnormalTimePeriod.data = this.analysisCache[this.$stateParams.analysisType].Response.AbnormalTimePeriods[index]
             }
+        }
+
+        private getAnalysisResponsePromise(analysisName: string): ng.IPromise<IAnalysisResult> {
+
+            var deferred = this.$q.defer<IAnalysisResult>();
+            let resourceService: IResourceService = this.ResourceServiceFactory.GetResourceService();
+            var self = this;
+
+            resourceService.promise.then(function (data: any) {
+
+                let analysis = { Promise: null, Response: null, SelectedAbnormalTimePeriod: null };
+
+                analysis.Promise = self.$http({
+                    method: "GET",
+                    url: UriPaths.DiagnosticsPassThroughAPIPath(),
+                    headers: {
+                        'GeoRegionApiRoute': UriPaths.AnalysisResourcePath(analysisName, resourceService.resource, self.TimeParamsService.StartTime, self.TimeParamsService.EndTime, self.TimeParamsService.TimeGrain),
+                        'IsInternal': self.TimeParamsService.IsInternal
+                    }
+                }).success((data: any) => {
+
+                    analysis.Response = angular.isDefined(data.Properties) ? data.Properties : data;
+                    analysis.SelectedAbnormalTimePeriod = {};
+                    analysis.SelectedAbnormalTimePeriod.index = analysis.Response.AbnormalTimePeriods.length - 1;
+                    analysis.SelectedAbnormalTimePeriod.data = analysis.Response.AbnormalTimePeriods[analysis.SelectedAbnormalTimePeriod.index];
+
+                    deferred.resolve(analysis);
+
+                })
+                    .error((data: any) => {
+                        deferred.reject(new ErrorModel(0, "Error in call to " + analysisName + " API"));
+                    });
+            });
+
+            return deferred.promise;
         }
     }
 

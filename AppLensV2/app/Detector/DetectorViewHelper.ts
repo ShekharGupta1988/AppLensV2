@@ -15,7 +15,7 @@ module SupportCenter {
                     type: 'multiBarChart',
                     height: this.graphHeight,
                     margin: {
-                        top: 20,
+                        top: 0,
                         right: 20,
                         bottom: 50,
                         left: 60
@@ -87,6 +87,8 @@ module SupportCenter {
                 case 'workercpuanalysis':
                 case 'multirolecpuanalysis':
                 case 'multirolecpuanalysisdetailed':
+                case 'machinememoryusage':
+                case 'machinememoryusagedetailed':
                 case 'sitecpuanalysis':
                 case 'sitecpuanalysisdetailed':
                 case 'workeravailability':
@@ -106,9 +108,18 @@ module SupportCenter {
                 case 'workerrolehttperrordistribution':
                 case 'outboundnetworkconnections':
                 case 'functioninstanceallocations':
+                case 'tcpconnectionsusage':
+                case 'tcpconnectionsusagedetailed':
+                case 'tcpopensocketcount':
+                case 'tcpopensocketcountdetailed':
                 case 'httpqueuelength':
                     options.chart.type = 'lineChart';
                     options.chart.useInteractiveGuideline = true;
+                    break;
+                case 'aseexternalconnectionhealth':
+                    options.chart.type = 'lineChart';
+                    options.chart.useInteractiveGuideline = true;
+                    options.chart.yAxis.axisLabel = 'Availability';
                     break;
                 case 'sitememoryanalysisdetailed':
                 case 'workermemoryanalysisdetailed':
@@ -163,7 +174,11 @@ module SupportCenter {
 
             for (let metric of metrics) {
 
-                if ((detectorName.indexOf('cpuanalysis') >= 0 && metric.Name !== "PercentTotalProcessorTime") || (detectorName.indexOf('memoryanalysis') >= 0 && metric.Name !== 'PercentOverallMemory')) {
+                if ((detectorName.indexOf('cpuanalysis') >= 0 && metric.Name !== "PercentTotalProcessorTime")
+                    || (detectorName.indexOf('sitememoryanalysis') >= 0 && metric.Name !== 'PercentOverallMemory')
+                    || (detectorName.indexOf('machinememoryusage') >= 0 && metric.Name !== 'Committed MBytes')
+                    || (detectorName.indexOf('tcpopensocketcount') >= 0 && metric.Name !== 'TotalOpenSocketCount')
+                    || (detectorName.indexOf('tcpconnectionsusage') >= 0 && metric.Name !== 'Outbound')) {
                     continue;
                 }
 

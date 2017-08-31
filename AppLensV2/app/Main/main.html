@@ -30,6 +30,12 @@
                     <h3>Performance Analysis</h3>
                 </div>
             </md-list-item>
+            <md-list-item class="md-2-line" ng-class="{'selected' : main.selectedItem === 'apprestartanalysis'}" ng-click="main.setSelectedItem('apprestartanalysis')">
+                <div class="md-list-item-text" layout="column">
+                    <h3>App Restart Analysis <ng-md-icon icon="fibre_new" style="fill:rgb(255, 117, 0)" size="25"></ng-md-icon></h3>
+                    
+                </div>
+            </md-list-item>
             <md-list-item class="md-2-line" ng-class="{'selected' : main.selectedItem === 'supportcentersessions'}" ng-click="main.setSelectedItem('supportcentersessions')" title="Check out customer interactions in Support Center for this site.">
                 <div class="md-list-item-text" layout="column">
                     <h3>Support Center Sessions</h3>
@@ -69,7 +75,6 @@
 
                 <div class="md-list-item-text" style="margin-left:0px;">
                     <h3>
-
                         <div ng-style="{'background-color':(detector.Correlated|correlatedcolor)}"
                              style="border-radius: 50%; behavior: url(PIE.htc); width: 15px; height: 15px; margin-right:8px; float: left;"></div>
                         {{ :: detector.DisplayName }}
@@ -141,7 +146,7 @@
                 <div class="md-list-item-text">
                     <h3 style="font-weight:600;font-variant:small-caps;font-size:20px">{{::appprofilectrl.site.name}}</h3>
                     <h4>{{::appprofilectrl.site.kind}}</h4>
-                    <p class="custom-theme-{{appprofilectrl.ThemeService.getTheme()}}"><a href="https://wawsobserver.azurewebsites.net/sites/{{appprofilectrl.site.name}}" target="_blank" style="font-size:13px">Observer Link</a></p>
+                    <p class="custom-theme-{{appprofilectrl.ThemeService.getTheme()}}"><a href="https://wawsobserver.azurewebsites.windows.net/sites/{{appprofilectrl.site.name}}" target="_blank" style="font-size:13px">Observer Link</a></p>
                 </div>
 
             </md-list-item>

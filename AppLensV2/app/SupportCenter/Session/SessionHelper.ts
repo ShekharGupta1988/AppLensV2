@@ -18,6 +18,31 @@ module SupportCenter {
 
             switch (event.EventName.toLowerCase()) {
 
+                case 'analysisinitialized':
+                    {
+                        uiModel.icon = "dashboard";
+                        uiModel.iconColor = "rgb(91, 53, 206)";
+                        uiModel.message = `This session was opened from  <span>Diagnose and Solve Blade. </span>`;
+
+                        let supportTopicId = _.find(event.EventData, function (item) {
+                            return item.Name.toLowerCase() === 'supporttopicid';
+                        });
+
+                        let analysisName = _.find(event.EventData, function (item) {
+                            return item.Name.toLowerCase() === 'analysisname';
+                        });
+
+                        if (angular.isDefined(supportTopicId) && supportTopicId.Value !== '') {
+                            uiModel.message = `This session was opened for support Category : <span>${this._getSupportCategory(supportTopicId.Value)}. </span>`;
+                        }
+
+                        if (angular.isDefined(analysisName)) {
+                            uiModel.message += `Analysis triggered : <span>${analysisName.Value}</span>`;
+                        }
+
+                        break;
+                    }
+
                 case "currentapphealth":
                     {
                         uiModel.message = "This app was <span>running healthy</span> during that timeframe.";
@@ -205,11 +230,25 @@ module SupportCenter {
 
         public GetDateString(dateObj: Date): string {
 
-            return `${this.Pad(dateObj.getUTCMonth() + 1)}/${this.Pad(dateObj.getUTCDate())}/${dateObj.getUTCFullYear()} ${this.Pad(dateObj.getUTCHours())}:${this.Pad(dateObj.getUTCMinutes())} (UTC)`;
+            return `${this._pad(dateObj.getUTCMonth() + 1)}/${this._pad(dateObj.getUTCDate())}/${dateObj.getUTCFullYear()} ${this._pad(dateObj.getUTCHours())}:${this._pad(dateObj.getUTCMinutes())} (UTC)`;
         }
 
-        private Pad(n: number): string {
+        private _pad(n: number): string {
             return (n < 10) ? ("0" + n.toString()) : n.toString();
+        }
+
+        private _getSupportCategory(supportTopicId: string): string {
+
+            switch (supportTopicId) {
+                case '32542218': return 'Web app down or reporting errors';
+                case '32457411': return 'Web app slow';
+                case '32581620': return 'Remote debugging';
+                case '32583701': return 'Web app experiencing high CPU';
+                case '32581616': return 'Web app experiencing high memory usage';
+                case '32570954': return 'Web app restarted';
+            }
+
+            return supportTopicId;
         }
     }
 }

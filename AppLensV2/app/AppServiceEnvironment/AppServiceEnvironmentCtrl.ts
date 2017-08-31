@@ -77,9 +77,11 @@ module SupportCenter {
             switch (this.$state.current.name) {
                 case "appServiceEnvironment":
                 case "appServiceEnvironment.aseAvailabilityAnalysis":
+                case "appServiceEnvironment.aseAvailabilityAnalysis.sia":
                     this.setSelectedItem("aseAvailabilityAnalysis");
                     break;
                 case "appServiceEnvironment.aseDeploymentAnalysis":
+                case "appServiceEnvironment.aseDeploymentAnalysis.sia":
                     this.setSelectedItem("aseDeploymentAnalysis");
                     break;
                 default:
@@ -99,17 +101,19 @@ module SupportCenter {
         }
 
         setSelectedItem(name: string): void {
+            let self = this;
             this.selectedItem = name;
             if (name === 'aseAvailabilityAnalysis') {
-                this.$state.go('appServiceEnvironment.' + name)
+                this.$state.go('appServiceEnvironment.' + name + ".sia")
             }
             else if (name === 'aseDeploymentAnalysis') {
-                this.$state.go('appServiceEnvironment.' + name)
+                this.$state.go('appServiceEnvironment.' + name + ".sia")
             }
             else {
                 if (this.$state.current.name.indexOf('appServiceEnvironment') >= 0) {
-                    if ((this.$state.current.name !== 'appServiceEnvironment.detector') || (this.$state.current.name === 'appServiceEnvironment.detector' && this.$state.params['detectorName'] !== name)) {
-                        this.$state.go('appServiceEnvironment.detector', { detectorName: name });
+                    if ((this.$state.current.name.indexOf('.detector')) < 0 || (this.$state.current.name.indexOf('.detector') >= 0 && this.$state.params['detectorName'] !== name)) {
+                        let analysisType = this.$state.current.name.replace("appServiceEnvironment.", "").replace(".detector", "").replace(".sia", "");
+                        this.$state.go("appServiceEnvironment." + analysisType + ".detector", { detectorName: name });
                     }
                 }
             }

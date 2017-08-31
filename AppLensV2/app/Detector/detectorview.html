@@ -44,12 +44,14 @@
                         <nvd3 options="detectorviewctrl.chartoptions" data="detectorviewctrl.chartdata"
                                   ng-if="!detectorviewctrl.isLoading && detectorviewctrl.info.Name !== 'instanceallocations' && detectorviewctrl.info.Name !== 'rebootrolesstuck'" api="detectorviewctrl.api"></nvd3>
                         <div google-chart chart="detectorviewctrl.chartdata" ng-if="!detectorviewctrl.isLoading && detectorviewctrl.info.Name === 'rebootrolesstuck'"></div>
+
                         <detailed-detector-view loading="detectorviewctrl.loading" metricsets="detectorviewctrl.metricsets" selectedworker="detectorviewctrl.selectedworker" detectorsource="detectorviewctrl.detectorsource"
-                                                ng-if="(detectorviewctrl.info.Name.indexOf('cpuanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('memoryanalysis') >= 0) && detectorviewctrl.showDetailedView"></detailed-detector-view>
-                        <md-button ng-click="detectorviewctrl.showDetailedView = !detectorviewctrl.showDetailedView" ng-if="detectorviewctrl.info.Name.indexOf('cpuanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('memoryanalysis') >= 0"/>
+                                                ng-if="(detectorviewctrl.info.Name.indexOf('cpuanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('memoryanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('machinememoryusage') >= 0 || detectorviewctrl.info.Name.indexOf('tcpconnectionsusage') >= 0 || detectorviewctrl.info.Name.indexOf('tcpopensocketcount') >= 0) && detectorviewctrl.showDetailedView"></detailed-detector-view>
+                        <md-button ng-click="detectorviewctrl.showDetailedView = !detectorviewctrl.showDetailedView" ng-if="detectorviewctrl.info.Name.indexOf('cpuanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('memoryanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('machinememoryusage') >= 0 || detectorviewctrl.info.Name.indexOf('tcpconnectionsusage') || detectorviewctrl.info.Name.indexOf('tcpopensocketcount') >= 0">
                             <span ng-if="!detectorviewctrl.showDetailedView">Show Per Instance Data</span>
                             <span ng-if="detectorviewctrl.showDetailedView">Hide Per Instance Data</span>
                         </md-button>
+
                         <table style="width: 100%; border-spacing: 1px; padding-right: 25px; border-collapse: separate;"
                                ng-if="detectorviewctrl.info.Name === 'instanceallocations'">
                             <tr ng-repeat="instance in detectorviewctrl.chartdata">

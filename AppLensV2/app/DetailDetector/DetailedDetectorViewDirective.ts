@@ -51,11 +51,19 @@ module SupportCenter {
                 case 'sitecpuanalysis':
                     this.detailedchartoptions.chart.yAxis.axisLabel = 'Percent Processor Time';
                     break;
+                case 'tcpconnectionsusage':
+                    this.detailedchartoptions.chart.yAxis.axisLabel = 'Connection Count';
+                    break;
+                case 'tcpopensocketcount':
+                    this.detailedchartoptions.chart.yAxis.axisLabel = 'Open Sockets Count';
+                    break;
                 case 'sitememoryanalysis':
                 case 'multirolememoryanalysis':
                 case 'workermemoryanalysis':
                     this.detailedchartoptions.chart.yAxis.axisLabel = 'Percent Physical Memory Used';
                     break;
+                default:
+                    this.detailedchartoptions.chart.yAxis.axisLabel = '';
             }
             this.updateGraphData();
         }

@@ -19,7 +19,17 @@ module SupportCenter {
                 return 'default3';
             }
             else {
-                return this.$state.current.name.indexOf('perfanalysis') > 0 ? 'default2' : 'default';
+                let currentStateName = this.$state.current.name;
+
+                if (currentStateName.indexOf('perfanalysis') > 0) {
+                    return 'default2';
+                }
+                else if (currentStateName.indexOf('apprestartanalysis') > 0) {
+                    return 'default4';
+                }
+                else {
+                    return 'default';
+                }
             }
         }
     }

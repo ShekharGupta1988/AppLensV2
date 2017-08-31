@@ -177,7 +177,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="app\Analysis\AppRestartAnalysis\apprestartanalysis.html" />
     <Content Include="app\AppServiceEnvironment\appServiceEnvironment.html" />
+    <Content Include="app\AppServiceEnvironment\appServiceEnvironmentMain.html" />
     <Content Include="app\assets\app.css" />
     <Content Include="app\assets\images\ASE-Logo.jpg" />
     <Content Include="app\assets\images\Azure-Functions-Logo.png" />
@@ -193,7 +195,7 @@
     <Content Include="app\DowntimeTimeline\downtimetimeline.html" />
     <Content Include="app\Home\home.html" />
     <Content Include="app\Main\main.html" />
-    <Content Include="app\Sia\sia.html" />
+    <Content Include="app\Analysis\sia.html" />
     <Content Include="app\Site\site.html" />
     <Content Include="app\SupportCenter\sessionslist.html" />
     <Content Include="app\SupportCenter\Session\session.html" />
@@ -252,6 +254,8 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="app\Analysis\AppRestartAnalysis\AppRestartAnalysisCtrl.ts" />
+    <TypeScriptCompile Include="app\Analysis\AppRestartAnalysis\AppRestartAnalysisService.ts" />
     <TypeScriptCompile Include="app\app.ts" />
     <TypeScriptCompile Include="app\Common\Constants.ts" />
     <TypeScriptCompile Include="app\Common\DetectorsService.ts" />
@@ -282,13 +286,7 @@
     <TypeScriptCompile Include="app\NgModels\Site.ts" />
     <TypeScriptCompile Include="app\NgModels\SupportCenterSessionResponse.ts" />
     <TypeScriptCompile Include="app\references.ts" />
-    <TypeScriptCompile Include="app\Sia\AnalysisResponse\AnalysisResponseFactory.ts" />
-    <TypeScriptCompile Include="app\Sia\AnalysisResponse\AseAvailabilityAnalysisResponse.ts" />
-    <TypeScriptCompile Include="app\Sia\AnalysisResponse\DeploymentAnalysisResponse.ts" />
-    <TypeScriptCompile Include="app\Sia\AnalysisResponse\IAnalysisResponse.ts" />
-    <TypeScriptCompile Include="app\Sia\AnalysisResponse\AppAnalysisResponse.ts" />
-    <TypeScriptCompile Include="app\Sia\AnalysisResponse\PerfAnalysisResponse.ts" />
-    <TypeScriptCompile Include="app\Sia\SiaCtrl.ts" />
+    <TypeScriptCompile Include="app\Analysis\SiaCtrl.ts" />
     <TypeScriptCompile Include="app\Site\SiteCtrl.ts" />
     <TypeScriptCompile Include="app\SupportCenter\SessionListCtrl.ts" />
     <TypeScriptCompile Include="app\SupportCenter\Session\SessionCtrl.ts" />

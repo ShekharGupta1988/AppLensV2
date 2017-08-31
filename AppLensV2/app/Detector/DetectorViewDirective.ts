@@ -20,7 +20,7 @@ module SupportCenter {
 
     export class DetectorViewCtrl {
         public static $inject: string[] = ["DetectorsService", "$stateParams", "$window", "FeedbackService", "$mdToast", "$timeout"];
-        public showDetailedView: boolean = false;
+        public showDetailedView: boolean = true;
         public detectorFeedbackOption: number = -1;
         private nameElement: any;
         private detectorName: string;

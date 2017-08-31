@@ -1,0 +1,52 @@
+﻿<md-content>
+    <h2 class="page-title">App Restart Analysis</h2>
+    <p class="page-description" style="color:rgb(91, 53, 206)">Know why your web application restarted across different role instances and helpful tips.</p>
+
+    <div ng-if="apprestart.isLoading">
+        <div layout="row" layout-sm="column" layout-align="space-around" style="height:30%">
+
+            <div layout="column" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
+            </div>
+        </div>
+    </div>
+
+    <div ng-if="!apprestart.isLoading">
+
+        <h3 class="restart-section-heading">App Restart Events Timeline</h3>
+
+        <div class="restart-container">
+
+            <md-input-container md-theme="default4" style="min-width:100px">
+                <label>Select Instance</label>
+                <md-select ng-model="apprestart.selectedWorker">
+                    <md-option ng-value="key" ng-repeat="(key, list) in apprestart.MetricsPerInstance">{{ ::key }}</md-option>
+                </md-select>
+            </md-input-container>
+
+            <nvd3 options="apprestart.chartOptions" data="apprestart.MetricsPerInstance[apprestart.selectedWorker]"></nvd3>
+        </div>
+
+        <h3 class="restart-section-heading">Top Reasons</h3>
+        
+        <div class="restart-container restart-message" ng-if="apprestart.analysisResult.length !== 0">
+            <md-button ng-click="apprestart.CopyToClipboard()" class="md-primary md-raised" md-theme="default4"  style="float:right">Copy Report to clipboard</md-button>    
+            <ul style="margin-top:60px">
+                <li ng-repeat="item in apprestart.analysisResult" style="list-style-type: square;margin-top:30px;">
+                    <p style="font-size:16px;color:#412f79">{{ ::item.Message }}</p>
+
+                    <div ng-repeat="evidence in item.MetaData" class="evidence" ng-click="apprestart.OpenHelpulTip(evidence)">{{apprestart.GetHelpulTipName(evidence)}}</div>
+
+                </li>
+            </ul>
+        </div>
+
+        <div class="restart-container restart-message" ng-if="apprestart.analysisResult.length === 0" ng-class="{'no-restart': apprestart.noReason.type === 0, 'no-reason': apprestart.noReason.type === 1}">
+
+            <p style="font-size:17px;color:#412f79">{{apprestart.noReason.message}}</p>
+
+        </div>
+
+    </div>
+</md-content>
+

@@ -44,15 +44,19 @@ module SupportCenter {
                 this.$state.current.name === 'sites.appanalysis' || this.$state.current.name === 'stampsites.appanalysis') {
                 this.setSelectedItem('appanalysis');
             }
-            if (this.$state.current.name === 'sites.perfanalysis' || this.$state.current.name === 'stampsites.perfanalysis') {
+            else if (this.$state.current.name === 'sites.perfanalysis' || this.$state.current.name === 'stampsites.perfanalysis') {
                 this.setSelectedItem('perfanalysis');
             }
-            if (this.$state.current.name === 'sites.detector') {
+            else if (this.$state.current.name === 'sites.apprestartanalysis' || this.$state.current.name === 'stampsites.apprestartanalysis') {
+                this.setSelectedItem('apprestartanalysis');
+            }
+            else if (this.$state.current.name === 'sites.detector') {
                 this.setSelectedItem(this.$state.params['detectorName']);
             }
-            if (this.$state.current.name.indexOf('.sia') >= 0) {
+            else if (this.$state.current.name.indexOf('.sia') >= 0) {
                 this.selectedItem = "appanalysis";
-            } else if (this.$state.current.name.indexOf('.detector') >= 0) {
+            }
+            else if (this.$state.current.name.indexOf('.detector') >= 0) {
                 this.selectedItem = this.$state.params['detectorName'];
             }
 
@@ -85,6 +89,13 @@ module SupportCenter {
                     this.$state.go('stampsites.perfanalysis.sia');
                 } else {
                     this.$state.go('sites.perfanalysis.sia');
+                }
+            }
+            else if (name === 'apprestartanalysis') {
+                if (this.$state.current.name.indexOf('stampsites') >= 0) {
+                    this.$state.go('stampsites.apprestartanalysis');
+                } else {
+                    this.$state.go('sites.apprestartanalysis');
                 }
             }
             else if (name === 'supportcentersessions') {

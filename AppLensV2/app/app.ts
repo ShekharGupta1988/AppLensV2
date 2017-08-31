@@ -3,7 +3,7 @@
 module SupportCenter {
     "use strict";
 
-    var app = angular.module("supportCenterApp", ["ngMaterial", "ngMdIcons", "ngLetterAvatar", "ui.router", "nvd3", "ngSanitize", "btford.markdown", "jlareau.bowser", "md.data.table", "googlechart"])
+    var app = angular.module("supportCenterApp", ["ngMaterial", "ngMdIcons", "ngLetterAvatar", "ui.router", "nvd3", "ngSanitize", "btford.markdown", "jlareau.bowser", "md.data.table", "googlechart", "angular-clipboard"])
 
         .service("DetectorsService", DetectorsService)
         .service("SiaService", SiaService)
@@ -12,9 +12,9 @@ module SupportCenter {
         .service("FeedbackService", FeedbackService)
         .service("ErrorHandlerService", ErrorHandlerService)
         .service("AseService", AseService)
-        .service("AnalysisResponseFactory", AnalysisResponseFactory)
         .service("ResourceServiceFactory", ResourceServiceFactory)
         .service("SupportCenterService", SupportCenterService)
+        .service("AppRestartAnalysisService", AppRestartAnalysisService)
         .service("ThemeService", ThemeService)
         .controller("HomeCtrl",HomeCtrl)
         .controller("MainCtrl", MainCtrl)
@@ -22,6 +22,7 @@ module SupportCenter {
         .controller("SiteCtrl", SiteCtrl)
         .controller("DetectorCtrl", DetectorCtrl)
         .controller("SiaCtrl", SiaCtrl)
+        .controller("AppRestartAnalysisCtrl", AppRestartAnalysisCtrl)
         .controller("AppProfileCtrl", AppProfileCtrl)
         .controller("AseProfileCtrl", AseProfileCtrl)
         .controller("CaseFeedbackCtrl", CaseFeedbackCtrl)
@@ -47,11 +48,16 @@ module SupportCenter {
             $mdThemingProvider.theme('default2')
                 .primaryPalette('blue')
                 .accentPalette('red');
-
+            
             // ASE Theme
             $mdThemingProvider.theme('default3')
                 .primaryPalette('brown')
                 .accentPalette('red');
+
+            // App Restart Analysis Theme
+            $mdThemingProvider.theme('default4')
+                .primaryPalette('deep-purple')
+                .accentPalette('blue-grey');
 
             $mdThemingProvider.alwaysWatchTheme(true);
 
@@ -88,7 +94,7 @@ module SupportCenter {
                 })
                 .state('appServiceEnvironment', {
                     url: '/hostingEnvironments/{hostingEnvironmentName}?{startTime}&{endTime}&{timeGrain}&{isInternal}&{vNext}',
-                    templateUrl: 'app/AppServiceEnvironment/appServiceEnvironment.html',
+                    templateUrl: 'app/AppServiceEnvironment/appServiceEnvironmentMain.html',
                     controller: 'AppServiceEnvironmentCtrl',
                     controllerAs: 'ase'
                 })
@@ -144,13 +150,39 @@ module SupportCenter {
                         analysisType: 'perfAnalysis'
                     }
                 })
+                .state('sites.apprestartanalysis', {
+                    url: '/apprestartanalysis',
+                    views: {
+                        'mainContent': {
+                            templateUrl: 'app/Analysis/AppRestartAnalysis/apprestartanalysis.html',
+                            controller: 'AppRestartAnalysisCtrl',
+                            controllerAs: 'apprestart'
+                        }
+                    },
+                    params: {
+                        analysisType: 'appRestartAnalysis'
+                    }
+                })
+                .state('stampsites.apprestartanalysis', {
+                    url: '/apprestartanalysis',
+                    views: {
+                        'mainContent': {
+                            templateUrl: 'app/Analysis/AppRestartAnalysis/apprestartanalysis.html',
+                            controller: 'AppRestartAnalysisCtrl',
+                            controllerAs: 'apprestart'
+                        }
+                    },
+                    params: {
+                        analysisType: 'appRestartAnalysis'
+                    }
+                })
                 .state('appServiceEnvironment.aseAvailabilityAnalysis', {
                     url: '/aseAvailabilityAnalysis',
                     views: {
-                        'childContent': {
-                            templateUrl: 'app/Sia/sia.html',
-                            controller: 'SiaCtrl',
-                            controllerAs: 'sia'
+                        'mainContent': {
+                            templateUrl: 'app/AppServiceEnvironment/appServiceEnvironment.html',
+                            controller: 'AppServiceEnvironmentCtrl',
+                            controllerAs: 'ase'
                         }
                     },
                     params: {
@@ -160,14 +192,58 @@ module SupportCenter {
                 .state('appServiceEnvironment.aseDeploymentAnalysis', {
                     url: '/aseDeploymentAnalysis',
                     views: {
+                        'mainContent': {
+                            templateUrl: 'app/AppServiceEnvironment/appServiceEnvironment.html',
+                            controller: 'AppServiceEnvironmentCtrl',
+                            controllerAs: 'ase'
+                        }
+                    },
+                    params: {
+                        analysisType: 'aseDeploymentAnalysis'
+                    }
+                })
+                .state('appServiceEnvironment.aseAvailabilityAnalysis.sia', {
+                    views: {
                         'childContent': {
-                            templateUrl: 'app/Sia/sia.html',
+                            templateUrl: 'app/Analysis/sia.html',
+                            controller: 'SiaCtrl',
+                            controllerAs: 'sia'
+                        }
+                    },
+                    params: {
+                        analysisType: 'aseAvailabilityAnalysis'
+                    }
+                })
+                .state('appServiceEnvironment.aseDeploymentAnalysis.sia', {
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Analysis/sia.html',
                             controller: 'SiaCtrl',
                             controllerAs: 'sia'
                         }
                     },
                     params: {
                         analysisType: 'aseDeploymentAnalysis'
+                    }
+                })
+                .state('appServiceEnvironment.aseAvailabilityAnalysis.detector', {
+                    url: '/detectors/{detectorName}',
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Detector/detector.html',
+                            controller: 'DetectorCtrl',
+                            controllerAs: 'detector'
+                        }
+                    }
+                })
+                .state('appServiceEnvironment.aseDeploymentAnalysis.detector', {
+                    url: '/detectors/{detectorName}',
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Detector/detector.html',
+                            controller: 'DetectorCtrl',
+                            controllerAs: 'detector'
+                        }
                     }
                 })
                 // Old state - just exists to redirect to [sites/stampsites].appanalysis.detector
@@ -184,7 +260,7 @@ module SupportCenter {
                 .state('sites.appanalysis.sia', {
                     views: {
                         'childContent': {
-                            templateUrl: 'app/Sia/sia.html',
+                            templateUrl: 'app/Analysis/sia.html',
                             controller: 'SiaCtrl',
                             controllerAs: 'sia'
                         }
@@ -193,7 +269,7 @@ module SupportCenter {
                 .state('stampsites.appanalysis.sia', {
                     views: {
                         'childContent': {
-                            templateUrl: 'app/Sia/sia.html',
+                            templateUrl: 'app/Analysis/sia.html',
                             controller: 'SiaCtrl',
                             controllerAs: 'sia'
                         }
@@ -219,20 +295,10 @@ module SupportCenter {
                         }
                     }
                 })
-                .state('appServiceEnvironment.detector', {
-                    url: '/detectors/{detectorName}',
-                    views: {
-                        'childContent': {
-                            templateUrl: 'app/Detector/detector.html',
-                            controller: 'DetectorCtrl',
-                            controllerAs: 'detector'
-                        }
-                    }
-                })
                 .state('sites.perfanalysis.sia', {
                     views: {
                         'childContent': {
-                            templateUrl: 'app/Sia/sia.html',
+                            templateUrl: 'app/Analysis/sia.html',
                             controller: 'SiaCtrl',
                             controllerAs: 'sia'
                         }
@@ -241,7 +307,7 @@ module SupportCenter {
                 .state('stampsites.perfanalysis.sia', {
                     views: {
                         'childContent': {
-                            templateUrl: 'app/Sia/sia.html',
+                            templateUrl: 'app/Analysis/sia.html',
                             controller: 'SiaCtrl',
                             controllerAs: 'sia'
                         }

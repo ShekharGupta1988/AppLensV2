@@ -8,6 +8,7 @@ module SupportCenter {
         public static aggregatedWorkerName: string = "aggregated";
         public static perfAnalysis: string = "perfAnalysis";
         public static appAnalysis: string = "appAnalysis";
+        public static appRestartAnalysis: string = "appRestartAnalysis"
         public static aseAvailabilityAnalysis: string = "aseAvailabilityAnalysis";
         public static deploymentAnalysis: string = "aseDeploymentAnalysis";
     }
@@ -21,14 +22,12 @@ module SupportCenter {
         private static detectorsDocumentAPIPath: string = "/api/detectors/{detectorName}/files/{fileName}";
 
         // Uri Paths of Geo Region Diagnostic Role APIs
-        //private static baseAPIPath: string = "subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/sites/{site}/diagnostics";
         private static baseAPIPathSites: string = "subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/sites/{site}/diagnostics";
         private static baseAPIPathAse: string = "subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/troubleshoot";
         private static commonQueryString: string = "stampName={stamp}&{hostnames}&startTime={start}&endTime={end}&timeGrain={grain}";
-        private static appAnalysis: string = "/appAnalysis?" + UriPaths.commonQueryString;
-        private static perfAnalysis: string = "/perfAnalysis?" + UriPaths.commonQueryString;
-        private static aseAvailabilityAnalysis: string = "/aseAvailabilityAnalysis?" + UriPaths.commonQueryString;
-        private static aseDeploymentAnalysis: string = "/aseDeploymentAnalysis?" + UriPaths.commonQueryString;
+        
+        private static analysisResrouce: string = "/{analysisName}?" + UriPaths.commonQueryString;
+
         private static detectors: string = "/detectors";
         private static detectorResource: string = "/detectors/{detectorName}?" + UriPaths.commonQueryString;
         private static siteDiagnosticProperties: string = "/properties";
@@ -77,16 +76,12 @@ module SupportCenter {
                 .replace("{detectorName}", detectorName);
         }
 
-        public static AppAnalysisPath(site: Site, startTime: string, endTime: string, timeGrain: string): string {
-            return UriPaths.CreateGeoRegionAPIPath(UriPaths.appAnalysis, site, startTime, endTime, timeGrain);
+        public static AnalysisResourcePath(analysisResourceName: string, resource: Resource, startTime: string, endTime: string, timeGrain: string): string {
+            return UriPaths.CreateGeoRegionAPIPath(UriPaths.analysisResrouce.replace("{analysisName}", analysisResourceName), resource, startTime, endTime, timeGrain);
         }
-
+        
         public static ListDetectorsPath(resource: Resource): string {
             return UriPaths.CreateGeoRegionAPIPath(UriPaths.detectors, resource, '', '', '');
-        }
-
-        public static PerfAnalysisPath(site: Site, startTime: string, endTime: string, timeGrain: string): string {
-            return UriPaths.CreateGeoRegionAPIPath(UriPaths.perfAnalysis, site, startTime, endTime, timeGrain);
         }
 
         public static SiteDiagnosticPropertiesPath(site: Site): string {
@@ -97,15 +92,7 @@ module SupportCenter {
             return UriPaths.CreateGeoRegionAPIPath(UriPaths.detectorResource, resource, startTime, endTime, timeGrain)
                 .replace("{detectorName}", detectorName);
         }
-
-        public static AseAvailabilityAnalysisPath(resource: Resource, startTime: string, endTime: string, timeGrain: string) {
-            return UriPaths.CreateGeoRegionAPIPath(UriPaths.aseAvailabilityAnalysis, resource, startTime, endTime, timeGrain);
-        }
-
-        public static AseDeploymentAnalysisPath(resource: Resource, startTime: string, endTime: string, timeGrain: string) {
-            return UriPaths.CreateGeoRegionAPIPath(UriPaths.aseDeploymentAnalysis, resource, startTime, endTime, timeGrain);
-        }
-
+        
         public static SupportCenterSessionsListPath(siteName: string): string {
             return UriPaths.supportCenterSessionsList.replace("{site}", siteName);
         }
