@@ -1,0 +1,53 @@
+﻿
+<div flex="25" layout="row" class="md-sticky">
+    <div layout="column" flex="5"></div>
+    <md-card flex="95">
+
+        <div ng-if="tcpconnections.portRejectionsDataLoading" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':tcpconnections.containerHeight}">
+            <div layout="column" layout-align="center center">
+                <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
+            </div>
+        </div>
+
+        <md-card-content ng-if="!tcpconnections.portRejectionsDataLoading " flex layout-align="space-between" layout="column">
+            <div flex>
+                <downtime-timeline height="'20px'"></downtime-timeline>
+                <nvd3  options="::tcpconnections.portRejectionsChartOptions" data="::tcpconnections.portRejectionsChartData"></nvd3>                
+            </div>
+        </md-card-content>
+
+    </md-card>
+</div>
+
+<md-content flex layout="column">
+
+    <div flex="25" layout="row">
+        <div layout="column" flex="5" layout-align="center center"></div>
+        <md-card flex="95">
+
+            <div ng-if="tcpconnections.tcpConnectionsDataLoading" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':tcpconnections.containerHeight}">
+                <div layout="column" layout-align="center center">
+                    <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
+                </div>
+            </div>
+
+            <md-card-content ng-if="!tcpconnections.tcpConnectionsDataLoading" flex layout-align="space-between" layout="column">
+                <div flex>
+                    <nvd3 options="::tcpconnections.tcpConnectionsChartOptions" data="::tcpconnections.tcpConnectionsChartData"></nvd3>
+
+                </div>
+            </md-card-content>
+
+        </md-card>
+    </div>
+
+    
+
+    <div flex layout="row">
+
+        <div flex ui-view="childContent"></div>
+
+    </div>
+
+</md-content>
+

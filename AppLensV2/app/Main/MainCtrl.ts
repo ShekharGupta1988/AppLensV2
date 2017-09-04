@@ -50,6 +50,9 @@ module SupportCenter {
             else if (this.$state.current.name === 'sites.apprestartanalysis' || this.$state.current.name === 'stampsites.apprestartanalysis') {
                 this.setSelectedItem('apprestartanalysis');
             }
+            else if (this.$state.current.name === 'sites.tcpconnectionsanalysis' || this.$state.current.name === 'stampsites.tcpconnectionsanalysis') {
+                this.setSelectedItem('tcpconnectionsanalysis');
+            }
             else if (this.$state.current.name === 'sites.detector') {
                 this.setSelectedItem(this.$state.params['detectorName']);
             }
@@ -96,6 +99,13 @@ module SupportCenter {
                     this.$state.go('stampsites.apprestartanalysis');
                 } else {
                     this.$state.go('sites.apprestartanalysis');
+                }
+            }
+            else if (name === 'tcpconnectionsanalysis') {
+                if (this.$state.current.name.indexOf('stampsites') >= 0) {
+                    this.$state.go('stampsites.tcpconnectionsanalysis.sia');
+                } else {
+                    this.$state.go('sites.tcpconnectionsanalysis.sia');
                 }
             }
             else if (name === 'supportcentersessions') {

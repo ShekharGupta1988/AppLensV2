@@ -20,6 +20,7 @@ module SupportCenter {
         .controller("MainCtrl", MainCtrl)
         .controller("AppServiceEnvironmentCtrl", AppServiceEnvrionmentCtrl)
         .controller("SiteCtrl", SiteCtrl)
+        .controller("TcpConnectionsCtrl", TcpConnectionsCtrl)
         .controller("DetectorCtrl", DetectorCtrl)
         .controller("SiaCtrl", SiaCtrl)
         .controller("AppRestartAnalysisCtrl", AppRestartAnalysisCtrl)
@@ -122,6 +123,32 @@ module SupportCenter {
                     },
                     params: {
                         analysisType: 'appAnalysis'
+                    }
+                })
+                .state('sites.tcpconnectionsanalysis', {
+                    url: '/tcpconnectionsanalysis',
+                    views: {
+                        'mainContent': {
+                            templateUrl: 'app/Analysis/TcpConnectionsAnalysis/TcpConnections.html',
+                            controller: 'TcpConnectionsCtrl',
+                            controllerAs: 'tcpconnections'
+                        }
+                    },
+                    params: {
+                        analysisType: 'tcpconnectionsanalysis'
+                    }
+                })
+                .state('stampsites.tcpconnectionsanalysis', {
+                    url: '/tcpconnectionsanalysis',
+                    views: {
+                        'mainContent': {
+                            templateUrl: 'app/Analysis/TcpConnectionsAnalysis/TcpConnections.html',
+                            controller: 'TcpConnectionsCtrl',
+                            controllerAs: 'tcpconnections'
+                        }
+                    },
+                    params: {
+                        analysisType: 'tcpconnectionsanalysis'
                     }
                 })
                 .state('sites.perfanalysis', {
@@ -334,6 +361,51 @@ module SupportCenter {
                     }
                 })
 
+
+                .state('sites.tcpconnectionsanalysis.sia', {
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Analysis/sia.html',
+                            controller: 'SiaCtrl',
+                            controllerAs: 'sia'
+                        }
+                    },
+                    params: {
+                        analysisType: 'tcpconnectionsanalysis'
+                    }
+                })
+                .state('stampsites.tcpconnectionsanalysis.sia', {
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Analysis/sia.html',
+                            controller: 'SiaCtrl',
+                            controllerAs: 'sia'
+                        }
+                    },
+                    params: {
+                        analysisType: 'tcpconnectionsanalysis'
+                    }
+                })
+                .state('sites.tcpconnectionsanalysis.detector', {
+                    url: '/detectors/{detectorName}',
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Detector/detector.html',
+                            controller: 'DetectorCtrl',
+                            controllerAs: 'detector'
+                        }
+                    }
+                })
+                .state('stampsites.tcpconnectionsanalysis.detector', {
+                    url: '/detectors/{detectorName}',
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Detector/detector.html',
+                            controller: 'DetectorCtrl',
+                            controllerAs: 'detector'
+                        }
+                    }
+                })
 
                 .state('sites.supportcasestudy', {
                     url: '/supportcentersessions',

@@ -36,6 +36,12 @@
                     
                 </div>
             </md-list-item>
+            <md-list-item class="md-2-line" ng-class="{'selected' : main.selectedItem === 'tcpconnectionsanalysis'}" ng-click="main.setSelectedItem('tcpconnectionsanalysis')">
+                <div class="md-list-item-text" layout="column">
+                    <h3>TCP Connections Analysis <ng-md-icon icon="fibre_new" style="fill:rgb(255, 117, 0)" size="25"></ng-md-icon></h3>
+
+                </div>
+            </md-list-item>
             <md-list-item class="md-2-line" ng-class="{'selected' : main.selectedItem === 'supportcentersessions'}" ng-click="main.setSelectedItem('supportcentersessions')" title="Check out customer interactions in Support Center for this site.">
                 <div class="md-list-item-text" layout="column">
                     <h3>Support Center Sessions</h3>
