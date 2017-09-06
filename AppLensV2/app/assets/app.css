@@ -375,6 +375,19 @@ ng-md-icon.custom-theme-default4 {
     fill:rgb(91, 53, 206);
 }
 
+div.custom-theme-default5 {
+    background-color: #903b3b;
+    color: white;
+}
+
+p.custom-theme-default5 {
+    color: #903b3b;
+}
+
+ng-md-icon.custom-theme-default5 {
+    fill: #903b3b;
+}
+
 .caseanalysis-timeline-icon{
     width:30px;
     height:30px;

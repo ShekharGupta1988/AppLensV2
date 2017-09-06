@@ -19,8 +19,7 @@ module SupportCenter {
         .controller("HomeCtrl",HomeCtrl)
         .controller("MainCtrl", MainCtrl)
         .controller("AppServiceEnvironmentCtrl", AppServiceEnvrionmentCtrl)
-        .controller("SiteCtrl", SiteCtrl)
-        .controller("TcpConnectionsCtrl", TcpConnectionsCtrl)
+        .controller("SiteCtrl", SiteCtrl)        
         .controller("DetectorCtrl", DetectorCtrl)
         .controller("SiaCtrl", SiaCtrl)
         .controller("AppRestartAnalysisCtrl", AppRestartAnalysisCtrl)
@@ -59,6 +58,11 @@ module SupportCenter {
             $mdThemingProvider.theme('default4')
                 .primaryPalette('deep-purple')
                 .accentPalette('blue-grey');
+
+            // TCP Connections Analysis Theme
+            $mdThemingProvider.theme('default5')
+                .primaryPalette('brown')
+                .accentPalette('deep-orange');
 
             $mdThemingProvider.alwaysWatchTheme(true);
 
@@ -129,26 +133,26 @@ module SupportCenter {
                     url: '/tcpconnectionsanalysis',
                     views: {
                         'mainContent': {
-                            templateUrl: 'app/Analysis/TcpConnectionsAnalysis/TcpConnections.html',
-                            controller: 'TcpConnectionsCtrl',
-                            controllerAs: 'tcpconnections'
+                            templateUrl: 'app/Site/site.html',
+                            controller: 'SiteCtrl',
+                            controllerAs: 'site'
                         }
                     },
                     params: {
-                        analysisType: 'tcpconnectionsanalysis'
+                        analysisType: 'tcpConnectionsAnalysis'
                     }
                 })
                 .state('stampsites.tcpconnectionsanalysis', {
                     url: '/tcpconnectionsanalysis',
                     views: {
                         'mainContent': {
-                            templateUrl: 'app/Analysis/TcpConnectionsAnalysis/TcpConnections.html',
-                            controller: 'TcpConnectionsCtrl',
-                            controllerAs: 'tcpconnections'
+                            templateUrl: 'app/Site/site.html',
+                            controller: 'SiteCtrl',
+                            controllerAs: 'site'
                         }
                     },
                     params: {
-                        analysisType: 'tcpconnectionsanalysis'
+                        analysisType: 'tcpConnectionsAnalysis'
                     }
                 })
                 .state('sites.perfanalysis', {
@@ -371,7 +375,7 @@ module SupportCenter {
                         }
                     },
                     params: {
-                        analysisType: 'tcpconnectionsanalysis'
+                        analysisType: 'tcpConnectionsAnalysis'
                     }
                 })
                 .state('stampsites.tcpconnectionsanalysis.sia', {
@@ -383,7 +387,7 @@ module SupportCenter {
                         }
                     },
                     params: {
-                        analysisType: 'tcpconnectionsanalysis'
+                        analysisType: 'tcpConnectionsAnalysis'
                     }
                 })
                 .state('sites.tcpconnectionsanalysis.detector', {

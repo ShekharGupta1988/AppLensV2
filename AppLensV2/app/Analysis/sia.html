@@ -5,8 +5,12 @@
 <div ng-if="!sia.isLoading" style="margin-left:15px;">    
     <div ng-if="::sia.SiaResponse.AbnormalTimePeriods.length === 0">
 
-        <h2 class="md-title" style="margin-bottom:0;text-decoration:underline;color:#5f5f5f">
+        <h2 ng-if="::sia.analysisType !='tcpConnectionsAnalysis'" class="md-title" style="margin-bottom:0;text-decoration:underline;color:#5f5f5f">
             Application is running healthy.</h2>
+        <h2 ng-if="::sia.analysisType =='tcpConnectionsAnalysis'" class="md-title" style="margin-bottom:0;text-decoration:underline;color:#5f5f5f">
+            No issues detected with Port Rejections in this time frame
+        </h2>
+      
     </div>
 </div>
 

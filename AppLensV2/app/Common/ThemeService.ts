@@ -27,6 +27,9 @@ module SupportCenter {
                 else if (currentStateName.indexOf('apprestartanalysis') > 0) {
                     return 'default4';
                 }
+                else if (currentStateName.indexOf('tcpconnectionsanalysis') > 0) {
+                    return 'default5';
+                }
                 else {
                     return 'default';
                 }
