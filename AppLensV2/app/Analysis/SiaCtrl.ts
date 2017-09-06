@@ -11,12 +11,14 @@ module SupportCenter {
 
             var self = this;
             this.DetectorData = {};
-
+            
             this.isLoading = true;
             this.isVNext = true;
             if (angular.isDefined(this.$stateParams.vNext) && this.$stateParams.vNext === 'false') {
                 this.isVNext = false;
             }
+
+            this.analysisType = this.$stateParams.analysisType;
 
             let service = ResourceServiceFactory.GetResourceService();
             service.promise.then(function (data: any) {
@@ -47,5 +49,6 @@ module SupportCenter {
         public DetectorData: ICache<DetectorViewParams>;
         public isLoading: boolean;
         public selectedAbnormalTimePeriod: any;
+        public analysisType: string;
     }
 }
