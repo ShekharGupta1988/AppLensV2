@@ -174,8 +174,8 @@ module SupportCenter {
 
             for (let metric of metrics) {
 
-                if ((detectorName.indexOf('cpuanalysis') >= 0 && metric.Name !== "PercentTotalProcessorTime")
-                    || (detectorName.indexOf('sitememoryanalysis') >= 0 && metric.Name !== 'PercentOverallMemory')
+                if ((detectorName.indexOf('cpuanalysis') >= 0 && metric.Name !== "Overall CPU Percent")
+                    || (detectorName.indexOf('memoryanalysis') >= 0 && metric.Name !== 'Percent Physical Memory Used')
                     || (detectorName.indexOf('machinememoryusage') >= 0 && metric.Name !== 'Committed MBytes')
                     || (detectorName.indexOf('tcpopensocketcount') >= 0 && metric.Name !== 'TotalOpenSocketCount')
                     || (detectorName.indexOf('tcpconnectionsusage') >= 0 && metric.Name !== 'Outbound')) {
@@ -325,7 +325,7 @@ module SupportCenter {
             var allDetailedChartData: DetailedGraphData = new DetailedGraphData();
 
             for (let metric of metrics) {
-                if (metric.Name === 'PercentOverallMemory') {
+                if (metric.Name === 'Percent Physical Memory Used') {
                     continue;
                 }
 
