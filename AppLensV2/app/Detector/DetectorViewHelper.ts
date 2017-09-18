@@ -20,7 +20,7 @@ module SupportCenter {
                         bottom: 50,
                         left: 60
                     },
-                    color: this.defaultColors,
+                    color: DetectorViewHelper.defaultColors,
                     useInteractiveGuideline: false,
                     transitionDuration: 350,
                     showLegend: true,
@@ -431,7 +431,7 @@ module SupportCenter {
 
         private graphHeight: any = this.$window.innerHeight * 0.2;
         
-        private defaultColors: [string] = ["#DD2C00", "#0D47A1", "#00695C", "#3E2723", "#FF6F00", "#aa0000", "#311B92", "#D4E157", "#4DB6AC", "#880E4F"];
+        public static defaultColors: [string] = ["#DD2C00", "#0D47A1", "#00695C", "#3E2723", "#FF6F00", "#aa0000", "#311B92", "#D4E157", "#4DB6AC", "#880E4F"];
         public static runtimeAvailabilityColors: [string] = ["#117dbb", "hsl(120, 57%, 40%)"];
         public static requestsColors: [string] = ["#117dbb", "hsl(120, 57%, 40%)", "#D4E157", "rgb(173, 90, 16)", "#aa0000"];
 

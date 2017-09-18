@@ -24,7 +24,7 @@ namespace AppLensV2
                 string geoRegionEndpoint;
                 if (Debugger.IsAttached)
                 {
-                    geoRegionEndpoint = "https://hawfor1georegionsvc.cloudapp.net:1743/";
+                    geoRegionEndpoint = "https://shgupgr1.cloudapp.net:1743/";
                 }
                 else
                 {
