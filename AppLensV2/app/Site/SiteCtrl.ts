@@ -98,6 +98,8 @@ module SupportCenter {
         private getRuntimeAvailability(): void {
 
             var runtimeavailability = 'runtimeavailability';
+            this.requestsChartOptions.chart.yAxis.axisLabel = 'Requests Count';
+            this.requestsChartOptions.chart.yAxis.tickFormat = d3.format('d');
             var self = this;
             let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
 
@@ -152,6 +154,8 @@ module SupportCenter {
         private getSiteLatency(): void {
 
             var sitelatency = 'sitelatency';
+            this.latencyChartOptions.chart.yAxis.axisLabel = 'Response Time (ms)';
+            this.latencyChartOptions.chart.yAxis.tickFormat = d3.format('d');
             var self = this;
             let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
 
@@ -163,13 +167,17 @@ module SupportCenter {
                 var requestsIterator = 0;
 
                 _.each(chartDataList, function (item: any) {
-                    item.color = DetectorViewHelper.runtimeAvailabilityColors[iterator];
+                    item.color = DetectorViewHelper.defaultColors[iterator++];
+                    if (item.key === '90th Percentile' || item.key === '95th Percentile') {
+                        item.disabled = true;
+                    }
+
                     self.latencyChartData.push(item);
                 });
             }, function (err) {
                 self.perfDataLoading = false;
                 self.ErrorHandlerService.showError(ErrorModelBuilder.Build(err));
-            });
+                });
         }
 
 
