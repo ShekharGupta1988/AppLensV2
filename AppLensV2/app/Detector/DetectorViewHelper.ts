@@ -113,6 +113,9 @@ module SupportCenter {
                 case 'tcpopensocketcount':
                 case 'tcpopensocketcountdetailed':
                 case 'httpqueuelength':
+                case 'committedmemoryusage':
+                case 'pagefileoperations':
+                case 'pagefileoperationsdetailed':
                     options.chart.type = 'lineChart';
                     options.chart.useInteractiveGuideline = true;
                     break;
@@ -176,7 +179,7 @@ module SupportCenter {
 
                 if ((detectorName.indexOf('cpuanalysis') >= 0 && metric.Name !== "Overall CPU Percent")
                     || (detectorName.indexOf('memoryanalysis') >= 0 && metric.Name !== 'Percent Physical Memory Used')
-                    || (detectorName.indexOf('machinememoryusage') >= 0 && metric.Name !== 'Committed MBytes')
+                    || (detectorName.indexOf('pagefileoperations') >= 0 && metric.Name !== 'Page Reads/sec')
                     || (detectorName.indexOf('tcpopensocketcount') >= 0 && metric.Name !== 'TotalOpenSocketCount')
                     || (detectorName.indexOf('tcpconnectionsusage') >= 0 && metric.Name !== 'Outbound')) {
                     continue;

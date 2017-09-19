@@ -48,6 +48,14 @@ module SupportCenter {
             
         }
 
+        isDetailedGraphEnabled(detectorName: string) {
+            return detectorName.indexOf('cpuanalysis') >= 0 ||
+                detectorName.indexOf('memoryanalysis') >= 0 ||
+                detectorName === 'pagefileoperations' ||
+                detectorName === 'tcpconnectionsusage' ||
+                detectorName === 'tcpopensocketcount'
+        }
+
         sendDetectorFeedback(detectorName: string, feedbackOption: number) {
 
             if (this.detectorFeedbackOption === -1) {

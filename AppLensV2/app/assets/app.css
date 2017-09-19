@@ -287,7 +287,7 @@ md-badge{
   min-height:100px;
 }
 
-@keyframes pulse {
+@keyframes pulse-downtime {
     0% {background-color: #00695c;}
     50% {background-color: #00b49d;}
     100% {background-color: #00695c;}
@@ -310,8 +310,8 @@ md-badge{
 
 .timeline-downtime-selected {
     background-color: #00695c;
-    animation-name: pulse;
-    animation-duration: 2s;
+    animation-name: pulse-downtime;
+    animation-duration: 5s;
     animation-iteration-count: infinite;
 }
 
