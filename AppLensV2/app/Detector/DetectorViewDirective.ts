@@ -49,11 +49,12 @@ module SupportCenter {
         }
 
         isDetailedGraphEnabled(detectorName: string) {
-            return detectorName.indexOf('cpuanalysis') >= 0 ||
-                detectorName.indexOf('memoryanalysis') >= 0 ||
-                detectorName === 'pagefileoperations' ||
-                detectorName === 'tcpconnectionsusage' ||
-                detectorName === 'tcpopensocketcount'
+            for (var i = 0; i < DetectorViewHelper.DetailedGraphEnabledDetectors.length; i++) {
+                if (detectorName.indexOf(DetectorViewHelper.DetailedGraphEnabledDetectors[i].name)) {
+                    return true;
+                }
+            }
+            return false;
         }
 
         sendDetectorFeedback(detectorName: string, feedbackOption: number) {

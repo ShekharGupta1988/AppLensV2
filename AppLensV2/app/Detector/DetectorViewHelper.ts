@@ -8,6 +8,14 @@ module SupportCenter {
         constructor(private $window: angular.IWindowService) {
         }
 
+        public static DetailedGraphEnabledDetectors = [
+            { name: 'cpuanalysis', metric: 'Overall CPU Percent' },
+            { name: 'memoryanalysis', metric: 'Percent Physical Memory Used' },
+            { name: 'pagefileoperations', metric: 'Page Reads/sec' },
+            { name: 'tcpopensocketcount', metric: 'TotalOpenSocketCount' },
+            { name: 'tcpconnectionsusage', metric: 'Outbound' }
+        ];
+
         public GetChartOptions(detectorName: string = '', svc: IDetectorsService = null, resource: Resource = null): any {
 
             var options: any = {
@@ -177,11 +185,15 @@ module SupportCenter {
 
             for (let metric of metrics) {
 
-                if ((detectorName.indexOf('cpuanalysis') >= 0 && metric.Name !== "Overall CPU Percent")
-                    || (detectorName.indexOf('memoryanalysis') >= 0 && metric.Name !== 'Percent Physical Memory Used')
-                    || (detectorName.indexOf('pagefileoperations') >= 0 && metric.Name !== 'Page Reads/sec')
-                    || (detectorName.indexOf('tcpopensocketcount') >= 0 && metric.Name !== 'TotalOpenSocketCount')
-                    || (detectorName.indexOf('tcpconnectionsusage') >= 0 && metric.Name !== 'Outbound')) {
+                var skipMetric = false;
+                for (var i = 0; i < DetectorViewHelper.DetailedGraphEnabledDetectors.length; i++) {
+                    if (detectorName.indexOf(DetectorViewHelper.DetailedGraphEnabledDetectors[i].name) > 0 && metric.Name !== DetectorViewHelper.DetailedGraphEnabledDetectors[i].metric) {
+                        skipMetric = true;
+                        break;
+                    }
+                }
+
+                if (skipMetric) {
                     continue;
                 }
 
