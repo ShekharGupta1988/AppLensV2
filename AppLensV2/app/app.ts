@@ -207,6 +207,32 @@ module SupportCenter {
                         analysisType: 'appRestartAnalysis'
                     }
                 })
+                .state('sites.memoryanalysis', {
+                    url: '/memoryanalysis',
+                    views: {
+                        'mainContent': {
+                            templateUrl: 'app/Site/site.html',
+                            controller: 'SiteCtrl',
+                            controllerAs: 'site'
+                        }
+                    },
+                    params: {
+                        analysisType: 'memoryAnalysis'
+                    }
+                })
+                .state('stampsites.memoryanalysis', {
+                    url: '/memoryanalysis',
+                    views: {
+                        'mainContent': {
+                            templateUrl: 'app/Site/site.html',
+                            controller: 'SiteCtrl',
+                            controllerAs: 'site'
+                        }
+                    },
+                    params: {
+                        analysisType: 'memoryAnalysis'
+                    }
+                })
                 .state('appServiceEnvironment.aseAvailabilityAnalysis', {
                     url: '/aseAvailabilityAnalysis',
                     views: {
@@ -364,7 +390,44 @@ module SupportCenter {
                         }
                     }
                 })
-
+                .state('sites.memoryanalysis.sia', {
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Analysis/sia.html',
+                            controller: 'SiaCtrl',
+                            controllerAs: 'sia'
+                        }
+                    }
+                })
+                .state('stampsites.memoryanalysis.sia', {
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Analysis/sia.html',
+                            controller: 'SiaCtrl',
+                            controllerAs: 'sia'
+                        }
+                    }
+                })
+                .state('sites.memoryanalysis.detector', {
+                    url: '/detectors/{detectorName}',
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Detector/detector.html',
+                            controller: 'DetectorCtrl',
+                            controllerAs: 'detector'
+                        }
+                    }
+                })
+                .state('stampsites.memoryanalysis.detector', {
+                    url: '/detectors/{detectorName}',
+                    views: {
+                        'childContent': {
+                            templateUrl: 'app/Detector/detector.html',
+                            controller: 'DetectorCtrl',
+                            controllerAs: 'detector'
+                        }
+                    }
+                })
 
                 .state('sites.tcpconnectionsanalysis.sia', {
                     views: {

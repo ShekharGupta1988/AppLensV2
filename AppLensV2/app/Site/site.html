@@ -2,16 +2,16 @@
     <div layout="column" flex="5"></div>
     <md-card flex="95">
 
-        <div ng-if="(site.analysisType === 'appAnalysis' && site.dataLoading) || (site.analysisType === 'perfAnalysis' && site.perfDataLoading) || (site.analysisType === 'tcpConnectionsAnalysis' && site.portRejectionsDataLoading)" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':site.containerHeight}">
+        <div ng-if="((site.analysisType === 'appAnalysis'  || site.analysisType === 'memoryAnalysis') && site.dataLoading) || (site.analysisType === 'perfAnalysis' && site.perfDataLoading) || (site.analysisType === 'tcpConnectionsAnalysis' && site.portRejectionsDataLoading)" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':site.containerHeight}">
             <div layout="column" layout-align="center center">
                 <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
             </div>
         </div>
 
-        <md-card-content ng-if="(site.analysisType === 'appAnalysis' && !site.dataLoading) || (site.analysisType === 'perfAnalysis' && !site.perfDataLoading) || (site.analysisType === 'tcpConnectionsAnalysis' && !site.portRejectionsDataLoading)" flex layout-align="space-between" layout="column">
+        <md-card-content ng-if="(site.analysisType === 'appAnalysis' || site.analysisType === 'memoryAnalysis' && !site.dataLoading) || (site.analysisType === 'perfAnalysis' && !site.perfDataLoading) || (site.analysisType === 'tcpConnectionsAnalysis' && !site.portRejectionsDataLoading)" flex layout-align="space-between" layout="column">
             <div flex>
                 <downtime-timeline height="'20px'"></downtime-timeline>
-                <nvd3 ng-if="site.analysisType === 'appAnalysis'" options="::site.availabilityChartOptions" data="::site.avaiabilityChartData"></nvd3>
+                <nvd3 ng-if="site.analysisType === 'appAnalysis'  || site.analysisType === 'memoryAnalysis'" options="::site.availabilityChartOptions" data="::site.avaiabilityChartData"></nvd3>
                 <nvd3 ng-if="site.analysisType === 'perfAnalysis'" options="::site.latencyChartOptions" data="::site.latencyChartData"></nvd3>
                 <nvd3 ng-if="site.analysisType === 'tcpConnectionsAnalysis'" options="::site.portRejectionsChartOptions" data="::site.portRejectionsChartData"></nvd3>
             </div>
@@ -26,13 +26,13 @@
         <div layout="column" flex="5" layout-align="center center"></div>
         <md-card flex="95">
 
-            <div ng-if="((site.analysisType === 'appAnalysis' || site.analysisType === 'perfAnalysis') && site.dataLoading) || ( site.analysisType === 'tcpConnectionsAnalysis' && site.tcpConnectionsDataLoading )" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':site.containerHeight}">
+            <div ng-if="((site.analysisType === 'appAnalysis' || site.analysisType === 'perfAnalysis' || site.analysisType === 'memoryAnalysis') && site.dataLoading) || ( site.analysisType === 'tcpConnectionsAnalysis' && site.tcpConnectionsDataLoading )" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':site.containerHeight}">
                 <div layout="column" layout-align="center center">
                     <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
                 </div>
             </div>
 
-            <md-card-content ng-if="((site.analysisType === 'appAnalysis' || site.analysisType === 'perfAnalysis') && !site.dataLoading) " flex layout-align="space-between" layout="column">
+            <md-card-content ng-if="((site.analysisType === 'appAnalysis' || site.analysisType === 'perfAnalysis' || site.analysisType === 'memoryAnalysis') && !site.dataLoading) " flex layout-align="space-between" layout="column">
                 <div flex>
                     <nvd3 options="::site.requestsChartOptions" data="::site.requestsChartData"></nvd3>
                 </div>
