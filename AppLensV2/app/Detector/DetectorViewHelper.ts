@@ -187,7 +187,7 @@ module SupportCenter {
 
                 var skipMetric = false;
                 for (var i = 0; i < DetectorViewHelper.DetailedGraphEnabledDetectors.length; i++) {
-                    if (detectorName.indexOf(DetectorViewHelper.DetailedGraphEnabledDetectors[i].name) > 0 && metric.Name !== DetectorViewHelper.DetailedGraphEnabledDetectors[i].metric) {
+                    if (detectorName.indexOf(DetectorViewHelper.DetailedGraphEnabledDetectors[i].name) >= 0 && metric.Name !== DetectorViewHelper.DetailedGraphEnabledDetectors[i].metric) {
                         skipMetric = true;
                         break;
                     }
