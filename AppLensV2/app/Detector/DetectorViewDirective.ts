@@ -50,7 +50,7 @@ module SupportCenter {
 
         isDetailedGraphEnabled(detectorName: string) {
             for (var i = 0; i < DetectorViewHelper.DetailedGraphEnabledDetectors.length; i++) {
-                if (detectorName.indexOf(DetectorViewHelper.DetailedGraphEnabledDetectors[i].name)) {
+                if (detectorName.indexOf(DetectorViewHelper.DetailedGraphEnabledDetectors[i].name) >= 0) {
                     return true;
                 }
             }
