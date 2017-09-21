@@ -120,6 +120,7 @@ module SupportCenter {
                 case 'tcpconnectionsusagedetailed':
                 case 'tcpopensocketcount':
                 case 'tcpopensocketcountdetailed':
+                case 'containerstoragecapacity':
                 case 'httpqueuelength':
                 case 'committedmemoryusage':
                 case 'pagefileoperations':
