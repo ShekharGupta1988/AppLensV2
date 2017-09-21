@@ -118,7 +118,9 @@
                                 </thead>
                                 <tbody md-body>
                                     <tr md-row ng-repeat="row in detectorviewctrl.additionaldata">
-                                        <td md-cell ng-repeat="col in row">{{col.Value}}</td>
+                                        <td md-cell ng-repeat="col in row">
+                                            <p style="white-space: pre;">{{col.Value}}</p>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>

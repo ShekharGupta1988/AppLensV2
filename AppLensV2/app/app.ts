@@ -402,9 +402,9 @@ module SupportCenter {
 
     app.filter('worker', function () {
         return function (input) {
-            return input.replace("SmallDedicatedWebWorkerRole_IN", "SDW")
-                .replace("MediumDedicatedWebWorkerRole_IN", "MDW")
-                .replace("LargeDedicatedWebWorkerRole_IN", "LDW")
+            return input.replace("SmallDedicatedWebWorkerRole_IN", "SDW").replace("SmallDedicatedLinuxWebWorkerRole_IN", "SDW")
+                .replace("MediumDedicatedWebWorkerRole_IN", "MDW").replace("MediumDedicatedLinuxWebWorkerRole_IN", "MDW")
+                .replace("LargeDedicatedWebWorkerRole_IN", "LDW").replace("LargeDedicatedLinuxWebWorkerRole_IN", "LDW")
                 .replace("WebWorkerRole_IN_", "W").replace(" - aggregated", "");
         };
     });

@@ -112,6 +112,7 @@ module SupportCenter {
                 case 'tcpconnectionsusagedetailed':
                 case 'tcpopensocketcount':
                 case 'tcpopensocketcountdetailed':
+                case 'containerstoragecapacity':
                 case 'httpqueuelength':
                     options.chart.type = 'lineChart';
                     options.chart.useInteractiveGuideline = true;
