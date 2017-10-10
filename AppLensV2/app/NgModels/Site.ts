@@ -57,5 +57,6 @@ module SupportCenter {
         SmallWorkerSizeAndCount: string;
         MediumWorkerSizeAndCount: string;
         LargeWorkerSizeAndCount: string;
+        VNetResourceGroup: string;
     }
 }
