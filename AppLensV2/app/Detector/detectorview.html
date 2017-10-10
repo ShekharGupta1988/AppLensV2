@@ -46,8 +46,8 @@
                         <div google-chart chart="detectorviewctrl.chartdata" ng-if="!detectorviewctrl.isLoading && detectorviewctrl.info.Name === 'rebootrolesstuck'"></div>
 
                         <detailed-detector-view loading="detectorviewctrl.loading" metricsets="detectorviewctrl.metricsets" selectedworker="detectorviewctrl.selectedworker" detectorsource="detectorviewctrl.detectorsource"
-                                                ng-if="(detectorviewctrl.info.Name.indexOf('cpuanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('memoryanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('machinememoryusage') >= 0 || detectorviewctrl.info.Name.indexOf('tcpconnectionsusage') >= 0 || detectorviewctrl.info.Name.indexOf('tcpopensocketcount') >= 0) && detectorviewctrl.showDetailedView"></detailed-detector-view>
-                        <md-button ng-click="detectorviewctrl.showDetailedView = !detectorviewctrl.showDetailedView" ng-if="detectorviewctrl.info.Name.indexOf('cpuanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('memoryanalysis') >= 0 || detectorviewctrl.info.Name.indexOf('machinememoryusage') >= 0 || detectorviewctrl.info.Name.indexOf('tcpconnectionsusage') >= 0 || detectorviewctrl.info.Name.indexOf('tcpopensocketcount') >= 0">
+                                                ng-if="detectorviewctrl.isDetailedGraphEnabled(detectorviewctrl.info.Name) && detectorviewctrl.showDetailedView"></detailed-detector-view>
+                        <md-button ng-click="detectorviewctrl.showDetailedView = !detectorviewctrl.showDetailedView" ng-if="detectorviewctrl.isDetailedGraphEnabled(detectorviewctrl.info.Name)">
                             <span ng-if="!detectorviewctrl.showDetailedView">Show Per Instance Data</span>
                             <span ng-if="detectorviewctrl.showDetailedView">Hide Per Instance Data</span>
                         </md-button>

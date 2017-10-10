@@ -22,9 +22,9 @@ module SupportCenter {
         private static detectorsDocumentAPIPath: string = "/api/detectors/{detectorName}/files/{fileName}";
 
         // Uri Paths of Geo Region Diagnostic Role APIs
-        private static baseAPIPathSites: string = "subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/sites/{site}/diagnostics";
-        private static baseAPIPathAse: string = "subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/troubleshoot";
-        private static commonQueryString: string = "stampName={stamp}&{hostnames}&startTime={start}&endTime={end}&timeGrain={grain}";
+        private static baseAPIPathSites: string = "v2/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/sites/{site}/diagnostics";
+        private static baseAPIPathAse: string = "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/troubleshoot";
+        private static commonQueryString: string = "stampName={stamp}&vnetResourceGroup={vnetResourceGroup}&vnetName={vnetName}&vnetSubnetName={vnetSubnetName}&{hostnames}&startTime={start}&endTime={end}&timeGrain={grain}";
         
         private static analysisResrouce: string = "/{analysisName}?" + UriPaths.commonQueryString;
 
@@ -136,6 +136,12 @@ module SupportCenter {
                 }
 
                 path = path.replace("{hostnames}", hostNamesFilter);
+            } else {
+                var hostingEnvironment = resource as HostingEnvironment;
+                path = path
+                    .replace("{vnetResourceGroup}", hostingEnvironment.VNetResourceGroup)
+                    .replace("{vnetName}", hostingEnvironment.VNetName)
+                    .replace("{vnetSubnetName}", hostingEnvironment.VNetSubnetName);
             }
 
             return path;

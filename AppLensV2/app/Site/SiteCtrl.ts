@@ -12,10 +12,14 @@ module SupportCenter {
             this.avaiabilityChartData = [];
             this.requestsChartData = [];
             this.latencyChartData = [];
+            this.portRejectionsChartData = [];
+            this.tcpConnectionsChartData = [];
             let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
             this.availabilityChartOptions = helper.GetChartOptions('runtimeavailability');
             this.requestsChartOptions = helper.GetChartOptions('runtimeavailability');
             this.latencyChartOptions = helper.GetChartOptions('sitelatency');
+            this.portRejectionsChartOptions = helper.GetChartOptions('portexhaustion');
+            this.tcpConnectionsChartOptions = helper.GetChartOptions('tcpconnectionsusage');
             this.containerHeight = this.$window.innerHeight * 0.25 + 'px';
 
             this.analysisType = this.$stateParams.analysisType;
@@ -29,7 +33,9 @@ module SupportCenter {
                 self.site = self.SiteService.resource;
                 self.getRuntimeAvailability();
                 self.getSiteLatency();
-
+                self.getPortRejections();
+                self.getTcpConnections();
+                
                 self.DetectorsService.getDetectors(self.site).then(function (data: DetectorDefinition[]) {
                     self.detectors = self.DetectorsService.detectorsList;
 
@@ -74,6 +80,12 @@ module SupportCenter {
         requestsChartData: any;
         dataLoading: boolean = true;
         perfDataLoading: boolean = true;
+        tcpConnectionsChartOptions: any;
+        tcpConnectionsChartData: any;
+        portRejectionsChartData: any;
+        portRejectionsChartOptions: any;
+        portRejectionsDataLoading: boolean = true;
+        tcpConnectionsDataLoading: boolean = true;
         containerHeight: string;
         analysisType: string;
         site: Resource;
@@ -86,6 +98,8 @@ module SupportCenter {
         private getRuntimeAvailability(): void {
 
             var runtimeavailability = 'runtimeavailability';
+            this.requestsChartOptions.chart.yAxis.axisLabel = 'Requests Count';
+            this.requestsChartOptions.chart.yAxis.tickFormat = d3.format('d');
             var self = this;
             let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
 
@@ -140,6 +154,8 @@ module SupportCenter {
         private getSiteLatency(): void {
 
             var sitelatency = 'sitelatency';
+            this.latencyChartOptions.chart.yAxis.axisLabel = 'Response Time (ms)';
+            this.latencyChartOptions.chart.yAxis.tickFormat = d3.format('d');
             var self = this;
             let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
 
@@ -151,11 +167,66 @@ module SupportCenter {
                 var requestsIterator = 0;
 
                 _.each(chartDataList, function (item: any) {
-                    item.color = DetectorViewHelper.runtimeAvailabilityColors[iterator];
+                    item.color = DetectorViewHelper.defaultColors[iterator++];
+                    if (item.key === '90th Percentile' || item.key === '95th Percentile') {
+                        item.disabled = true;
+                    }
+
                     self.latencyChartData.push(item);
                 });
             }, function (err) {
                 self.perfDataLoading = false;
+                self.ErrorHandlerService.showError(ErrorModelBuilder.Build(err));
+                });
+        }
+
+
+        private getTcpConnections(): void {
+
+            var tcpconnectionsusage = 'tcpconnectionsusage';
+            var self = this;
+            let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
+
+            this.DetectorsService.getDetectorResponse(self.site, tcpconnectionsusage).then(function (data: DetectorResponse) {
+
+                let chartDataList: any = helper.GetChartData(data.StartTime, data.EndTime, data.Metrics, tcpconnectionsusage);
+                self.tcpConnectionsDataLoading = false;
+                var iterator = 0;
+
+                _.each(chartDataList, function (item: any) {                    
+                    iterator++;
+                    self.tcpConnectionsChartData.push(item);
+
+                });
+
+                self.tcpConnectionsDataLoading = false;
+            }, function (err) {
+                self.tcpConnectionsDataLoading = false;
+                self.ErrorHandlerService.showError(ErrorModelBuilder.Build(err));
+            });
+        }
+
+        private getPortRejections(): void {
+
+            var portexhaustion = 'portexhaustion';
+            var self = this;
+            let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
+
+            this.DetectorsService.getDetectorResponse(self.site, portexhaustion).then(function (data: DetectorResponse) {
+
+                let chartDataList: any = helper.GetChartData(data.StartTime, data.EndTime, data.Metrics, portexhaustion);
+                self.portRejectionsDataLoading = false;
+                var iterator = 0;
+
+                _.each(chartDataList, function (item: any) {                   
+                    iterator++;
+                    self.portRejectionsChartData.push(item);
+
+                });
+
+                self.portRejectionsDataLoading = false;
+            }, function (err) {
+                self.portRejectionsDataLoading = false;
                 self.ErrorHandlerService.showError(ErrorModelBuilder.Build(err));
             });
         }

@@ -48,6 +48,15 @@ module SupportCenter {
             
         }
 
+        isDetailedGraphEnabled(detectorName: string) {
+            for (var i = 0; i < DetectorViewHelper.DetailedGraphEnabledDetectors.length; i++) {
+                if (detectorName.indexOf(DetectorViewHelper.DetailedGraphEnabledDetectors[i].name) >= 0) {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         sendDetectorFeedback(detectorName: string, feedbackOption: number) {
 
             if (this.detectorFeedbackOption === -1) {

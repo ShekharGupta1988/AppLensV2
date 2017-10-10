@@ -8,6 +8,14 @@ module SupportCenter {
         constructor(private $window: angular.IWindowService) {
         }
 
+        public static DetailedGraphEnabledDetectors = [
+            { name: 'cpuanalysis', metric: 'Overall CPU Percent' },
+            { name: 'memoryanalysis', metric: 'Percent Physical Memory Used' },
+            { name: 'pagefileoperations', metric: 'Page Reads/sec' },
+            { name: 'tcpopensocketcount', metric: 'TotalOpenSocketCount' },
+            { name: 'tcpconnectionsusage', metric: 'Outbound' }
+        ];
+
         public GetChartOptions(detectorName: string = '', svc: IDetectorsService = null, resource: Resource = null): any {
 
             var options: any = {
@@ -20,7 +28,7 @@ module SupportCenter {
                         bottom: 50,
                         left: 60
                     },
-                    color: this.defaultColors,
+                    color: DetectorViewHelper.defaultColors,
                     useInteractiveGuideline: false,
                     transitionDuration: 350,
                     showLegend: true,
@@ -114,6 +122,9 @@ module SupportCenter {
                 case 'tcpopensocketcountdetailed':
                 case 'containerstoragecapacity':
                 case 'httpqueuelength':
+                case 'committedmemoryusage':
+                case 'pagefileoperations':
+                case 'pagefileoperationsdetailed':
                     options.chart.type = 'lineChart';
                     options.chart.useInteractiveGuideline = true;
                     break;
@@ -175,11 +186,15 @@ module SupportCenter {
 
             for (let metric of metrics) {
 
-                if ((detectorName.indexOf('cpuanalysis') >= 0 && metric.Name !== "PercentTotalProcessorTime")
-                    || (detectorName.indexOf('sitememoryanalysis') >= 0 && metric.Name !== 'PercentOverallMemory')
-                    || (detectorName.indexOf('machinememoryusage') >= 0 && metric.Name !== 'Committed MBytes')
-                    || (detectorName.indexOf('tcpopensocketcount') >= 0 && metric.Name !== 'TotalOpenSocketCount')
-                    || (detectorName.indexOf('tcpconnectionsusage') >= 0 && metric.Name !== 'Outbound')) {
+                var skipMetric = false;
+                for (var i = 0; i < DetectorViewHelper.DetailedGraphEnabledDetectors.length; i++) {
+                    if (detectorName.indexOf(DetectorViewHelper.DetailedGraphEnabledDetectors[i].name) >= 0 && metric.Name !== DetectorViewHelper.DetailedGraphEnabledDetectors[i].metric) {
+                        skipMetric = true;
+                        break;
+                    }
+                }
+
+                if (skipMetric) {
                     continue;
                 }
 
@@ -326,7 +341,7 @@ module SupportCenter {
             var allDetailedChartData: DetailedGraphData = new DetailedGraphData();
 
             for (let metric of metrics) {
-                if (metric.Name === 'PercentOverallMemory') {
+                if (metric.Name === 'Percent Physical Memory Used') {
                     continue;
                 }
 
@@ -432,7 +447,7 @@ module SupportCenter {
 
         private graphHeight: any = this.$window.innerHeight * 0.2;
         
-        private defaultColors: [string] = ["#DD2C00", "#0D47A1", "#00695C", "#3E2723", "#FF6F00", "#aa0000", "#311B92", "#D4E157", "#4DB6AC", "#880E4F"];
+        public static defaultColors: [string] = ["#DD2C00", "#0D47A1", "#00695C", "#3E2723", "#FF6F00", "#aa0000", "#311B92", "#D4E157", "#4DB6AC", "#880E4F"];
         public static runtimeAvailabilityColors: [string] = ["#117dbb", "hsl(120, 57%, 40%)"];
         public static requestsColors: [string] = ["#117dbb", "hsl(120, 57%, 40%)", "#D4E157", "rgb(173, 90, 16)", "#aa0000"];
 

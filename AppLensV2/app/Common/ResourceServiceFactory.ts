@@ -1,7 +1,7 @@
 ﻿module SupportCenter {
     export class ResourceServiceFactory {
-        public static $inject: string[] = ["$http", "$stateParams", "ErrorHandlerService"]
-        constructor(private $http: ng.IHttpService, private $stateParams: IStateParams, private ErrorHandlerService: IErrorHandlerService) {
+        public static $inject: string[] = ["$http", "$stateParams", "ErrorHandlerService", "AseService", "SiteService"]
+        constructor(private $http: ng.IHttpService, private $stateParams: IStateParams, private ErrorHandlerService: IErrorHandlerService, private aseService: AseService, private siteService: SiteService) {
         }
 
         GetResourceService(): IResourceService {
@@ -9,10 +9,10 @@
             switch (this.$stateParams.analysisType) {
                 case Constants.aseAvailabilityAnalysis:
                 case Constants.deploymentAnalysis:
-                    resourceService = new AseService(this.$http, this.$stateParams, this.ErrorHandlerService);
+                    resourceService = this.aseService;
                     break;
                 default:
-                    resourceService = new SiteService(this.$http, this.$stateParams, this.ErrorHandlerService);
+                    resourceService = this.siteService;
                     break;
             }
             return resourceService;
