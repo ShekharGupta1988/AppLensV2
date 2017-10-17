@@ -9,7 +9,8 @@ module SupportCenter {
             public EndTime: string,
             public Metrics: DiagnosticMetricSet[],
             public Data: NameValuePair[][],
-            public ResponseMetaData: ResponseMetaData
+            public ResponseMetaData: ResponseMetaData,
+            public AbnormalTimePeriods: DetectorAbnormalTimePeriod[]
         ) {
         }
     }

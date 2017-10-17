@@ -16,18 +16,20 @@ module SupportCenter {
         selectedworker: string;
         detectorsource: string;
         abnormaltimeperiod: AbnormalTimePeriod;
+        abnormaltimeperiods: any
     }
 
     export class DetectorViewCtrl {
-        public static $inject: string[] = ["DetectorsService", "$stateParams", "$window", "FeedbackService", "$mdToast", "$timeout"];
+        public static $inject: string[] = ["DetectorsService", "$stateParams", "$window", "FeedbackService", "$mdToast", "$timeout", "$scope"];
         public showDetailedView: boolean = true;
         public detectorFeedbackOption: number = -1;
         private nameElement: any;
         private detectorName: string;
         public api: any;
         public isLoading: boolean;
+        public isSolutionsProvided: boolean = false;
 
-        constructor(private DetectorsService: IDetectorsService, private $stateParams: IStateParams, private $window: angular.IWindowService, private FeedbackService: IFeedbackService, private $mdToast: angular.material.IToastService, private $timeout: ng.ITimeoutService) {
+        constructor(private DetectorsService: IDetectorsService, private $stateParams: IStateParams, private $window: angular.IWindowService, private FeedbackService: IFeedbackService, private $mdToast: angular.material.IToastService, private $timeout: ng.ITimeoutService, private $scope: IDetectorViewScope) {
             this.isLoading = true;
             this.nameElement = document.getElementById('name');
             let self = this;
@@ -44,8 +46,6 @@ module SupportCenter {
             this.$timeout(function () {
                 self.isLoading = false;
             }, 1);
-
-            
         }
 
         isDetailedGraphEnabled(detectorName: string) {
@@ -54,6 +54,11 @@ module SupportCenter {
                     return true;
                 }
             }
+            return false;
+        }
+
+        isSolutionProvided(): boolean {
+            console.log(this.$scope.abnormaltimeperiods);
             return false;
         }
 
@@ -97,6 +102,8 @@ module SupportCenter {
             selectedworker: '=',
             detectorsource: '=',
             abnormaltimeperiod: '=',
+            abnormaltimeperiods: '=',
+
         };
     }
 }

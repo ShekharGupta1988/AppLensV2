@@ -133,7 +133,7 @@ module SupportCenter {
             })
                 .success((data: any) => {
 
-                    var response = new DetectorResponse(this.TimeParamsService.StartTime, this.TimeParamsService.EndTime, [], [], null);
+                    var response = new DetectorResponse(this.TimeParamsService.StartTime, this.TimeParamsService.EndTime, [], [], null, []);
 
                     if (angular.isDefined(data)) {
                         response = angular.isDefined(data.Properties) ? data.Properties : data;
