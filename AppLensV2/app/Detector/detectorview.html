@@ -31,27 +31,6 @@
                 </div>
             </div>
 
-            <div layout="column" flex="95" style="margin:10px;padding:5px;max-width:60%;border-radius:15px;border-bottom-left-radius:0" ng-if="detectorviewctrl.abnormaltimeperiods !== undefined">
-                <h3 style="text-decoration:underline">Observations:</h3>
-                <ul style="margin-top:0">
-                    <li ng-repeat="abnormaltimeperiod in detectorviewctrl.abnormaltimeperiods" style="list-style-type: square;font-size:15px;margin-top:8px">{{::abnormaltimeperiod.Message}}</li>
-                </ul>
-            </div>
-
-            <div layout="column" flex="95" style="margin:10px;padding:5px;max-width:60%;border-radius:15px;border-bottom-left-radius:0" ng-if="detectorviewctrl.abnormaltimeperiods !== undefined">
-                <h3 style="text-decoration:underline">Solutions:</h3>
-                <ul ng-repeat="abnormaltimeperiod in detectorviewctrl.abnormaltimeperiods" ng-if="abnormaltimeperiod.Solutions.length !== 0">
-                    <li ng-repeat="solution in abnormaltimeperiod.Solutions" style="list-style-type: square;font-size:15px;margin-top:10px">
-                        {{::solution.DisplayName}}<span ng-if="::solution.Description !== ''">: {{::solution.Description}}</span>
-                    </li>
-                </ul>
-                <div ng-if="detectorviewctrl.abnormaltimeperiods.Solutions.length === 0">No Solutions Provided. (Please report using feedback button at top)</div>
-            </div>
-
-            <div ng-if="!detectorviewctrl.loading">
-                <span ng-if="detectorviewctrl.isSolutionProvided() !== false">Hello World</span>
-            </div>
-
             <md-tabs md-dynamic-height md-border-bottom ng-if="!detectorviewctrl.loading">
                 <md-tab label="Metrics">
                     <md-tab-label>
@@ -195,6 +174,27 @@
                 </md-tab>
             </md-tabs>
 
+            <div layout="column" flex="95" style="margin:10px;padding:5px;max-width:60%;border-radius:15px;border-bottom-left-radius:0" ng-if="detectorviewctrl.abnormaltimeperiods !== undefined">
+                <h3 style="text-decoration:underline">Observations:</h3>
+                <div ng-if="detectorviewctrl.isSameObservations() === true">
+                    {{::detectorviewctrl.singleObservationMessage}} <span>({{::detectorviewctrl.abnormaltimeperiods.length}})</span>
+                </div>
+                <ul style="margin-top:0" ng-if="detectorviewctrl.isSameObservations() !== true">
+                    <li ng-repeat="abnormaltimeperiod in detectorviewctrl.abnormaltimeperiods" style="list-style-type: square;font-size:15px;margin-top:8px">{{::abnormaltimeperiod.Message}}</li>
+                </ul>
+            </div>
+            <div layout="column" flex="95" style="margin:10px;padding:5px;max-width:60%;border-radius:15px;border-bottom-left-radius:0" ng-if="detectorviewctrl.abnormaltimeperiods !== undefined">
+                <h3 style="text-decoration:underline">Solutions:</h3>
+                <div ng-if="detectorviewctrl.isSameSolutions() === true">
+                    {{::detectorviewctrl.singleSolutionMessage}} <span>({{::detectorviewctrl.abnormaltimeperiods.length}})</span>
+                </div>
+                <ul ng-repeat="abnormaltimeperiod in detectorviewctrl.abnormaltimeperiods" ng-if="abnormaltimeperiod.Solutions.length !== 0">
+                    <li ng-repeat="solution in abnormaltimeperiod.Solutions" style="list-style-type: square;font-size:15px;margin-top:10px">
+                        {{::solution.DisplayName}}<span ng-if="::solution.Description !== ''">: {{::solution.Description}}</span>
+                    </li>
+                </ul>
+                <div ng-if="detectorviewctrl.isSolutionProvided() === false">No Solutions Provided. (Please report using feedback button at top)</div>
+            </div>
 
 
         </div>
