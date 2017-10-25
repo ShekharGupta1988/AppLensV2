@@ -183,6 +183,7 @@
     <Content Include="app\assets\app.css" />
     <Content Include="app\assets\images\ASE-Logo.jpg" />
     <Content Include="app\assets\images\Azure-Functions-Logo.png" />
+    <Content Include="app\assets\images\Azure-Tux-Logo.png" />
     <Content Include="app\assets\images\Azure-WebApps-Logo.png" />
     <Content Include="app\assets\images\sia.png" />
     <Content Include="app\assets\svg\menu.svg" />

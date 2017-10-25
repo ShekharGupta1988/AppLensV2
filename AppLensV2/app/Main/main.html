@@ -3,8 +3,9 @@
     <div style="height:150px;width:100%" class="custom-theme-{{main.ThemeService.getTheme()}}">
         <div layout="column">
             <div layout="row" flex="60" layout-align="center center" style="padding:5px;padding-top:10px">
-                <img ng-if="main.site.kind !== 'functionapp'" src="app/assets/images/Azure-WebApps-Logo.png" class="md-avatar" alt="app" style="height:60px;width:60px" />
-                <img ng-if="main.site.kind === 'functionapp'" src="app/assets/images/Azure-Functions-Logo.png" class="md-avatar" alt="app" style="height:60px;width:60px" />
+                <img ng-if="main.site.kind !== 'functionapp' && main.site.isLinux !== true" src="app/assets/images/Azure-WebApps-Logo.png" class="md-avatar" alt="app" style="height:60px;width:60px" />
+                <img ng-if="main.site.kind === 'functionapp'" src="app/assets/images/Azure-Functions-Logo.png" class="md-avatar" alt="app" style="height: 60px; width: 60px"/>
+                <img ng-if="main.site.isLinux === true" src="app/assets/images/Azure-Tux-Logo.png" class="md-avatar" alt="app" style="height: 60px; width: 60px"/>
             </div>
             <div layout="row" flex="20" layout-align="center center" style="font-size:17px;font-weight:400">
                 {{::main.site.name}}
