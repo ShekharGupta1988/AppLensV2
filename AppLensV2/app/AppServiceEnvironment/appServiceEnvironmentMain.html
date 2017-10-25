@@ -53,7 +53,7 @@
                 <md-progress-circular md-mode="indeterminate" md-diameter="30"></md-progress-circular>
             </md-list-item>
 
-            <md-list-item class="md-2-line" ng-repeat="detector in ase.detectors | filter:ase.searchText | orderBy:['-Correlated','Rank']"
+            <md-list-item class="md-2-line" ng-repeat="detector in ase.DetectorsService.detectorsList | filter:ase.searchText | orderBy:['-Correlated','Rank']"
                           ng-class="{'selected' : ase.selectedItem === detector.Name}" ng-click="ase.setSelectedItem(detector.Name)">
 
                 <!--<ng-letter-avatar data="{{::detector.DisplayName}}" class="md-avatar-icon" shape="round" fontFamily="Roboto,sans-serif"></ng-letter-avatar>-->
