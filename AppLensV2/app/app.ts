@@ -287,7 +287,7 @@ module SupportCenter {
                     url: '/detectors/{detectorName}',
                     views: {
                         'childContent': {
-                            templateUrl: 'app/Detector/detector.html',
+                            templateUrl: 'app/Detector/ase_detector.html',
                             controller: 'DetectorCtrl',
                             controllerAs: 'detector'
                         }
@@ -297,7 +297,7 @@ module SupportCenter {
                     url: '/detectors/{detectorName}',
                     views: {
                         'childContent': {
-                            templateUrl: 'app/Detector/detector.html',
+                            templateUrl: 'app/Detector/ase_detector.html',
                             controller: 'DetectorCtrl',
                             controllerAs: 'detector'
                         }

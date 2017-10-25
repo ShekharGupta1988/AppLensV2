@@ -60,6 +60,8 @@ module SupportCenter {
                         self.chartOptions.chart.title = title;
                         
                     }
+
+                    self.abnormalTimePeriods = data.AbnormalTimePeriods;
                 }, function (err) {
                     self.dataLoading = false;
                     self.ErrorHandlerService.showError(ErrorModelBuilder.Build(err));
@@ -88,5 +90,6 @@ module SupportCenter {
         detectorInfo: DetectorDefinition;
         wikiContent: string;
         solutionContent: string;
+        abnormalTimePeriods: any;
     }
 }
