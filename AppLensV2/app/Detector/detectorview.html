@@ -176,23 +176,33 @@
 
             <div layout="column" flex="95" style="margin:10px;padding:5px;max-width:60%;border-radius:15px;border-bottom-left-radius:0" ng-if="detectorviewctrl.abnormaltimeperiods !== undefined">
                 <h3 style="text-decoration:underline">Observations:</h3>
-                <div ng-if="detectorviewctrl.isSameObservations() === true">
+                <div ng-if="detectorviewctrl.areSameObservations() === true">
                     {{::detectorviewctrl.singleObservationMessage}} <span>({{::detectorviewctrl.abnormaltimeperiods.length}})</span>
                 </div>
-                <ul style="margin-top:0" ng-if="detectorviewctrl.isSameObservations() !== true">
-                    <li ng-repeat="abnormaltimeperiod in detectorviewctrl.abnormaltimeperiods" style="list-style-type: square;font-size:15px;margin-top:8px">{{::abnormaltimeperiod.Message}}</li>
-                </ul>
+                <div style="margin-top:0" ng-if="detectorviewctrl.areSameObservations() !== true">
+                    <div ng-repeat="abnormaltimeperiod in detectorviewctrl.abnormaltimeperiods">
+                        {{::abnormaltimeperiod.StartTime}} - {{::abnormaltimeperiod.EndTime}}
+                        <ul>
+                            <li style="list-style-type: square;font-size:15px;margin-top:8px">{{::abnormaltimeperiod.Message}}</li>
+                        </ul>
+                    </div>
+                </div>
             </div>
             <div layout="column" flex="95" style="margin:10px;padding:5px;max-width:60%;border-radius:15px;border-bottom-left-radius:0" ng-if="detectorviewctrl.abnormaltimeperiods !== undefined">
                 <h3 style="text-decoration:underline">Solutions:</h3>
-                <div ng-if="detectorviewctrl.isSameSolutions() === true">
-                    {{::detectorviewctrl.singleSolutionMessage}} <span>({{::detectorviewctrl.abnormaltimeperiods.length}})</span>
+                <div ng-if="detectorviewctrl.isSameSolution() === true">
+                    {{::detectorviewctrl.singleSolutionMessage}}
                 </div>
-                <ul ng-repeat="abnormaltimeperiod in detectorviewctrl.abnormaltimeperiods" ng-if="abnormaltimeperiod.Solutions.length !== 0">
-                    <li ng-repeat="solution in abnormaltimeperiod.Solutions" style="list-style-type: square;font-size:15px;margin-top:10px">
-                        {{::solution.DisplayName}}<span ng-if="::solution.Description !== ''">: {{::solution.Description}}</span>
-                    </li>
-                </ul>
+                <div ng-if="detectorviewctrl.isSameSolution() !== true">
+                    <div ng-repeat="abnormaltimeperiod in detectorviewctrl.abnormaltimeperiods" ng-if="abnormaltimeperiod.Solutions.length !== 0">
+                        {{::abnormaltimeperiod.StartTime}} - {{::abnormaltimeperiod.EndTime}}
+                        <ul>
+                            <li ng-repeat="solution in abnormaltimeperiod.Solutions" style="list-style-type: square;font-size:15px;margin-top:10px">
+                                {{::solution.DisplayName}}<span ng-if="::solution.Description !== ''">: {{::solution.Description}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
                 <div ng-if="detectorviewctrl.isSolutionProvided() === false">No Solutions Provided. (Please report using feedback button at top)</div>
             </div>
 

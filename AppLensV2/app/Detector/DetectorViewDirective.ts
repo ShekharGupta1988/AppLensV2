@@ -25,6 +25,7 @@ module SupportCenter {
         public detectorFeedbackOption: number = -1;
         private nameElement: any;
         private detectorName: string;
+        private observationsDictionary: { [key: string]: Array<string> } = {};
         public api: any;
         public isLoading: boolean;
 
@@ -87,7 +88,7 @@ module SupportCenter {
             return false;
         }
 
-        isSameObservations(): boolean {
+        areSameObservations(): boolean {
             let observations: string[] = [];
             if (angular.isDefined(this.abnormaltimeperiods) && this.abnormaltimeperiods.length !== 0) {
                 for (let abnormaltimeperiod of this.abnormaltimeperiods) {
@@ -95,7 +96,8 @@ module SupportCenter {
                 }
             }
 
-            let s = observations.pop();
+            //let s = observations.pop();
+            let s = observations[0];
 
             let isSame = observations.every((ss: string) => {
                 return s === ss;
@@ -106,9 +108,7 @@ module SupportCenter {
                 this.singleObservationMessage = s;
             }
 
-            let onlyOneObservationProvided = this.abnormaltimeperiods.length == 1;
-
-            return isSame && !onlyOneObservationProvided;
+            return isSame;
         }
 
         isSameSolution(): boolean {
@@ -125,7 +125,7 @@ module SupportCenter {
                 }
             }
 
-            let s = solutions.pop();
+            let s = solutions[0];
 
             let isSame = solutions.every((ss: string) => {
                 return s === ss;
