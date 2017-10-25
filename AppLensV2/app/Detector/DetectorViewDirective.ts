@@ -88,6 +88,17 @@ module SupportCenter {
             return false;
         }
 
+        areObservationsProvided(): boolean {
+            if (angular.isDefined(this.abnormaltimeperiods) && this.abnormaltimeperiods.length !== 0) {
+                for (let abnormalTimePeriod of this.abnormaltimeperiods) {
+                    if (abnormalTimePeriod.Message !== '') {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
         areSameObservations(): boolean {
             let observations: string[] = [];
             if (angular.isDefined(this.abnormaltimeperiods) && this.abnormaltimeperiods.length !== 0) {
