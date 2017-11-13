@@ -16,6 +16,7 @@ module SupportCenter {
         selectedworker: string;
         detectorsource: string;
         abnormaltimeperiod: AbnormalTimePeriod;
+        abnormaltimeperiods: any
     }
 
     export class DetectorViewCtrl {
@@ -24,8 +25,14 @@ module SupportCenter {
         public detectorFeedbackOption: number = -1;
         private nameElement: any;
         private detectorName: string;
+        private observationsDictionary: { [key: string]: Array<string> } = {};
         public api: any;
         public isLoading: boolean;
+
+        public abnormaltimeperiods: any;
+        public singleObservationMessage: string;
+        public singleSolutionMessage: string;
+        public metricsets: DiagnosticMetricSet[];
 
         constructor(private DetectorsService: IDetectorsService, private $stateParams: IStateParams, private $window: angular.IWindowService, private FeedbackService: IFeedbackService, private $mdToast: angular.material.IToastService, private $timeout: ng.ITimeoutService) {
             this.isLoading = true;
@@ -44,8 +51,6 @@ module SupportCenter {
             this.$timeout(function () {
                 self.isLoading = false;
             }, 1);
-
-            
         }
 
         isDetailedGraphEnabled(detectorName: string) {
@@ -71,6 +76,80 @@ module SupportCenter {
                 });
             }
         }
+
+        isSolutionProvided(): boolean {
+            if (angular.isDefined(this.abnormaltimeperiods) && this.abnormaltimeperiods.length !== 0) {
+                for (let abnormalTimePeriod of this.abnormaltimeperiods) {
+                    if (abnormalTimePeriod.Solutions.length > 0) {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        areObservationsProvided(): boolean {
+            if (angular.isDefined(this.abnormaltimeperiods) && this.abnormaltimeperiods.length !== 0) {
+                for (let abnormalTimePeriod of this.abnormaltimeperiods) {
+                    if (abnormalTimePeriod.Message !== '') {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+
+        areSameObservations(): boolean {
+            let observations: string[] = [];
+            if (angular.isDefined(this.abnormaltimeperiods) && this.abnormaltimeperiods.length !== 0) {
+                for (let abnormaltimeperiod of this.abnormaltimeperiods) {
+                    observations.push(abnormaltimeperiod.Message);
+                }
+            }
+
+            //let s = observations.pop();
+            let s = observations[0];
+
+            let isSame = observations.every((ss: string) => {
+                return s === ss;
+                }
+            )
+
+            if (isSame) {
+                this.singleObservationMessage = s;
+            }
+
+            return isSame;
+        }
+
+        isSameSolution(): boolean {
+            let solutions: string[] = [];
+            if (angular.isDefined(this.abnormaltimeperiods) && this.abnormaltimeperiods.length !== 0) {
+                for (let abnormaltimeperiod of this.abnormaltimeperiods) {
+                    for (let solution of abnormaltimeperiod.Solutions) {
+                        if (solution.Description !== '') {
+                            solutions.push(solution.DisplayName + ": " + solution.Description);
+                        } else {
+                            solutions.push(solution.DisplayName);
+                        }
+                    }
+                }
+            }
+
+            let s = solutions[0];
+
+            let isSame = solutions.every((ss: string) => {
+                return s === ss;
+            }
+            )
+
+            if (isSame) {
+                this.singleSolutionMessage = s;
+            }
+
+            return isSame;
+        }
+
     }
 
     export class DetectorViewDir implements ng.IDirective {
@@ -97,6 +176,7 @@ module SupportCenter {
             selectedworker: '=',
             detectorsource: '=',
             abnormaltimeperiod: '=',
+            abnormaltimeperiods: '='
         };
     }
 }

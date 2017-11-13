@@ -191,6 +191,7 @@
     <Content Include="app\assets\svg\success.svg" />
     <Content Include="app\assets\svg\warning.svg" />
     <Content Include="app\DetailDetector\detaileddetectorview.html" />
+    <Content Include="app\Detector\ase_detector.html" />
     <Content Include="app\Detector\detector.html" />
     <Content Include="app\Detector\detectorview.html" />
     <Content Include="app\DowntimeTimeline\downtimetimeline.html" />
