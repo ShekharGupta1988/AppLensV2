@@ -18,7 +18,7 @@ module SupportCenter {
             this.availabilityChartOptions = helper.GetChartOptions('runtimeavailability');
             this.requestsChartOptions = helper.GetChartOptions('runtimeavailability');
             this.latencyChartOptions = helper.GetChartOptions('sitelatency');
-            this.portRejectionsChartOptions = helper.GetChartOptions('portexhaustion');
+            this.portRejectionsChartOptions = helper.GetChartOptions('portrejections');
             this.tcpConnectionsChartOptions = helper.GetChartOptions('tcpconnectionsusage');
             this.containerHeight = this.$window.innerHeight * 0.25 + 'px';
 
@@ -208,13 +208,13 @@ module SupportCenter {
 
         private getPortRejections(): void {
 
-            var portexhaustion = 'portexhaustion';
+            var portrejections = 'portrejections';
             var self = this;
             let helper: DetectorViewHelper = new DetectorViewHelper(this.$window);
 
-            this.DetectorsService.getDetectorResponse(self.site, portexhaustion).then(function (data: DetectorResponse) {
+            this.DetectorsService.getDetectorResponse(self.site, portrejections).then(function (data: DetectorResponse) {
 
-                let chartDataList: any = helper.GetChartData(data.StartTime, data.EndTime, data.Metrics, portexhaustion);
+                let chartDataList: any = helper.GetChartData(data.StartTime, data.EndTime, data.Metrics, portrejections);
                 self.portRejectionsDataLoading = false;
                 var iterator = 0;
 
