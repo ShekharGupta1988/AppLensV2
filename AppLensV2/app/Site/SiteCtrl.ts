@@ -114,6 +114,10 @@ module SupportCenter {
                     if (item.key.toLowerCase().indexOf("availability") !== -1) {
                         item.color = DetectorViewHelper.runtimeAvailabilityColors[iterator];
                         iterator++;
+                        if (item.key.toLowerCase().indexOf("platform") > -1) {
+                            item.key = "Canary Availability";
+                        }
+
                         self.avaiabilityChartData.push(item);
                     }
                     else {
