@@ -49,6 +49,15 @@ module SupportCenter {
                     if (self.detectorName.indexOf('tcpopensocketcount') > 0) {
                         self.chartOptions.chart.yAxis.axisLabel = 'Open Sockets Count';
                     }
+                    if (self.detectorName.indexOf('asehealthcheck') !== -1) {
+                        _.each(self.chartData, function (item: any) {
+                            if (item.key.toLowerCase().indexOf("success") > -1) {
+                                item.color = "hsl(120, 57%, 40%)";
+                            } else {
+                                item.color = "#aa0000";
+                            }
+                        })
+                    }
                     self.dataLoading = false;
                     if (self.detectorName.indexOf('filesystemusage') >= 0) {
                         let title = "";
