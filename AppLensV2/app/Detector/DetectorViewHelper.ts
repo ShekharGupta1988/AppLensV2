@@ -279,6 +279,16 @@ module SupportCenter {
                             
                         }
 
+                        if (detectorName.indexOf('asehealthcheck') !== -1) {
+
+                            if (workerChartData[workerName].key.toLowerCase().indexOf("success") > -1) {
+                                workerChartData[workerName].color = "hsl(120, 57%, 40%)";
+                            }
+                            else {
+                                workerChartData[workerName].color = "#aa0000";
+                            }
+                        }
+
                         workerChartData[worker].values.push(
                             {
                                 x: self.ConvertToUTCTime(xDate),
