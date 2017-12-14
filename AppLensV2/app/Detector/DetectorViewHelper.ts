@@ -136,7 +136,11 @@ module SupportCenter {
                 case 'sitememoryanalysisdetailed':
                 case 'workermemoryanalysisdetailed':
                 case 'multirolememoryanalysisdetailed':
+                    options.chart.type = 'stackedAreaChart';
+                    options.chart.useInteractiveGuideline = true;
+                    break;
                 case 'asehealthcheck':
+                    options.chart.yAxis.axisLabel = 'Health Pings';
                     options.chart.type = 'stackedAreaChart';
                     options.chart.useInteractiveGuideline = true;
                     break;
