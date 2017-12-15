@@ -24,7 +24,7 @@ module SupportCenter {
         // Uri Paths of Geo Region Diagnostic Role APIs
         private static baseAPIPathSites: string = "v2/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/sites/{site}/diagnostics";
         private static baseAPIPathAse: string = "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/troubleshoot";
-        private static commonQueryString: string = "stampName={stamp}&vnetResourceGroup={vnetResourceGroup}&vnetName={vnetName}&vnetSubnetName={vnetSubnetName}&{hostnames}&startTime={start}&endTime={end}&timeGrain={grain}";
+        private static commonQueryString: string = "stampName={stamp}&hostingEnvironmentName={hostingEnvironmentName}&vnetResourceGroup={vnetResourceGroup}&vnetName={vnetName}&vnetSubnetName={vnetSubnetName}&{hostnames}&startTime={start}&endTime={end}&timeGrain={grain}";
         
         private static analysisResrouce: string = "/{analysisName}?" + UriPaths.commonQueryString;
 
@@ -118,7 +118,6 @@ module SupportCenter {
                 .replace("{rg}", resource.resourceGroup)
                 .replace("{site}", resource.resourceName)
                 .replace("{stamp}", resource.resourceInternalStamp)
-                .replace("{hostingEnvironmentName}", resource.resourceName)
                 .replace("{start}", startTime)
                 .replace("{end}", endTime)
                 .replace("{grain}", timeGrain);
@@ -135,10 +134,14 @@ module SupportCenter {
                     }
                 }
 
-                path = path.replace("{hostnames}", hostNamesFilter);
+                path =
+                    path.replace("{hostnames}", hostNamesFilter)
+                        .replace("{hostingEnvironmentName}", resource.stampName);
             } else {
                 var hostingEnvironment = resource as HostingEnvironment;
-                path = path
+                path =
+                    path
+                    .replace("{hostingEnvironmentName}", resource.resourceName)
                     .replace("{vnetResourceGroup}", hostingEnvironment.VNetResourceGroup)
                     .replace("{vnetName}", hostingEnvironment.VNetName)
                     .replace("{vnetSubnetName}", hostingEnvironment.VNetSubnetName);

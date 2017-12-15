@@ -139,6 +139,11 @@ module SupportCenter {
                     options.chart.type = 'stackedAreaChart';
                     options.chart.useInteractiveGuideline = true;
                     break;
+                case 'asehealthcheck':
+                    options.chart.yAxis.axisLabel = 'Health Pings';
+                    options.chart.type = 'stackedAreaChart';
+                    options.chart.useInteractiveGuideline = true;
+                    break;
                 case 'sitelatency':
                 case 'frontendlatency':
                 case 'stampfrontendlatency':
@@ -276,6 +281,16 @@ module SupportCenter {
                             }
                             while (angular.isDefined(nextElementToAdd) && new Date(nextElementToAdd.Timestamp).getTime() <= new Date(last.Timestamp).getTime());
                             
+                        }
+
+                        if (detectorName.indexOf('asehealthcheck') !== -1) {
+
+                            if (workerChartData[workerName].key.toLowerCase().indexOf("success") > -1) {
+                                workerChartData[workerName].color = "hsl(120, 57%, 40%)";
+                            }
+                            else {
+                                workerChartData[workerName].color = "#aa0000";
+                            }
                         }
 
                         workerChartData[worker].values.push(

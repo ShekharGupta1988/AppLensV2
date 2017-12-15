@@ -49,6 +49,7 @@ module SupportCenter {
                     if (self.detectorName.indexOf('tcpopensocketcount') > 0) {
                         self.chartOptions.chart.yAxis.axisLabel = 'Open Sockets Count';
                     }
+
                     self.dataLoading = false;
                     if (self.detectorName.indexOf('filesystemusage') >= 0) {
                         let title = "";
