@@ -135,8 +135,14 @@ module SupportCenter {
                 }
 
                 path =
-                    path.replace("{hostnames}", hostNamesFilter)
-                        .replace("{hostingEnvironmentName}", resource.stampName);
+                    path.replace("{hostnames}", hostNamesFilter);
+                //if this site lives in ministamp then resource.stampName will be the ASE friendly name
+                if (resource.stampName.indexOf('waws-prod') < 0) {
+                    path = path.replace("{hostingEnvironmentName}", resource.stampName);
+                } else {
+                    path = path.replace("{hostingEnvironmentName}", '');
+                }
+
             } else {
                 var hostingEnvironment = resource as HostingEnvironment;
                 path =
