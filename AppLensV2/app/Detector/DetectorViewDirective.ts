@@ -54,6 +54,11 @@ module SupportCenter {
         }
 
         isDetailedGraphEnabled(detectorName: string) {
+            for (var i = 0; i < DetectorViewHelper.NonDetailedGraphEnabledDetectors.length; i++) {
+                if (detectorName === DetectorViewHelper.NonDetailedGraphEnabledDetectors[i].name) {
+                    return false;
+                }
+            }
             for (var i = 0; i < DetectorViewHelper.DetailedGraphEnabledDetectors.length; i++) {
                 if (detectorName.indexOf(DetectorViewHelper.DetailedGraphEnabledDetectors[i].name) >= 0) {
                     return true;

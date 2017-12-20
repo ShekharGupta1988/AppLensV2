@@ -16,6 +16,11 @@ module SupportCenter {
             { name: 'tcpconnectionsusage', metric: 'Outbound' }
         ];
 
+        public static NonDetailedGraphEnabledDetectors = [
+            { name: 'linuxcpuanalysis' },
+            { name: 'linuxmemoryanalysis' }
+        ];
+
         public GetChartOptions(detectorName: string = '', svc: IDetectorsService = null, resource: Resource = null): any {
 
             var options: any = {
@@ -125,6 +130,8 @@ module SupportCenter {
                 case 'committedmemoryusage':
                 case 'pagefileoperations':
                 case 'pagefileoperationsdetailed':
+                case 'linuxmemoryanalysis':
+                case 'linuxcpuanalysis':
                     options.chart.type = 'lineChart';
                     options.chart.useInteractiveGuideline = true;
                     break;
@@ -198,7 +205,11 @@ module SupportCenter {
                         break;
                     }
                 }
-
+                for (var i = 0; i < DetectorViewHelper.NonDetailedGraphEnabledDetectors.length; i++) {
+                    if (detectorName === DetectorViewHelper.NonDetailedGraphEnabledDetectors[i].name) {
+                        skipMetric = false;
+                    }
+                }
                 if (skipMetric) {
                     continue;
                 }
