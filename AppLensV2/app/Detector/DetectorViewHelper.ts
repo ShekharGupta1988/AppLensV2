@@ -16,7 +16,7 @@ module SupportCenter {
             { name: 'tcpconnectionsusage', metric: 'Outbound' }
         ];
 
-        public static NonDetailedGraphEnabledDetectors = [
+        public static DetailedGraphDisabledDetectors = [
             { name: 'linuxcpuanalysis' },
             { name: 'linuxmemoryanalysis' }
         ];
@@ -205,9 +205,10 @@ module SupportCenter {
                         break;
                     }
                 }
-                for (var i = 0; i < DetectorViewHelper.NonDetailedGraphEnabledDetectors.length; i++) {
-                    if (detectorName === DetectorViewHelper.NonDetailedGraphEnabledDetectors[i].name) {
+                for (var i = 0; i < DetectorViewHelper.DetailedGraphDisabledDetectors.length; i++) {
+                    if (detectorName === DetectorViewHelper.DetailedGraphDisabledDetectors[i].name) {
                         skipMetric = false;
+                        break;
                     }
                 }
                 if (skipMetric) {

@@ -54,8 +54,8 @@ module SupportCenter {
         }
 
         isDetailedGraphEnabled(detectorName: string) {
-            for (var i = 0; i < DetectorViewHelper.NonDetailedGraphEnabledDetectors.length; i++) {
-                if (detectorName === DetectorViewHelper.NonDetailedGraphEnabledDetectors[i].name) {
+            for (var i = 0; i < DetectorViewHelper.DetailedGraphDisabledDetectors.length; i++) {
+                if (detectorName === DetectorViewHelper.DetailedGraphDisabledDetectors[i].name) {
                     return false;
                 }
             }
