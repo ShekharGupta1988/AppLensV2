@@ -1,4 +1,11 @@
-﻿<div flex="25" layout="row" class="md-sticky">
+﻿<div ng-if="site.site.kind === 'functionapp'" style="height:20px;padding:10px;margin-bottom:15px">
+    <div style="height:100%;background-color:#ffe2cb;border-radius:5px;padding:10px">
+        <ng-md-icon icon="warning" style="fill:#ff7722" size="20"></ng-md-icon>
+        For <span style="font-weight:500">Dynamic Sku</span> Apps, Data presented here may be incomplete or include other function apps running on the same machines as the selected function app.
+    </div>
+</div>
+
+<div flex="25" layout="row" class="md-sticky">
     <div layout="column" flex="5"></div>
     <md-card flex="95">
 
