@@ -5,9 +5,7 @@
         <p style="margin-top:5px" ng-if="ticketworkflowctrl.ticketWorflowData.MsSolveCaseId">
             <ng-md-icon icon="error" style="fill:#FF6F00;font-size:13px"></ng-md-icon> Support Case got created for this workflow. Case Id : {{ticketworkflowctrl.ticketWorflowData.MsSolveCaseId}} (<a href="https://mssolveweb.partners.extranet.microsoft.com/MSSolveWeb/srdetails.html?q={{ticketworkflowctrl.ticketWorflowData.MsSolveCaseId}}&s=0" target="_blank">Open in MsSolve</a>)
         </p>
-        <p style="margin-top:5px;color:teal;font-weight:500" ng-if="!ticketworkflowctrl.ticketWorflowData.MsSolveCaseId">
-            <ng-md-icon icon="info" style="fill:#00C853;font-size:13px"></ng-md-icon> Support Case got deflected for this workflow.
-        </p>
+        
         <p style="margin-top:5px;color:teal">Number of Sessions for this workflow : {{ticketworkflowctrl.ticketWorflowData.Sessions.length}}</p>
     </div>
 
