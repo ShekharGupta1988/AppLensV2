@@ -16,32 +16,37 @@
 
 <md-list style="width:100%;" ng-if="!sia.isLoading">
 
-    <md-divider></md-divider>
-    <div flex class="md-sticky time-period-nav" layout="row" ng-if="sia.SiaResponse.AbnormalTimePeriods.length > 0">
-        <div flex="20" ng-if="sia.selectedAbnormalTimePeriod.index <= 0"></div>
-        <div flex="20" class="time-period-nav-direction" ng-click="sia.selectDowntime(sia.selectedAbnormalTimePeriod.index - 1)" ng-if="sia.selectedAbnormalTimePeriod.index > 0 ">
-            <div flex layout="row">
-                <md-button class="md-icon-button" ng-click="" aria-label="">
-                    <ng-md-icon icon="chevron_left" style="fill:rgba(255,255,255,0.87)"></ng-md-icon>
-                </md-button>
-                <div flex></div>
+    <!--<md-divider></md-divider>-->
+
+    <div style="padding-left: 50px;padding-right: 50px;">
+
+        <div flex class="md-sticky time-period-nav" layout="row" ng-if="sia.SiaResponse.AbnormalTimePeriods.length > 0">
+            <div flex="20" ng-if="sia.selectedAbnormalTimePeriod.index <= 0"></div>
+            <div flex="20" class="time-period-nav-direction" ng-click="sia.selectDowntime(sia.selectedAbnormalTimePeriod.index - 1)" ng-if="sia.selectedAbnormalTimePeriod.index > 0 ">
+                <div flex layout="row">
+                    <md-button class="md-icon-button" ng-click="" aria-label="">
+                        <ng-md-icon icon="chevron_left" style="fill:#5f5f5f"></ng-md-icon>
+                    </md-button>
+                    <div flex></div>
+                </div>
             </div>
-         </div>
-        <div flex></div>
-        <h1>
-            Start Time : {{ sia.selectedAbnormalTimePeriod.data.StartTime | date: 'EEE MMM-dd, hh:mm a': 'UTC'}} (UTC), End Time : {{ sia.selectedAbnormalTimePeriod.data.EndTime | date: 'EEE MMM-dd, hh:mm a': 'UTC'}} (UTC)
-        </h1>
-        <div flex></div>
-        <div flex="20" ng-if="sia.selectedAbnormalTimePeriod.index + 1 >= sia.SiaResponse.AbnormalTimePeriods.length"></div>
-        <div flex="20" class="time-period-nav-direction" ng-click="sia.selectDowntime(sia.selectedAbnormalTimePeriod.index + 1)" ng-if="sia.selectedAbnormalTimePeriod.index + 1 < sia.SiaResponse.AbnormalTimePeriods.length">
-            <div flex layout="row">
-                <div flex></div>
-                <md-button class="md-icon-button" aria-label="" ng-click="">
-                    <ng-md-icon icon="chevron_right" style="fill:rgba(255,255,255,0.87)"></ng-md-icon>
-                </md-button>
+            <div flex></div>
+            <h1>
+                Start Time : {{ sia.selectedAbnormalTimePeriod.data.StartTime | date: 'EEE MMM-dd, hh:mm a': 'UTC'}} (UTC), End Time : {{ sia.selectedAbnormalTimePeriod.data.EndTime | date: 'EEE MMM-dd, hh:mm a': 'UTC'}} (UTC)
+            </h1>
+            <div flex></div>
+            <div flex="20" ng-if="sia.selectedAbnormalTimePeriod.index + 1 >= sia.SiaResponse.AbnormalTimePeriods.length"></div>
+            <div flex="20" class="time-period-nav-direction" ng-click="sia.selectDowntime(sia.selectedAbnormalTimePeriod.index + 1)" ng-if="sia.selectedAbnormalTimePeriod.index + 1 < sia.SiaResponse.AbnormalTimePeriods.length">
+                <div flex layout="row">
+                    <div flex></div>
+                    <md-button class="md-icon-button" aria-label="" ng-click="">
+                        <ng-md-icon icon="chevron_right" style="fill:#5f5f5f"></ng-md-icon>
+                    </md-button>
+                </div>
             </div>
+
         </div>
-        
+
     </div>
 
     <div>
@@ -158,16 +163,24 @@
 
             <md-list-item layout="row" style="padding:0">
 
-                <div class="discussion-timeline"></div>
+                <div class="discussion-timeline" style="margin-top:35px"></div>
                 <div layout="column" flex="5">
                     <div class="discussion-timeline-solution-icon">
                         <md-icon md-svg-icon="warning" style="height:100%;width:100%"></md-icon>
                     </div>
                 </div>
 
-                <div layout="column" flex="95" style="margin:10px;padding:5px;max-width:60%;border-radius:15px;border-bottom-left-radius:0" class="custom-theme-{{sia.ThemeService.getTheme()}}">
-                    <h3 style="text-decoration:underline">Observations:</h3>
-                    <ul style="margin-top:0">
+                <div layout="column" flex="95" style="margin-top: 35px !important; margin-right: 15px; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: #009dc7;box-shadow: 1px 1px 7px 0px #c5c3c3;">
+
+                    <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
+                        <div class="md-toolbar-tools">
+                            <h5 style="margin:auto 10px auto;font-weight:500;color: #009dc7;margin-top: 10px;margin-bottom: 10px;">Observations and Insights</h5>
+                            <span flex></span>
+
+                        </div>
+                    </md-toolbar>
+
+                    <ul>
                         <li ng-repeat="event in sia.selectedAbnormalTimePeriod.data.Events" style="list-style-type: square;font-size:15px;margin-top:8px">{{::event.Message}}</li>
                     </ul>
                 </div>
@@ -182,12 +195,18 @@
                     </div>
                 </div>
 
+                <div layout="column" flex="95" style="margin-top: 35px !important; margin-right: 15px !important; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: #25ae88;box-shadow: 1px 1px 7px 0px #c5c3c3;">
 
-                <div layout="column" flex="95" style="margin:10px;padding:5px;max-width:60%;border-radius:15px;border-bottom-left-radius:0" class="custom-theme-{{sia.ThemeService.getTheme()}}">
-                    <h3 style="text-decoration:underline">Solutions:</h3>
+                    <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
+                        <div class="md-toolbar-tools">
+                            <h5 style="margin:auto 10px auto;font-weight:500;color: #25ae88;margin-top: 10px;margin-bottom: 10px;">Troubleshotting Steps</h5>
+                            <span flex></span>
+                        </div>
+                    </md-toolbar>
+
                     <ul style="margin-top:0" ng-if="sia.selectedAbnormalTimePeriod.data.Solutions.length !== 0">
                         <li ng-repeat="solution in sia.selectedAbnormalTimePeriod.data.Solutions" style="list-style-type: square;font-size:15px;margin-top:10px">
-                        {{::solution.DisplayName}}<span ng-if="::solution.Description !== ''">: {{::solution.Description}}</span>
+                            {{::solution.DisplayName}}<span ng-if="::solution.Description !== ''">: {{::solution.Description}}</span>
                         </li>
                     </ul>
                     <div ng-if="sia.selectedAbnormalTimePeriod.data.Solutions.length === 0">No Solutions Provided. (Please report using feedback button at top)</div>

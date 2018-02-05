@@ -17,8 +17,9 @@ md-toolbar .md-toolbar-tools h1 {
 }
 
 .time-period-nav {
-    background-color:#808080;
+    background-color: #e4e4e4;
     height: 40px;
+    box-shadow: 1px 1px 5px 0px #cecece;
 }
 
 .time-period-nav-direction:hover {
@@ -27,7 +28,7 @@ md-toolbar .md-toolbar-tools h1 {
 }
 
 .time-period-nav h1 {
-    color:white;
+    color: #5f5f5f;
     font-size: 1.100em;
     font-weight: 400;
 }

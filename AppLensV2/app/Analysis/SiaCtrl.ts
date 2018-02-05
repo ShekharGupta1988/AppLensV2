@@ -1,4 +1,4 @@
-﻿///<reference path="../references.ts" />
+﻿﻿///<reference path="../references.ts" />
 
 module SupportCenter {
     "use strict";
@@ -6,12 +6,12 @@ module SupportCenter {
     export class SiaCtrl {
 
         public static $inject: string[] = ["SiaService", "$window", "ErrorHandlerService", "ThemeService", "$stateParams", "ResourceServiceFactory"];
-        
+
         constructor(private SiaService: ISiaService, private $window: angular.IWindowService, private ErrorHandlerService: IErrorHandlerService, private ThemeService: IThemeService, private $stateParams: IStateParams, private ResourceServiceFactory: ResourceServiceFactory) {
 
             var self = this;
             this.DetectorData = {};
-            
+
             this.isLoading = true;
             this.isVNext = true;
             if (angular.isDefined(this.$stateParams.vNext) && this.$stateParams.vNext === 'false') {
