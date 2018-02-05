@@ -1,4 +1,4 @@
-﻿///<reference path="../references.ts" />
+﻿﻿///<reference path="../references.ts" />
 
 module SupportCenter {
     "use strict";
@@ -11,6 +11,7 @@ module SupportCenter {
 
             var self = this;
             this.DetectorData = {};
+
             this.isLoading = true;
             this.isVNext = true;
             if (angular.isDefined(this.$stateParams.vNext) && this.$stateParams.vNext === 'false') {
