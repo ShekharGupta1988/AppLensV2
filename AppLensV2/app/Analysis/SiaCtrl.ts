@@ -5,13 +5,12 @@ module SupportCenter {
 
     export class SiaCtrl {
 
-        public static $inject: string[] = ["SiaService", "$window", "ErrorHandlerService", "ThemeService", "$stateParams", "ResourceServiceFactory", "FeedbackService"];
+        public static $inject: string[] = ["SiaService", "$window", "ErrorHandlerService", "ThemeService", "$stateParams", "ResourceServiceFactory"];
 
-        constructor(private SiaService: ISiaService, private $window: angular.IWindowService, private ErrorHandlerService: IErrorHandlerService, private ThemeService: IThemeService, private $stateParams: IStateParams, private ResourceServiceFactory: ResourceServiceFactory, private FeedbackService: IFeedbackService) {
+        constructor(private SiaService: ISiaService, private $window: angular.IWindowService, private ErrorHandlerService: IErrorHandlerService, private ThemeService: IThemeService, private $stateParams: IStateParams, private ResourceServiceFactory: ResourceServiceFactory) {
 
             var self = this;
             this.DetectorData = {};
-
             this.isLoading = true;
             this.isVNext = true;
             if (angular.isDefined(this.$stateParams.vNext) && this.$stateParams.vNext === 'false') {
