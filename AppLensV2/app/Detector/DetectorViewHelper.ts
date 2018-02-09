@@ -184,7 +184,6 @@ module SupportCenter {
                     options.chart.pie = {};
                     options.chart.labelsOutside = false;
                     break;
-
             }
             return options;
         }
