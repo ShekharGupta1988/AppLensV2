@@ -194,6 +194,7 @@ module SupportCenter {
             var perWorkerGraph: boolean = false;
 
             var diskUsageData: any = {};
+            var frebSlowRespData: any = {};
             
             var chartData = [];
 
@@ -234,6 +235,15 @@ module SupportCenter {
                     if (metric.Name !== "Total" && metric.Name !== "Used") {
                         chartData.push(diskUsageData);
                     }
+                    continue;
+                }
+
+                if (detectorName.indexOf('frebslowresponse') >= 0) {
+                    frebSlowRespData = {
+                        key: metric.Name,
+                        y: metric.Values[0].Total
+                    };
+                    chartData.push(frebSlowRespData);
                     continue;
                 }
 
