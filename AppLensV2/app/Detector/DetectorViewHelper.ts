@@ -173,6 +173,17 @@ module SupportCenter {
                     options.chart.pie = {};
                     options.chart.donut = true;
                     break;
+                case 'frebslowresponse':
+                    options.chart.type = 'pieChart';
+                    options.chart.showLabels = false;
+                    options.chart.x = function (d) { return d.key; };
+                    options.chart.y = function (d) { return d.y; };
+                    options.chart.height = 400;
+                    options.chart.duration = 500;
+                    options.chart.labelThreshold = 0.5;
+                    options.chart.pie = {};
+                    options.chart.labelsOutside = false;
+                    break;
             }
             return options;
         }
@@ -183,6 +194,7 @@ module SupportCenter {
             var perWorkerGraph: boolean = false;
 
             var diskUsageData: any = {};
+            var frebSlowRespData: any = {};
             
             var chartData = [];
 
@@ -223,6 +235,15 @@ module SupportCenter {
                     if (metric.Name !== "Total" && metric.Name !== "Used") {
                         chartData.push(diskUsageData);
                     }
+                    continue;
+                }
+
+                if (detectorName.indexOf('frebslowresponse') >= 0) {
+                    frebSlowRespData = {
+                        key: metric.Name,
+                        y: metric.Values[0].Total
+                    };
+                    chartData.push(frebSlowRespData);
                     continue;
                 }
 
