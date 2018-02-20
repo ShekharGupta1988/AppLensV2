@@ -53,13 +53,13 @@
         </md-card>
     </div>
 
-    <div flex="5" layout="row" ng-if="site.avgAvailability && (site.analysisType === 'appAnalysis')" style="margin-bottom:35px">
+    <div flex="5" layout="row" ng-if="(site.avgAvailability && (site.analysisType === 'appAnalysis')) || (site.recentSupportCaseOpened)" style="margin-bottom:35px">
 
         <div layout="column" flex="5" layout-align="center center"></div>
 
         <div layout="column" flex="95" style="display:inline">
 
-            <div style="display:inline-block;">
+            <div ng-if="site.avgAvailability && (site.analysisType === 'appAnalysis')" style="display:inline-block;">
                 <p style="margin-bottom:0;font-weight:400" class="custom-theme-{{site.ThemeService.getTheme()}}">
                     <ng-md-icon icon="equalizer" style="fill:teal;font-size:12px"></ng-md-icon>
                     Organic SLA
