@@ -5,9 +5,9 @@ module SupportCenter {
 
     export class SiteCtrl {
 
-        public static $inject: string[] = ["$http", "$q", "DetectorsService", "SiaService", "$mdSidenav", "SiteService", "$stateParams", "$state", "$window", "$mdPanel", "FeedbackService", "$mdToast", "ErrorHandlerService", "$mdDialog", "bowser", "ThemeService"];
+        public static $inject: string[] = ["$http", "$q", "DetectorsService", "SiaService", "$mdSidenav", "SiteService", "$stateParams", "$state", "$window", "$mdPanel", "FeedbackService", "$mdToast", "ErrorHandlerService", "$mdDialog", "bowser", "ThemeService", "SupportCenterService"];
 
-        constructor(private $http: ng.IHttpService, private $q: ng.IQService, private DetectorsService: IDetectorsService, private SiaService: ISiaService, private $mdSidenav: angular.material.ISidenavService, private SiteService: IResourceService, private $stateParams: IStateParams, private $state: angular.ui.IStateService, private $window: angular.IWindowService, private $mdPanel: angular.material.IPanelService, private FeedbackService: IFeedbackService, private $mdToast: angular.material.IToastService, private ErrorHandlerService: IErrorHandlerService, private $mdDialog: angular.material.IDialogService, private bowser: any, public ThemeService: IThemeService) {
+        constructor(private $http: ng.IHttpService, private $q: ng.IQService, private DetectorsService: IDetectorsService, private SiaService: ISiaService, private $mdSidenav: angular.material.ISidenavService, private SiteService: IResourceService, private $stateParams: IStateParams, private $state: angular.ui.IStateService, private $window: angular.IWindowService, private $mdPanel: angular.material.IPanelService, private FeedbackService: IFeedbackService, private $mdToast: angular.material.IToastService, private ErrorHandlerService: IErrorHandlerService, private $mdDialog: angular.material.IDialogService, private bowser: any, public ThemeService: IThemeService, private SupportCenterService: ISupportCenterService) {
 
             this.avaiabilityChartData = [];
             this.requestsChartData = [];
@@ -68,6 +68,16 @@ module SupportCenter {
             }, function (err) {
                 // Error in calling Site Details
                 self.dataLoading = false;
+                });
+
+            this.SupportCenterService.dataPromise.then(function (data: any) {
+
+                self.SupportCenterService.supportCenterWorkflowList.forEach(item => {
+                    if (item.MsSolveCaseId && item.MsSolveCaseId !== '' && !self.recentSupportCaseOpened) {
+                        self.recentSupportCaseNumber = item.MsSolveCaseId;
+                        self.recentSupportCaseOpened = true;
+                    }
+                });
             });
         }
 
@@ -90,9 +100,16 @@ module SupportCenter {
         analysisType: string;
         site: Resource;
         avgAvailability: string;
+        recentSupportCaseOpened: boolean = false;
+        recentSupportCaseNumber: string;
 
         toggleSideNav(): void {
             this.$mdSidenav('left').toggle();
+        }
+
+        openASC(): void {
+            let ascUrl = "https://azuresupportcentertest.msftcloudes.com/caseoverview?srId=" + this.recentSupportCaseNumber;
+            this.$window.open(ascUrl, "_blank");
         }
 
         private getRuntimeAvailability(): void {
@@ -183,8 +200,7 @@ module SupportCenter {
                 self.ErrorHandlerService.showError(ErrorModelBuilder.Build(err));
                 });
         }
-
-
+        
         private getTcpConnections(): void {
 
             var tcpconnectionsusage = 'tcpconnectionsusage';
