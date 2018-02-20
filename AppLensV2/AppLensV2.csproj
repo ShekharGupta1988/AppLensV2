@@ -26,6 +26,7 @@
     </NuGetPackageImportStamp>
     <TypeScriptToolsVersion>1.8</TypeScriptToolsVersion>
     <ApplicationInsightsResourceId>/subscriptions/0d3ae56c-deaf-4982-b514-33d016d4a683/resourcegroups/AppLensV2/providers/microsoft.insights/components/AppLensV2</ApplicationInsightsResourceId>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -181,6 +182,7 @@
     <Content Include="app\AppServiceEnvironment\appServiceEnvironment.html" />
     <Content Include="app\AppServiceEnvironment\appServiceEnvironmentMain.html" />
     <Content Include="app\assets\app.css" />
+    <Content Include="app\assets\images\ASC.png" />
     <Content Include="app\assets\images\ASE-Logo.jpg" />
     <Content Include="app\assets\images\Azure-Functions-Logo.png" />
     <Content Include="app\assets\images\Azure-Tux-Logo.png" />
