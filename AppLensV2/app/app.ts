@@ -32,6 +32,7 @@ module SupportCenter {
         .directive("detectorView", [() => new DetectorViewDir()])
         .directive("detailedDetectorView", [() => new DetailedDetectorViewDir()])
         .directive("downtimeTimeline", [() => new DowntimeTimelineDir()])
+        .directive("incidentNotification", [() => new IncidentDir()])
         .directive("sessionView", [() => new SessionViewDir()])
         .directive("topLevelSignal", [() => new TopLevelSignalDir()])
         .config(($mdThemingProvider: angular.material.IThemingProvider,
@@ -63,6 +64,9 @@ module SupportCenter {
             $mdThemingProvider.theme('default5')
                 .primaryPalette('brown')
                 .accentPalette('deep-orange');
+
+            // LSI Warning
+            $mdThemingProvider.theme('incident-theme').backgroundPalette('red');
 
             $mdThemingProvider.alwaysWatchTheme(true);
 

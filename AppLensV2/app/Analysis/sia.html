@@ -159,94 +159,97 @@
         </div>
 
         <!-- VNext Feature -->
-        <div ng-if="sia.isVNext && (sia.SiaResponse.AbnormalTimePeriods.length > 0 && sia.selectedAbnormalTimePeriod.data.Events.length > 0)">
 
-            <md-list-item layout="row" style="padding:0">
 
-                <div class="discussion-timeline" style="margin-top:35px"></div>
-                <div layout="column" flex="5">
-                    <div class="discussion-timeline-solution-icon">
-                        <md-icon md-svg-icon="warning" style="height:100%;width:100%"></md-icon>
+        <div ng-if="sia.isVNext">
+            
+            <div ng-if="sia.SiaResponse.AbnormalTimePeriods.length > 0 && sia.selectedAbnormalTimePeriod.data.Events.length > 0">
+                <md-list-item layout="row" style="padding:0">
+
+                    <div class="discussion-timeline" style="margin-top:35px"></div>
+                    <div layout="column" flex="5">
+                        <div class="discussion-timeline-solution-icon">
+                            <md-icon md-svg-icon="warning" style="height:100%;width:100%"></md-icon>
+                        </div>
                     </div>
-                </div>
 
-                <div layout="column" flex="95" style="margin-top: 35px !important; margin-right: 15px; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: #009dc7;box-shadow: 1px 1px 7px 0px #c5c3c3;">
+                    <div layout="column" flex="95" style="margin-top: 35px !important; margin-right: 15px; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: #009dc7;box-shadow: 1px 1px 7px 0px #c5c3c3;">
 
-                    <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
-                        <div class="md-toolbar-tools">
-                            <h5 style="margin:auto 10px auto;font-weight:500;color: #009dc7;margin-top: 10px;margin-bottom: 10px;">Observations and Insights</h5>
-                            <span flex></span>
+                        <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
+                            <div class="md-toolbar-tools">
+                                <h5 style="margin:auto 10px auto;font-weight:500;color: #009dc7;margin-top: 10px;margin-bottom: 10px;">Observations and Insights</h5>
+                                <span flex></span>
+
+                            </div>
+                        </md-toolbar>
+
+                        <ul>
+                            <li ng-repeat="event in sia.selectedAbnormalTimePeriod.data.Events" style="list-style-type: square;font-size:15px;margin-top:8px">{{::event.Message}}</li>
+                        </ul>
+                    </div>
+                </md-list-item>
+
+                <md-list-item layout="row" style="padding:0">
+
+                    <div class="discussion-timeline"></div>
+                    <div layout="column" flex="5">
+                        <div class="discussion-timeline-solution-icon">
+                            <md-icon md-svg-icon="success" style="height:100%;width:100%"></md-icon>
+                        </div>
+                    </div>
+
+                    <div layout="column" flex="95" style="margin-top: 35px !important; margin-right: 15px !important; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: #25ae88;box-shadow: 1px 1px 7px 0px #c5c3c3;">
+
+                        <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
+                            <div class="md-toolbar-tools">
+                                <h5 style="margin:auto 10px auto;font-weight:500;color: #25ae88;margin-top: 10px;margin-bottom: 10px;">Troubleshooting Steps</h5>
+                                <span flex></span>
+                            </div>
+                        </md-toolbar>
+
+                        <ul style="margin-top:0" ng-if="sia.selectedAbnormalTimePeriod.data.Solutions.length !== 0">
+                            <li ng-repeat="solution in sia.selectedAbnormalTimePeriod.data.Solutions" style="list-style-type: square;font-size:15px;margin-top:10px">
+                                {{::solution.DisplayName}}<span ng-if="::solution.Description !== ''">: {{::solution.Description}}</span>
+                            </li>
+                        </ul>
+                        <div ng-if="sia.selectedAbnormalTimePeriod.data.Solutions.length === 0">No Solutions Provided. (Please report using feedback button at top)</div>
+                    </div>
+                </md-list-item>
+
+                <md-list-item layout="row" style="padding:0;padding-bottom:30px">
+
+                    <div class="discussion-timeline"></div>
+                    <div layout="column" flex="5">
+                        <div class="discussion-timeline-data-icon">
+                            <md-icon md-svg-icon="evidence" style="height:100%;width:100%"></md-icon>
+                        </div>
+
+                    </div>
+
+                    <div layout="column" flex="95" style="padding-top:10px">
+
+                        <div style="margin:10px;margin-top:20px" ng-repeat="event in sia.selectedAbnormalTimePeriod.data.Events">
+
+                            <detector-view loading="::sia.DetectorData[event.Source].loading"
+                                           chartoptions="::sia.DetectorData[event.Source].chartoptions"
+                                           chartdata="::sia.DetectorData[event.Source].chartdata"
+                                           info="::sia.DetectorData[event.Source].info" ,
+                                           responsemetadata="::sia.DetectorData[event.Source].responsemetadata"
+                                           wiki="::sia.DetectorData[event.Source].wiki"
+                                           solution="::sia.DetectorData[event.Source].solution"
+                                           metricsets="::sia.DetectorData[event.Source].metricsets"
+                                           additionaldata="::sia.DetectorData[event.Source].additionalData"
+                                           selectedworker="::event.Instance"
+                                           detectorsource="::event.Source"
+                                           abnormaltimeperiod="::sia.selectedAbnormalTimePeriod.data">
+                            </detector-view>
 
                         </div>
-                    </md-toolbar>
-
-                    <ul>
-                        <li ng-repeat="event in sia.selectedAbnormalTimePeriod.data.Events" style="list-style-type: square;font-size:15px;margin-top:8px">{{::event.Message}}</li>
-                    </ul>
-                </div>
-            </md-list-item>
-
-            <md-list-item layout="row" style="padding:0">
-
-                <div class="discussion-timeline"></div>
-                <div layout="column" flex="5">
-                    <div class="discussion-timeline-solution-icon">
-                        <md-icon md-svg-icon="success" style="height:100%;width:100%"></md-icon>
-                    </div>
-                </div>
-
-                <div layout="column" flex="95" style="margin-top: 35px !important; margin-right: 15px !important; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: #25ae88;box-shadow: 1px 1px 7px 0px #c5c3c3;">
-
-                    <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
-                        <div class="md-toolbar-tools">
-                            <h5 style="margin:auto 10px auto;font-weight:500;color: #25ae88;margin-top: 10px;margin-bottom: 10px;">Troubleshooting Steps</h5>
-                            <span flex></span>
-                        </div>
-                    </md-toolbar>
-
-                    <ul style="margin-top:0" ng-if="sia.selectedAbnormalTimePeriod.data.Solutions.length !== 0">
-                        <li ng-repeat="solution in sia.selectedAbnormalTimePeriod.data.Solutions" style="list-style-type: square;font-size:15px;margin-top:10px">
-                            {{::solution.DisplayName}}<span ng-if="::solution.Description !== ''">: {{::solution.Description}}</span>
-                        </li>
-                    </ul>
-                    <div ng-if="sia.selectedAbnormalTimePeriod.data.Solutions.length === 0">No Solutions Provided. (Please report using feedback button at top)</div>
-                </div>
-            </md-list-item>
-
-            <md-list-item layout="row" style="padding:0;padding-bottom:30px">
-
-                <div class="discussion-timeline"></div>
-                <div layout="column" flex="5">
-                    <div class="discussion-timeline-data-icon">
-                        <md-icon md-svg-icon="evidence" style="height:100%;width:100%"></md-icon>
-                    </div>
-
-                </div>
-
-                <div layout="column" flex="95" style="padding-top:10px">
-
-                    <div style="margin:10px;margin-top:20px" ng-repeat="event in sia.selectedAbnormalTimePeriod.data.Events">
-
-                        <detector-view loading="::sia.DetectorData[event.Source].loading"
-                                       chartoptions="::sia.DetectorData[event.Source].chartoptions"
-                                       chartdata="::sia.DetectorData[event.Source].chartdata"
-                                       info="::sia.DetectorData[event.Source].info" ,
-                                       responsemetadata="::sia.DetectorData[event.Source].responsemetadata"
-                                       wiki="::sia.DetectorData[event.Source].wiki"
-                                       solution="::sia.DetectorData[event.Source].solution"
-                                       metricsets="::sia.DetectorData[event.Source].metricsets"
-                                       additionaldata="::sia.DetectorData[event.Source].additionalData"
-                                       selectedworker="::event.Instance"
-                                       detectorsource="::event.Source"
-                                       abnormaltimeperiod="::sia.selectedAbnormalTimePeriod.data">
-                        </detector-view>
 
                     </div>
 
-                </div>
-
-            </md-list-item>
-
+                </md-list-item>
+            </div>
         </div>
 
     </div>

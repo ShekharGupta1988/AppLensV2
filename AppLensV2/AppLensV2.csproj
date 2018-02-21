@@ -198,6 +198,7 @@
     <Content Include="app\Detector\detectorview.html" />
     <Content Include="app\DowntimeTimeline\downtimetimeline.html" />
     <Content Include="app\Home\home.html" />
+    <Content Include="app\Incident\incidentdirective.html" />
     <Content Include="app\Main\main.html" />
     <Content Include="app\Analysis\sia.html" />
     <Content Include="app\Site\site.html" />
@@ -280,6 +281,7 @@
     <TypeScriptCompile Include="app\DowntimeTimeline\DowntimeTimelineDirective.ts" />
     <TypeScriptCompile Include="app\Home\HomeCtrl.ts" />
     <TypeScriptCompile Include="app\AppServiceEnvironment\AppServiceEnvironmentCtrl.ts" />
+    <TypeScriptCompile Include="app\Incident\IncidentDirective.ts" />
     <TypeScriptCompile Include="app\Main\MainCtrl.ts" />
     <TypeScriptCompile Include="app\MultipleSitesDialog\MultipleSitesDialogCtrl.ts" />
     <TypeScriptCompile Include="app\NgModels\Detector.ts" />

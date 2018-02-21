@@ -431,17 +431,17 @@ ng-md-icon.custom-theme-default5 {
     border-radius:5px;
     min-height:100px;
 }
-    .restart-container.restart-message {
-        border-color: rgb(121, 91, 214);
-        border-left-width: 10px !important;
-        padding:10px;
-    }
-        .restart-container.restart-message.no-restart {
-            border-color: #00E676 !important;
-        }
-        .restart-container.restart-message.no-reason {
-            border-color: #546E7A !important;
-        }
+.restart-container.restart-message {
+    border-color: rgb(121, 91, 214);
+    border-left-width: 10px !important;
+    padding:10px;
+}
+.restart-container.restart-message.no-restart {
+    border-color: #00E676 !important;
+}
+.restart-container.restart-message.no-reason {
+    border-color: #546E7A !important;
+}
 .evidence{
     padding:10px;
     border-radius:10px;
@@ -453,8 +453,12 @@ ng-md-icon.custom-theme-default5 {
     outline: none;
     margin-right:10px;
 }
-    .evidence:hover {
-        cursor: pointer;
-        background-color:#795bd6;
-        color:white;
-    }
+.evidence:hover {
+    cursor: pointer;
+    background-color:#795bd6;
+    color:white;
+}
+
+.incident-message-container {
+    padding: 0px 15px;
+}

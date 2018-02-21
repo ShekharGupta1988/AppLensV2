@@ -1,0 +1,30 @@
+﻿<div>
+    <div layout="row" ng-if="!incidentctrl.loadingLSIs && incidentctrl.incidentNotifications && incidentctrl.incidentNotifications.length > 0">
+        <div layout="column" flex="5" layout-align="center center"></div>
+        <md-card flex="95" md-theme="incident-theme" ng-repeat="incident in incidentctrl.incidentNotifications">
+            <md-card-title style="padding-bottom: 0px;">
+                <md-card-title-text>
+                    <span class="md-headline" style="font-size: 16px;" ng-bind-html="incident.message"></span>
+                </md-card-title-text>
+            </md-card-title>
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button ng-click="incidentctrl.openServiceHealth()">Open Service Health Detector</md-button>
+                <md-button ng-href="{{incident.link}}" target="_blank">Open Icm Incident</md-button>
+            </md-card-actions>
+        </md-card>
+    </div>
+
+    <div layout="row" ng-if="!incidentctrl.loadingCRIs && incidentctrl.criIncidentNotifications && incidentctrl.criIncidentNotifications.length > 0">
+        <div layout="column" flex="5" layout-align="center center"></div>
+        <md-card flex="95" md-theme="incident-theme" ng-repeat="incident in incidentctrl.criIncidentNotifications">
+            <div class="incident-message-container" ng-bind-html="incident.message">
+
+            </div>
+            
+            <md-card-actions layout="row" layout-align="end center">
+                <md-button ng-href="{{incident.link}}" target="_blank">Open Icm Incident</md-button>
+            </md-card-actions>
+        </md-card>
+    </div>
+</div>
+
