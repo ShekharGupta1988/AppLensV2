@@ -61,6 +61,10 @@ module SupportCenter {
                         self.chartOptions.chart.title = title;
                         
                     }
+                    if (self.detectorName.indexOf('frebslowresponse') >= 0) {
+                        let title = "Request Execution by Module";                        
+                        self.chartOptions.chart.title = title;
+                    }
 
                     self.abnormalTimePeriods = data.AbnormalTimePeriods;
                 }, function (err) {

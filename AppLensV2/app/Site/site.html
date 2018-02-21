@@ -55,14 +55,32 @@
 
     <incident-notification></incident-notification>
 
-    <div flex="5" layout="row" ng-if="site.avgAvailability && (site.analysisType === 'appAnalysis')">
+    <div flex="5" layout="row" ng-if="(site.avgAvailability && (site.analysisType === 'appAnalysis')) || (site.recentSupportCaseOpened)" style="margin-bottom:35px">
 
         <div layout="column" flex="5" layout-align="center center"></div>
 
-        <div layout="column" flex="95">
-            <p style="margin-bottom:0;font-size:17px;padding-left:5px" class="custom-theme-{{site.ThemeService.getTheme()}}">Organic SLA : {{site.avgAvailability}} %</p>
-        </div>
+        <div layout="column" flex="95" style="display:inline">
 
+            <div ng-if="site.avgAvailability && (site.analysisType === 'appAnalysis')" style="display:inline-block;">
+                <p style="margin-bottom:0;font-weight:400" class="custom-theme-{{site.ThemeService.getTheme()}}">
+                    <ng-md-icon icon="equalizer" style="fill:teal;font-size:12px"></ng-md-icon>
+                    Organic SLA
+                </p>
+                <h3 style="font-weight:500;margin-top:5px;font-size:22px;color:#585858">{{site.avgAvailability}} %</h3>
+            </div>
+
+            <div ng-if="site.recentSupportCaseOpened" style="display:inline-block;margin-left:35px">
+                <p style="margin-bottom:0;font-weight:400" class="custom-theme-{{site.ThemeService.getTheme()}}">
+                    <ng-md-icon icon="error" style="fill:#FF6F00;font-size:13px"></ng-md-icon> Recent Support Ticket
+                </p>
+               
+                <md-button class="md-raised" ng-click="site.openASC()">
+                    <img class="yourClass" src="app/assets/images/ASC.png" style="vertical-align:middle;height:20px;width:20px">
+                    <span style="color:#2c86db">Open in Azure Support Center</span>
+                </md-button>
+            </div>
+
+        </div>
     </div>
 
     <div flex layout="row">
