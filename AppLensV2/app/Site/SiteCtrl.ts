@@ -108,6 +108,12 @@ module SupportCenter {
         }
 
         openASC(): void {
+
+            var appInsightsClient = _.find(Object.keys(this.$window.window), function (item) { return item === 'appInsights' });
+            if (appInsightsClient) {
+                this.$window.window[appInsightsClient].trackEvent('AzureSupportCenter_Opened');
+            }
+
             let ascUrl = "https://azuresupportcentertest.msftcloudes.com/caseoverview?srId=" + this.recentSupportCaseNumber;
             this.$window.open(ascUrl, "_blank");
         }
