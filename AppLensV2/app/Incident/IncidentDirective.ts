@@ -27,7 +27,7 @@ module SupportCenter {
                     self.serviceHealthResponse = data;
                     self.incidentNotifications = self.findActiveIncidents(data);
                     self.incidentNotifications.forEach(incident => {
-                        incident.title = incident.status === IncidentStatus.Active ? "Active LSI incident may be affecting this app" : "Past LSI incident may have affected this app";
+                        incident.title = incident.status === IncidentStatus.Active ? "Active Live Site Incident may be affecting this app" : "Past Live Site Incident may have affected this app";
                     });
                     self.loadingLSIs = false;
                 });
@@ -36,7 +36,7 @@ module SupportCenter {
                     self.customerIncidentResponse = data;
                     self.criIncidentNotifications = self.findActiveIncidents(data);
                     self.criIncidentNotifications.forEach(incident => {
-                        incident.title = incident.status === IncidentStatus.Active ? "Active customer reported incident may be affecting this app" : "Past customer reported incident may have affected this app";
+                        incident.title = incident.status === IncidentStatus.Active ? "Active incident may be affecting this app" : "Past incident may have affected this app";
                     });
                     self.loadingCRIs = false;
                 });
