@@ -17,7 +17,7 @@ module SupportCenter {
         public serviceHealthResponse: DetectorResponse;
         public customerIncidentResponse: DetectorResponse;
         public incidentNotifications: IncidentNotification[];
-        public criIncidentNotifications: IncidentNotification[];        
+        public criIncidentNotifications: IncidentNotification[];
 
         constructor(private detectorService: IDetectorsService, private ResourceServiceFactory: ResourceServiceFactory, private $stateParams: IStateParams, private $state: angular.ui.IStateService) {
             var self = this;
@@ -26,19 +26,25 @@ module SupportCenter {
                 detectorService.getDetectorResponse(resourceService.resource, 'servicehealth').then(function (data: DetectorResponse) {
                     self.serviceHealthResponse = data;
                     self.incidentNotifications = self.findActiveIncidents(data);
+                    self.incidentNotifications.forEach(incident => {
+                        incident.title = incident.status === IncidentStatus.Active ? "Active LSI incident may be affecting this app" : "Past LSI incident may have affected this app";
+                    });
                     self.loadingLSIs = false;
                 });
 
                 detectorService.getDetectorResponse(resourceService.resource, 'customerincident').then(function (data: DetectorResponse) {
                     self.customerIncidentResponse = data;
                     self.criIncidentNotifications = self.findActiveIncidents(data);
+                    self.criIncidentNotifications.forEach(incident => {
+                        incident.title = incident.status === IncidentStatus.Active ? "Active customer reported incident may be affecting this app" : "Past customer reported incident may have affected this app";
+                    });
                     self.loadingCRIs = false;
                 });
             });
         }
 
-        findActiveIncidents(response: DetectorResponse) {
-            
+        findActiveIncidents(response: DetectorResponse, isLSI: boolean = true) {
+
             return response.AbnormalTimePeriods.filter(incident => {
                 if (incident.MetaData.length > 0) {
                     return incident.MetaData[0].filter(nameValuePair => nameValuePair.Name === "ShowNotification" && nameValuePair.Value === "True").length > 0;
@@ -54,9 +60,13 @@ module SupportCenter {
                     else if (nameValuePair.Name === "MessageHTML") {
                         incidentNotification.message = nameValuePair.Value;
                     }
+                    else if (nameValuePair.Name === "Status") {
+                        incidentNotification.status = IncidentStatus[nameValuePair.Value]
+                    }
                 });
+
                 return incidentNotification;
-                });
+            });
         }
 
         public openServiceHealth() {
@@ -69,7 +79,16 @@ module SupportCenter {
         abnormalTimePeriod: DetectorAbnormalTimePeriod;
         link: string;
         message: string;
-    }         
+        title: string;
+        status: IncidentStatus;
+
+    }
+
+    enum IncidentStatus {
+        Active,
+        Mititgated,
+        Resolved
+    }
 
     export class IncidentDir implements ng.IDirective {
 
