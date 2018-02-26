@@ -20,6 +20,7 @@ module SupportCenter {
         private static appServiceEnvironmentDetails: string = "/api/hostingEnvironments/{hostingEnvironmentName}"
         private static diagnosticsPassThroughApiPath: string = "/api/diagnostics";
         private static detectorsDocumentAPIPath: string = "/api/detectors/{detectorName}/files/{fileName}";
+        private static stampClusterAPIPath = "/api/stamps/{stampName}/cluster";
 
         // Uri Paths of Geo Region Diagnostic Role APIs
         private static baseAPIPathSites: string = "v2/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/sites/{site}/diagnostics";
@@ -105,6 +106,10 @@ module SupportCenter {
         public static SupportCenterTicketWorkflowPath(ticketWorkflowId: string): string {
             return UriPaths.supportCenterTicketWorflow
                 .replace("{ticketWorkflowId}", ticketWorkflowId);
+        }
+
+        public static StampClusterAPIPath(stampName: string): string {
+            return UriPaths.stampClusterAPIPath.replace("{stampName}", stampName);
         }
 
         private static CreateGeoRegionAPIPath(pathFormat: string, resource: Resource, startTime: string, endTime: string, timeGrain: string): string {

@@ -9,12 +9,13 @@ module SupportCenter {
         hostingEnvironment: HostingEnvironment;
         resource: Resource;
         sites: Array<Site>;
+        GetStampCluster(): ng.IPromise<string>;
     }
 
     export class AseService implements IResourceService {
 
-        static $inject = ['$http', '$stateParams', 'ErrorHandlerService'];
-        constructor(private $http: ng.IHttpService, private $stateParams: IStateParams, private ErrorHandlerService: IErrorHandlerService) {
+        static $inject = ['$http', '$stateParams', 'ErrorHandlerService', '$q'];
+        constructor(private $http: ng.IHttpService, private $stateParams: IStateParams, private ErrorHandlerService: IErrorHandlerService, private $q: ng.IQService) {
             var self = this;
 
             if (!angular.isDefined(this.$stateParams.siteName) || this.$stateParams.siteName === '') {
@@ -44,5 +45,17 @@ module SupportCenter {
         public hostingEnvironment: HostingEnvironment;
         public resource: Resource;
         public sites: Site[];
+
+        public GetStampCluster(): ng.IPromise<string> {
+
+            var deferred = this.$q.defer<string>();
+            let url: string = UriPaths.StampClusterAPIPath(this.hostingEnvironment.resourceInternalStamp);
+            this.$http.get(url)
+                .success((data: any) => {
+                    deferred.resolve(data);
+                });
+
+            return deferred.promise;
+        }
     }
 }
