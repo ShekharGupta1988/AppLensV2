@@ -27,7 +27,7 @@ module SupportCenter {
             this.chartOptions.chart.height = this.$window.innerHeight * 0.25;
             this.chartOptions.chart.color = this.seriesColors;
             this.chartOptions.chart.callback = function (chart) {
-                chart.dispatch.changeState({ disabled: { 0: true } });
+                chart.dispatch.changeState({ disabled: { 1: true } });
             }
 
             this.isLoading = true;
@@ -43,7 +43,7 @@ module SupportCenter {
                     else {
 
                         self.chartOptions.chart.callback = function (chart) {
-                            chart.dispatch.changeState({ disabled: { 0: false } })
+                            chart.dispatch.changeState({ disabled: { 1: false } })
                         };
 
                         let workerprocessrecycle = _.find(response.Payload, function (item) {
@@ -213,7 +213,7 @@ module SupportCenter {
         public selectedWorker: string;
         public isLoading: boolean;
         public noReason: any;
-        public seriesColors: [string] = ["#D4E157", "hsl(120, 57%, 40%)", "#117dbb", "#FFA726", "#aa0000", "#311B92", "#4DB6AC", "#880E4F", "#0D47A1", "#00695C"]; 
+        public seriesColors: [string] = ["#d6591b", "hsl(120, 57%, 40%)", "#117dbb", "#FFA726", "#aa0000", "#311B92", "#4DB6AC", "#880E4F", "#0D47A1", "#00695C"]; 
         public siteName;
     }
 }

@@ -34,22 +34,31 @@ namespace AppLensV2
         private static object lockObject = new object();
         private static bool targetSupportApiTestSlot;
 
-        /// <summary>
-        /// Support API Endpoint
-        /// </summary>
-        private static string SupportObserverApiEndpoint {
+        private static string SupportApiEndpoint
+        {
             get
             {
                 bool.TryParse(ConfigurationManager.AppSettings["TargetSupportApiTestSlot"], out targetSupportApiTestSlot);
 
-                //Add condition for Debugger.IsAttached so that we never mistakenly target Support Api test slot in production
                 if (Debugger.IsAttached && targetSupportApiTestSlot)
                 {
-                    return "https://support-bay-api-test.azurewebsites.net/observer/";
-                }else
-                {
-                    return "https://support-bay-api.azurewebsites.net/observer/";
+                    return "https://support-bay-api-test.azurewebsites.net/";
                 }
+                else
+                {
+                    return "https://support-bay-api.azurewebsites.net/";
+                }
+            }
+        }
+
+        /// <summary>
+        /// Support API Endpoint
+        /// </summary>
+        private static string SupportObserverApiEndpoint
+        {
+            get
+            {
+                return SupportApiEndpoint + "observer/";
             }
         }
 
@@ -124,7 +133,7 @@ namespace AppLensV2
         /// <param name="siteName">Site Name</param>
         internal static async Task<ObserverResponse> GetSite(string siteName)
         {
-            return await GetSiteInternal(SupportObserverApiEndpoint + "sites/" + siteName + "/adminsites?api-version=2.0");
+            return await GetResourceInternal(SupportObserverApiEndpoint + "sites/" + siteName + "/adminsites?api-version=2.0");
         }
 
         /// <summary>
@@ -134,10 +143,15 @@ namespace AppLensV2
         /// <param name="siteName">Site Name</param>
         internal static async Task<ObserverResponse> GetSite(string stamp, string siteName)
         {
-            return await GetSiteInternal(SupportObserverApiEndpoint + "stamps/" + stamp + "/sites/" + siteName + "/adminsites?api-version=2.0");
+            return await GetResourceInternal(SupportObserverApiEndpoint + "stamps/" + stamp + "/sites/" + siteName + "/adminsites?api-version=2.0");
         }
 
-        private static async Task<ObserverResponse> GetSiteInternal(string endpoint)
+        internal static async Task<ObserverResponse> GetStampCluster(string stamp)
+        {
+            return await GetResourceInternal(SupportApiEndpoint + "stamps/" + stamp + "/cluster", "GetStampCluster");
+        }
+
+        private static async Task<ObserverResponse> GetResourceInternal(string endpoint, string apiName = "GetAdminSite")
         {
             var request = new HttpRequestMessage()
             {
@@ -148,7 +162,7 @@ namespace AppLensV2
             request.Headers.Add("Authorization", await GetSupportObserverAccessToken());
             var response = await _httpClient.SendAsync(request);
 
-            ObserverResponse res = await CreateObserverResponse(response, "GetAdminSite");
+            ObserverResponse res = await CreateObserverResponse(response, apiName);
             return res;
         }
 
