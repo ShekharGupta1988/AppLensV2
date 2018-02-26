@@ -1,30 +1,40 @@
 ﻿<div>
     <div layout="row" ng-if="!incidentctrl.loadingLSIs && incidentctrl.incidentNotifications && incidentctrl.incidentNotifications.length > 0">
         <div layout="column" flex="5" layout-align="center center"></div>
-        <md-card flex="95" md-theme="incident-theme" ng-repeat="incident in incidentctrl.incidentNotifications">
-            <md-card-title style="padding-bottom: 0px;">
-                <md-card-title-text>
-                    <span class="md-headline" style="font-size: 16px;" ng-bind-html="incident.message"></span>
-                </md-card-title-text>
-            </md-card-title>
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-click="incidentctrl.openServiceHealth()">Open Service Health Detector</md-button>
-                <md-button ng-href="{{incident.link}}" target="_blank">Open Icm Incident</md-button>
-            </md-card-actions>
-        </md-card>
-    </div>
+        <div ng-repeat="incident in incidentctrl.incidentNotifications" layout="column" flex="95" style="margin-top: 20px !important; margin-right: 15px; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: rgb(244, 67, 54);box-shadow: 1px 1px 7px 0px #c5c3c3;">
+
+            <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
+                <div class="md-toolbar-tools">
+                    <h5 style="margin:auto 10px auto;font-weight:500;color: rgb(244, 67, 54);margin-top: 10px;margin-bottom: 10px;">{{incident.title}}</h5>
+                    <span flex></span>
+                    <md-button style="color:rgb(244, 67, 54)" ng-href="{{incident.link}}" target="_blank">
+                        Open ICM Incident
+                        <ng-md-icon style="font-size:16px" icon="open_in_new"></ng-md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div style="padding:15px 15px 15px 26px;font-size: 15px" ng-bind-html="incident.message"></div>
+        </div>
+
+     </div>
 
     <div layout="row" ng-if="!incidentctrl.loadingCRIs && incidentctrl.criIncidentNotifications && incidentctrl.criIncidentNotifications.length > 0">
         <div layout="column" flex="5" layout-align="center center"></div>
-        <md-card flex="95" md-theme="incident-theme" ng-repeat="incident in incidentctrl.criIncidentNotifications">
-            <div class="incident-message-container" ng-bind-html="incident.message">
+        <div ng-repeat="incident in incidentctrl.criIncidentNotifications" layout="column" flex="95" style="margin-top: 35px !important; margin-right: 15px; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: rgb(244, 67, 54);box-shadow: 1px 1px 7px 0px #c5c3c3;">
 
-            </div>
-            
-            <md-card-actions layout="row" layout-align="end center">
-                <md-button ng-href="{{incident.link}}" target="_blank">Open Icm Incident</md-button>
-            </md-card-actions>
-        </md-card>
+            <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
+                <div class="md-toolbar-tools">
+                    <h5 style="margin:auto 10px auto;font-weight:500;color: rgb(244, 67, 54);margin-top: 10px;margin-bottom: 10px;">{{incident.title}}</h5>
+                    <span flex></span>
+                    <md-button style="color:rgb(244, 67, 54)" ng-href="{{incident.link}}" target="_blank">
+                        Open ICM Incident
+                        <ng-md-icon icon="open_in_new"></ng-md-icon>
+                    </md-button>
+                </div>
+            </md-toolbar>
+            <div style="padding:15px 15px 15px 26px;font-size: 15px" ng-bind-html="incident.message"></div>
+        </div>
+
     </div>
 </div>
 
