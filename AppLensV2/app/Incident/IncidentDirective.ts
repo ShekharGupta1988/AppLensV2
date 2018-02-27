@@ -11,15 +11,16 @@ module SupportCenter {
     }
 
     export class IncidentCtrl implements IIncidentCtrl {
-        public static $inject: string[] = ["DetectorsService", "ResourceServiceFactory", "$stateParams", "$state"];
+        public static $inject: string[] = ["DetectorsService", "ResourceServiceFactory", "$stateParams", "$state", "clipboard", "$window", "$mdToast"];
         public loadingLSIs: boolean = true;
         public loadingCRIs: boolean = true;
         public serviceHealthResponse: DetectorResponse;
         public customerIncidentResponse: DetectorResponse;
         public incidentNotifications: IncidentNotification[];
         public criIncidentNotifications: IncidentNotification[];
+        public incidentStatus = IncidentStatus;
 
-        constructor(private detectorService: IDetectorsService, private ResourceServiceFactory: ResourceServiceFactory, private $stateParams: IStateParams, private $state: angular.ui.IStateService) {
+        constructor(private detectorService: IDetectorsService, private ResourceServiceFactory: ResourceServiceFactory, private $stateParams: IStateParams, private $state: angular.ui.IStateService, public clipboard: any, private $window: angular.IWindowService, private $mdToast: angular.material.IToastService) {
             var self = this;
             let resourceService = ResourceServiceFactory.GetResourceService();
             resourceService.promise.then(function (data: any) {
@@ -27,7 +28,7 @@ module SupportCenter {
                     self.serviceHealthResponse = data;
                     self.incidentNotifications = self.findActiveIncidents(data);
                     self.incidentNotifications.forEach(incident => {
-                        incident.title = incident.status === IncidentStatus.Active ? "Active Live Site Incident may be affecting this app" : "Past Live Site Incident may have affected this app";
+                        incident.messageTitle = incident.status === IncidentStatus.Active ? "Service Incident may be affecting this app" : "Service Incident may have affected this app";
                     });
                     self.loadingLSIs = false;
                 });
@@ -36,7 +37,7 @@ module SupportCenter {
                     self.customerIncidentResponse = data;
                     self.criIncidentNotifications = self.findActiveIncidents(data);
                     self.criIncidentNotifications.forEach(incident => {
-                        incident.title = incident.status === IncidentStatus.Active ? "Active incident may be affecting this app" : "Past incident may have affected this app";
+                        incident.messageTitle = incident.status === IncidentStatus.Active ? "Service incident may be affecting this app" : "Service incident may have affected this app";
                     });
                     self.loadingCRIs = false;
                 });
@@ -61,7 +62,17 @@ module SupportCenter {
                         incidentNotification.message = nameValuePair.Value;
                     }
                     else if (nameValuePair.Name === "Status") {
-                        incidentNotification.status = IncidentStatus[nameValuePair.Value]
+                        incidentNotification.status = IncidentStatus[nameValuePair.Value];
+                        incidentNotification.statusColor = this.getBorderColor(incidentNotification.status);
+                    }
+                    else if (nameValuePair.Name === "Id") {
+                        incidentNotification.id = nameValuePair.Value;
+                    }
+                    else if (nameValuePair.Name === "Title") {
+                        incidentNotification.title = nameValuePair.Value;
+                    }
+                    else if (nameValuePair.Name === "Stamp") {
+                        incidentNotification.stamp = nameValuePair.Value;
                     }
                 });
 
@@ -69,24 +80,54 @@ module SupportCenter {
             });
         }
 
+        public copyReport(text: string) {
+            this.clipboard.copyText(this.replaceAll(text.replace(/\s+/g, ' ').trim(), '</p>', '\r\n\r\n').replace(/<(?:.|\n)*?>/gm, ''));
+            this.$mdToast.showSimple("Report copied to clipboard !!");
+
+            var appInsightsClient = _.find(Object.keys(this.$window.window), function (item) { return item === 'appInsights' });
+            if (appInsightsClient) {
+                this.$window.window[appInsightsClient].trackEvent('IncidentDirective_ReportCopied');
+            }
+        }
+
+        private replaceAll(str, find, replace): string {
+            return str.replace(new RegExp(find, 'g'), replace);
+        }
+
         public openServiceHealth() {
             let stateParts = this.$state.current.name.split('.');
             this.$state.go(`${stateParts[0]}.${stateParts[1]}.detector`, { detectorName: 'servicehealth' });
         }
+
+        private getBorderColor(status: IncidentStatus) {
+            switch (status) {
+                case IncidentStatus.Resolved:
+                    return '#0a8f5b';
+                case IncidentStatus.Mitigated:
+                    return '#ffb900';
+                case IncidentStatus.Active:
+                default:
+                    return '#f36c4f';
+            }
+        }
+            
     }
 
     class IncidentNotification {
         abnormalTimePeriod: DetectorAbnormalTimePeriod;
         link: string;
         message: string;
-        title: string;
+        messageTitle: string;
         status: IncidentStatus;
-
+        statusColor: string;
+        id: string;
+        title: string;
+        stamp: string;
     }
 
     enum IncidentStatus {
         Active,
-        Mititgated,
+        Mitigated,
         Resolved
     }
 

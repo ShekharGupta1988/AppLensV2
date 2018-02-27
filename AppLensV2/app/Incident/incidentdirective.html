@@ -1,40 +1,103 @@
-﻿<div>
+﻿
+<div layout="row" flex="60">
     <div layout="row" ng-if="!incidentctrl.loadingLSIs && incidentctrl.incidentNotifications && incidentctrl.incidentNotifications.length > 0">
         <div layout="column" flex="5" layout-align="center center"></div>
-        <div ng-repeat="incident in incidentctrl.incidentNotifications" layout="column" flex="95" style="margin-top: 20px !important; margin-right: 15px; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: rgb(244, 67, 54);box-shadow: 1px 1px 7px 0px #c5c3c3;">
+        <div ng-repeat="incident in incidentctrl.incidentNotifications"
+             layout="column" flex="95"
+             style="margin-top: 20px !important; margin-right: 15px; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: rgb(244, 67, 54);box-shadow: 1px 1px 7px 0px #c5c3c3;"
+             ng-style="{ 'border-left-color': incident.statusColor }">
 
             <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
                 <div class="md-toolbar-tools">
-                    <h5 style="margin:auto 10px auto;font-weight:500;color: rgb(244, 67, 54);margin-top: 10px;margin-bottom: 10px;">{{incident.title}}</h5>
+                    <h5 style="margin:auto 10px auto;font-weight:500;color:rgb(93, 93, 93);margin-top: 10px;margin-bottom: 10px;">
+                        <ng-md-icon icon="warning" style="height:26px" size="22" ng-style="{ 'color': incident.statusColor }"></ng-md-icon>
+                        {{incident.messageTitle}}
+                    </h5>
                     <span flex></span>
-                    <md-button style="color:rgb(244, 67, 54)" ng-href="{{incident.link}}" target="_blank">
-                        Open ICM Incident
-                        <ng-md-icon style="font-size:16px" icon="open_in_new"></ng-md-icon>
-                    </md-button>
                 </div>
             </md-toolbar>
-            <div style="padding:15px 15px 15px 26px;font-size: 15px" ng-bind-html="incident.message"></div>
+
+            <div style="padding:15px 15px 0px 26px;font-size: 15px">
+                <div style="height:25px;padding-bottom:10px">
+                    <div style="padding-right:25px;float:left">
+                        <b>Id:</b> {{incident.id}}
+                    </div>
+                    <div style="padding-right:15px;float:left">
+                        <b>Status:</b> <span ng-style="{ 'color': incident.statusColor }">{{incidentctrl.incidentStatus[incident.status]}}</span>
+                    </div>
+                    <div style="padding-right:25px;float:left">
+                        <b>Title:</b> {{incident.title}}
+                    </div>
+                    <div style="padding-right:25px;float:left">
+                        <b>Stamp:</b> {{incident.stamp}}
+                    </div>
+                </div>
+                <div>
+                    Communicate the following message to customer:
+                    <div ng-bind-html="incident.message"></div>
+                </div>
+                <section layout="row" layout-sm="column" style="margin-bottom:10px">
+                    <md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-href="{{incident.link}}" target="_blank">
+                        Open ICM Incident
+                        <ng-md-icon style="height:18px" size="16" icon="open_in_new"></ng-md-icon>
+                    </md-button>
+                    <md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-click="incidentctrl.copyReport(incident.message)">
+                        Copy Report
+                        <ng-md-icon style="height:18px" size="16" icon="content_copy"></ng-md-icon>
+                    </md-button>
+                    <!--<md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-href="{{incident.link}}" target="_blank">
+                        Network Cluster Health
+                        <ng-md-icon style="height:18px" size="16" icon="settings_ethernet"></ng-md-icon>
+                    </md-button>-->
+                </section>
+            </div>
         </div>
-
-     </div>
-
+    </div>
     <div layout="row" ng-if="!incidentctrl.loadingCRIs && incidentctrl.criIncidentNotifications && incidentctrl.criIncidentNotifications.length > 0">
         <div layout="column" flex="5" layout-align="center center"></div>
-        <div ng-repeat="incident in incidentctrl.criIncidentNotifications" layout="column" flex="95" style="margin-top: 35px !important; margin-right: 15px; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: rgb(244, 67, 54);box-shadow: 1px 1px 7px 0px #c5c3c3;">
+        <div ng-repeat="incident in incidentctrl.criIncidentNotifications"
+             layout="column" flex="95"
+             style="margin-top: 20px !important; margin-right: 15px; margin-left:15px;padding:0px;border-radius: 5px;background-color: white;color: #676767;border: 1px solid #ececec;background-color: white;border-left-width: 5px;border-left-color: rgb(244, 67, 54);box-shadow: 1px 1px 7px 0px #c5c3c3;"
+             ng-style="{ 'border-left-color': incident.statusColor }">
 
             <md-toolbar style="min-height: 50px;background-color:#F4F4F4;color:rgb(0,150,136);z-index:0;height: 30px;">
                 <div class="md-toolbar-tools">
-                    <h5 style="margin:auto 10px auto;font-weight:500;color: rgb(244, 67, 54);margin-top: 10px;margin-bottom: 10px;">{{incident.title}}</h5>
+                    <h5 style="margin:auto 10px auto;font-weight:500;color:rgb(93, 93, 93);margin-top: 10px;margin-bottom: 10px;">
+                        <ng-md-icon icon="warning" style="height:26px" size="22" ng-style="{ 'color': incident.statusColor }"></ng-md-icon>
+                        {{incident.messageTitle}}
+                    </h5>
                     <span flex></span>
-                    <md-button style="color:rgb(244, 67, 54)" ng-href="{{incident.link}}" target="_blank">
-                        Open ICM Incident
-                        <ng-md-icon icon="open_in_new"></ng-md-icon>
-                    </md-button>
                 </div>
             </md-toolbar>
-            <div style="padding:15px 15px 15px 26px;font-size: 15px" ng-bind-html="incident.message"></div>
-        </div>
 
+            <div style="padding:15px 15px 0px 26px;font-size: 15px">
+                <div style="height:25px;padding-bottom:10px">
+                    <div style="padding-right:25px;float:left">
+                        <b>Id:</b> {{incident.id}}
+                    </div>
+                    <div style="padding-right:15px;float:left">
+                        <b>Status:</b> <span ng-style="{ 'color': incident.statusColor }">{{incidentctrl.incidentStatus[incident.status]}}</span>
+                    </div>
+                    <div style="padding-right:25px;float:left">
+                        <b>Title:</b> {{incident.title}}
+                    </div>
+                </div>
+                <div>
+                    Communicate the following message to customer:
+                    <div ng-bind-html="incident.message"></div>
+                </div>
+                <section layout="row" layout-sm="column" style="margin-bottom:10px">
+                    <md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-href="{{incident.link}}" target="_blank">
+                        Open ICM Incident
+                        <ng-md-icon style="height:18px" size="16" icon="open_in_new"></ng-md-icon>
+                    </md-button>
+                    <md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-click="incidentctrl.copyReport(incident.message)">
+                        Copy Report
+                        <ng-md-icon style="height:18px" size="16" icon="content_copy"></ng-md-icon>
+                    </md-button>
+                </section>
+            </div>
+        </div>
     </div>
 </div>
 
