@@ -158,15 +158,23 @@ namespace AppLensV2
 
         public static async Task<string> GetSrIdFromWorkflowId(string workflowId)
         {
-            string query = KustoQueries.GetSrIdFromWorkflowIdQuery(workflowId);
-            var result = await KustoManager.Instance.ExecuteQueryAsync(query, "azsupport", "AzureSupportability");
-
-            if(result != null && result.Rows != null && result.Rows.Count > 0)
+            // Temporary workaround. For more details, See issue https://github.com/ShekharGupta1988/AppLensV2/issues/1016
+            string srId = null;
+            try
             {
-                return result.Rows[0][0].ToString();
+                string query = KustoQueries.GetSrIdFromWorkflowIdQuery(workflowId);
+                var result = await KustoManager.Instance.ExecuteQueryAsync(query, "azsupport", "AzureSupportability");
+
+                if (result != null && result.Rows != null && result.Rows.Count > 0)
+                {
+                    srId = result.Rows[0][0].ToString();
+                }
+            }
+            catch
+            {
             }
 
-            return null;
+            return srId;
         }
 
         private static NameValuePropertyBag ParseDataEntry(string data)

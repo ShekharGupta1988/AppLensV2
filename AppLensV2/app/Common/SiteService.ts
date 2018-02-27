@@ -5,8 +5,8 @@ module SupportCenter {
 
     export class SiteService implements IResourceService {
 
-        static $inject = ['$http', '$stateParams', 'ErrorHandlerService'];
-        constructor(private $http: ng.IHttpService, private $stateParams: IStateParams, private ErrorHandlerService: IErrorHandlerService) {
+        static $inject = ['$http', '$stateParams', 'ErrorHandlerService', '$q'];
+        constructor(private $http: ng.IHttpService, private $stateParams: IStateParams, private ErrorHandlerService: IErrorHandlerService, private $q: ng.IQService) {
             var self = this;
 
             if (!angular.isDefined(this.$stateParams.hostingEnvironmentName) || this.$stateParams.hostingEnvironmentName === '') {
@@ -65,5 +65,17 @@ module SupportCenter {
         public hostingEnvironment: HostingEnvironment;
         public resource: Resource;
         public sites: Site[];
+
+        public GetStampCluster(): ng.IPromise<string> {
+
+            var deferred = this.$q.defer<string>();
+            let url: string = UriPaths.StampClusterAPIPath(this.site.stampName);
+            this.$http.get(url)
+                .success((data: any) => {
+                    deferred.resolve(data);
+                });
+
+            return deferred.promise;
+        }
     }
 }

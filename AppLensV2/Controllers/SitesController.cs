@@ -48,6 +48,19 @@ namespace AppLensV2
         }
 
         [HttpGet]
+        [Route("api/stamps/{stampName}/cluster")]
+        public async Task<IHttpActionResult> GetStampCluster(string stampName)
+        {
+            var result = await SupportObserverClient.GetStampCluster(stampName);
+            if(result.StatusCode != HttpStatusCode.OK)
+            {
+                return ResponseMessage(Request.CreateErrorResponse(result.StatusCode, (string)result.Content));
+            }
+
+            return Ok(result.Content);
+        }
+
+        [HttpGet]
         [Route("api/hostingEnvironments/{hostingEnvironmentName}")]
         public async Task<IHttpActionResult> GetHostingEnvironmentDetails(string hostingEnvironmentName)
         {
