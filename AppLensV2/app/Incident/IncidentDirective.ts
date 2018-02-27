@@ -81,7 +81,7 @@ module SupportCenter {
         }
 
         public copyReport(text: string) {
-            this.clipboard.copyText(this.replaceAll(text, '</p>', '\r\n').replace(/<(?:.|\n)*?>/gm, ''));
+            this.clipboard.copyText(this.replaceAll(text.replace(/\s+/g, ' ').trim(), '</p>', '\r\n\r\n').replace(/<(?:.|\n)*?>/gm, ''));
             this.$mdToast.showSimple("Report copied to clipboard !!");
 
             var appInsightsClient = _.find(Object.keys(this.$window.window), function (item) { return item === 'appInsights' });
