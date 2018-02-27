@@ -67,8 +67,9 @@ namespace AppLensV2
             | sort by TIMESTAMP asc";
 
         public static string SrIdFromWorkflowId =
-            @"['CaseSubmission.SRTelemetryAzureSupportabiltyData'] 
+            @"SrTelemetry
             | where trackingId =~ ""{WorkflowId}"" and action =~ ""CreateSr""
+            | parse ['data'] with * ""[SrId:"" srId  ""]"" *
             | project srId";
     }
 }

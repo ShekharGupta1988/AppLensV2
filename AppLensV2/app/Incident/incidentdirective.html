@@ -36,19 +36,19 @@
                     Communicate the following message to customer:
                     <div ng-bind-html="incident.message"></div>
                 </div>
-                <section layout="row" layout-sm="column" style="margin-bottom:10px">
-                    <md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-href="{{incident.link}}" target="_blank">
+                <section layout="row" layout-sm="column" style="margin-bottom:10px;border-top:1px solid #d7d7d7; padding-top: 10px">
+                    <md-button class="md-raised" ng-style="{ 'color': incident.statusColor }" ng-href="{{incident.link}}" target="_blank">
                         Open ICM Incident
                         <ng-md-icon style="height:18px" size="16" icon="open_in_new"></ng-md-icon>
                     </md-button>
-                    <md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-click="incidentctrl.copyReport(incident.message)">
+                    <md-button class="md-raised" ng-style="{ 'color': incident.statusColor }" ng-click="incidentctrl.copyReport(incident.message)">
                         Copy Report
                         <ng-md-icon style="height:18px" size="16" icon="content_copy"></ng-md-icon>
                     </md-button>
-                    <!--<md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-href="{{incident.link}}" target="_blank">
+                    <md-button class="md-raised" ng-style="{ 'color': incident.statusColor }" ng-click="incidentctrl.openNetVMATool()">
                         Network Cluster Health
-                        <ng-md-icon style="height:18px" size="16" icon="settings_ethernet"></ng-md-icon>
-                    </md-button>-->
+                        <ng-md-icon style="height:18px" size="16" icon="signal_wifi_2_bar"></ng-md-icon>
+                    </md-button>
                 </section>
             </div>
         </div>
@@ -86,14 +86,18 @@
                     Communicate the following message to customer:
                     <div ng-bind-html="incident.message"></div>
                 </div>
-                <section layout="row" layout-sm="column" style="margin-bottom:10px">
-                    <md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-href="{{incident.link}}" target="_blank">
+                <section layout="row" layout-sm="column" style="margin-bottom:10px;border-top:1px solid #d7d7d7; padding-top: 10px">
+                    <md-button class="md-raised" ng-style="{ 'color': incident.statusColor }" ng-href="{{incident.link}}" target="_blank">
                         Open ICM Incident
                         <ng-md-icon style="height:18px" size="16" icon="open_in_new"></ng-md-icon>
                     </md-button>
-                    <md-button class="md-raised" style="color:rgb(93, 93, 93)" ng-click="incidentctrl.copyReport(incident.message)">
+                    <md-button class="md-raised" ng-style="{ 'color': incident.statusColor }" ng-click="incidentctrl.copyReport(incident.message)">
                         Copy Report
                         <ng-md-icon style="height:18px" size="16" icon="content_copy"></ng-md-icon>
+                    </md-button>
+                    <md-button class="md-raised" ng-style="{ 'color': incident.statusColor }" ng-click="incidentctrl.openNetVMATool()">
+                        Network Cluster Health
+                        <ng-md-icon style="height:18px" size="16" icon="signal_wifi_2_bar"></ng-md-icon>
                     </md-button>
                 </section>
             </div>

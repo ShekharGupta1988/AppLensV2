@@ -19,6 +19,9 @@ module SupportCenter {
         public incidentNotifications: IncidentNotification[];
         public criIncidentNotifications: IncidentNotification[];
         public incidentStatus = IncidentStatus;
+        private stampCluster: string;
+        private startTime: string;
+        private endTime: string;
 
         constructor(private detectorService: IDetectorsService, private ResourceServiceFactory: ResourceServiceFactory, private $stateParams: IStateParams, private $state: angular.ui.IStateService, public clipboard: any, private $window: angular.IWindowService, private $mdToast: angular.material.IToastService) {
             var self = this;
@@ -31,6 +34,9 @@ module SupportCenter {
                         incident.messageTitle = incident.status === IncidentStatus.Active ? "Service Incident may be affecting this app" : "Service Incident may have affected this app";
                     });
                     self.loadingLSIs = false;
+
+                    self.startTime = data.StartTime;
+                    self.endTime = data.EndTime;
                 });
 
                 detectorService.getDetectorResponse(resourceService.resource, 'customerincident').then(function (data: DetectorResponse) {
@@ -40,6 +46,13 @@ module SupportCenter {
                         incident.messageTitle = incident.status === IncidentStatus.Active ? "Service incident may be affecting this app" : "Service incident may have affected this app";
                     });
                     self.loadingCRIs = false;
+
+                    self.startTime = data.StartTime;
+                    self.endTime = data.EndTime;
+                });
+
+                resourceService.GetStampCluster().then(function (data: string) {
+                    self.stampCluster = data;
                 });
             });
         }
@@ -83,15 +96,25 @@ module SupportCenter {
         public copyReport(text: string) {
             this.clipboard.copyText(this.replaceAll(text.replace(/\s+/g, ' ').trim(), '</p>', '\r\n\r\n').replace(/<(?:.|\n)*?>/gm, ''));
             this.$mdToast.showSimple("Report copied to clipboard !!");
+            this.logEvent('IncidentDirective_ReportCopied');
+        }
 
-            var appInsightsClient = _.find(Object.keys(this.$window.window), function (item) { return item === 'appInsights' });
-            if (appInsightsClient) {
-                this.$window.window[appInsightsClient].trackEvent('IncidentDirective_ReportCopied');
-            }
+        public openNetVMATool() {
+
+            var url: string = `https://netvma.westcentralus.cloudapp.azure.com/?startTime=${this.startTime}&endTime=${this.endTime}&value=${this.stampCluster}&destValue=&pathQuery=false&sdnPath=false&runAutoAnalysis=false&filterByLowAvailabilityOnly=false`;
+            this.$window.open(url, "_blank");
+            this.logEvent('IncidentDirective_NetVMAToolOpened');
         }
 
         private replaceAll(str, find, replace): string {
             return str.replace(new RegExp(find, 'g'), replace);
+        }
+
+        private logEvent(event: string) {
+            var appInsightsClient = _.find(Object.keys(this.$window.window), function (item) { return item === 'appInsights' });
+            if (appInsightsClient) {
+                this.$window.window[appInsightsClient].trackEvent(event);
+            }
         }
 
         public openServiceHealth() {
@@ -110,7 +133,6 @@ module SupportCenter {
                     return '#f36c4f';
             }
         }
-            
     }
 
     class IncidentNotification {
