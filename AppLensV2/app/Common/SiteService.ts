@@ -23,7 +23,7 @@ module SupportCenter {
                         self.site = self.sites[0];
                         self.resource = self.sites[0];
 
-                        self.$http({
+                        self.propertiesPromise = self.$http({
                             method: "GET",
                             url: UriPaths.DiagnosticsPassThroughAPIPath(),
                             headers: {
@@ -61,6 +61,7 @@ module SupportCenter {
         }
         
         public promise: ng.IPromise<any>;
+        public propertiesPromise: ng.IPromise<any>;
         public site: Site;
         public hostingEnvironment: HostingEnvironment;
         public resource: Resource;

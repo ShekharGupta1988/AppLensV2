@@ -5,6 +5,7 @@ module SupportCenter {
 
     export interface IResourceService {
         promise: ng.IPromise<any>;
+        propertiesPromise: ng.IPromise<any>;
         site: Site;
         hostingEnvironment: HostingEnvironment;
         resource: Resource;
@@ -41,6 +42,7 @@ module SupportCenter {
         }
         
         public promise: ng.IPromise<any>;
+        public propertiesPromise: ng.IPromise<any>;
         public site: Site;
         public hostingEnvironment: HostingEnvironment;
         public resource: Resource;

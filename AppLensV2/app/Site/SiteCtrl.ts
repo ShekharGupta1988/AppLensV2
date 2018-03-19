@@ -33,8 +33,12 @@ module SupportCenter {
                 self.site = self.SiteService.resource;
                 self.getRuntimeAvailability();
                 self.getSiteLatency();
-                self.getPortRejections();
-                self.getTcpConnections();
+                
+                self.SiteService.propertiesPromise.then(function (data: any) {
+                    if (!self.SiteService.site.isLinux) {
+                        self.getPortRejections();
+                        self.getTcpConnections();
+                    }
                 
                 self.DetectorsService.getDetectors(self.site).then(function (data: DetectorDefinition[]) {
                     self.detectors = self.DetectorsService.detectorsList;
