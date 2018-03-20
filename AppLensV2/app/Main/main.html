@@ -37,7 +37,7 @@
                     
                 </div>
             </md-list-item>
-            <md-list-item class="md-2-line" ng-class="{'selected' : main.selectedItem === 'tcpconnectionsanalysis'}" ng-click="main.setSelectedItem('tcpconnectionsanalysis')">
+            <md-list-item ng-if="!main.site.isLinux" class="md-2-line" ng-class="{'selected' : main.selectedItem === 'tcpconnectionsanalysis'}" ng-click="main.setSelectedItem('tcpconnectionsanalysis')">
                 <div class="md-list-item-text" layout="column">
                     <h3>TCP Connections Analysis <ng-md-icon icon="fibre_new" style="fill:#5bc0de" size="25"></ng-md-icon></h3>
 
