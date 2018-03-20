@@ -39,6 +39,7 @@ module SupportCenter {
                         self.getPortRejections();
                         self.getTcpConnections();
                     }
+                });
                 
                 self.DetectorsService.getDetectors(self.site).then(function (data: DetectorDefinition[]) {
                     self.detectors = self.DetectorsService.detectorsList;
