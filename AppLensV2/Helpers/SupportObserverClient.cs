@@ -213,15 +213,14 @@ namespace AppLensV2
         /// </summary>
         /// <param name="siteName">SiteName</param>
         /// <returns>Hostnames</returns>
-        internal static async Task<ObserverResponse> GetHostnames(string siteName)
+        internal static async Task<ObserverResponse> GetHostnames(string stamp, string siteName)
         {
             var request = new HttpRequestMessage()
             {
-                RequestUri = new Uri(SupportObserverApiEndpoint + "sites/" + siteName + "/hostnames?api-version=2.0"),
+                RequestUri = new Uri(SupportObserverApiEndpoint + (!string.IsNullOrWhiteSpace(stamp) ? "stamps/" + stamp + "/": string.Empty) + "sites/" + siteName + "/hostnames?api-version=2.0"),
                 Method = HttpMethod.Get
             };
 
-            var serializedParameters = JsonConvert.SerializeObject(new Dictionary<string, string>() { { "site", siteName } });
             request.Headers.Add("Authorization", await GetSupportObserverAccessToken());
             var response = await _httpClient.SendAsync(request);
 
