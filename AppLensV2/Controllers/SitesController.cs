@@ -76,7 +76,7 @@ namespace AppLensV2
 
         private async Task<IHttpActionResult> GetSiteInternal(string stamp, string siteName)
         {
-            var hostnamesTask = SupportObserverClient.GetHostnames(siteName);
+            var hostnamesTask = SupportObserverClient.GetHostnames(stamp, siteName);
             var siteDetailsTask = stamp == null ? SupportObserverClient.GetSite(siteName) : SupportObserverClient.GetSite(stamp, siteName);
 
             var hostNameResponse = await hostnamesTask;
