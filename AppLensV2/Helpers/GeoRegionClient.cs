@@ -24,7 +24,7 @@ namespace AppLensV2
                 string geoRegionEndpoint;
                 if (Debugger.IsAttached)
                 {
-                    geoRegionEndpoint = "https://hawfor1georegionsvc.cloudapp.net:1743/";
+                    geoRegionEndpoint = "https://sternsgeoregionsvc.cloudapp.net:1743/";
                 }
                 else
                 {
@@ -56,7 +56,7 @@ namespace AppLensV2
             }
         }    
 
-        public static async Task<HttpResponseMessage> GetResource(string apiRoute, string isPublic)
+        public static async Task<HttpResponseMessage> Execute(string apiRoute, string isPublic, string method)
         {
             if (apiRoute == null)
             {
@@ -77,7 +77,16 @@ namespace AppLensV2
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 client.DefaultRequestHeaders.Add("internal-applens", isPublic);
 
-                var response = await client.GetAsync(GeoRegionEndpoint + apiRoute);
+                HttpResponseMessage response;
+                if (method.ToLower() == "post")
+                {
+                    response = await client.PostAsync(GeoRegionEndpoint + apiRoute, null);
+                }
+                else
+                {
+                    response = await client.GetAsync(GeoRegionEndpoint + apiRoute);
+                }
+                
 
                 return response;
             }

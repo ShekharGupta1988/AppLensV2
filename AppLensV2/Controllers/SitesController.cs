@@ -22,6 +22,12 @@ namespace AppLensV2
                 apiRoute = temp.FirstOrDefault().ToString();
             }
 
+            string method = "GET";
+            if (Request.Headers.TryGetValues("GeoRegionApiMethod", out temp))
+            {
+                method = temp.FirstOrDefault().ToString();
+            }
+
             temp = null;
             string IsInternal = "true";
             if (Request.Headers.TryGetValues("IsInternal", out temp))
@@ -29,7 +35,7 @@ namespace AppLensV2
                 IsInternal = temp.FirstOrDefault().ToString();
             }
 
-            var response =  await GeoRegionClient.GetResource(apiRoute, IsInternal);
+            var response =  await GeoRegionClient.Execute(apiRoute, IsInternal, method);
             return response;
         }
 

@@ -152,6 +152,10 @@ module SupportCenter {
                 });
         }
 
+        goToHomepage() {
+            this.$state.go('homePage');
+        }
+
         showAseProfile($env): void {
 
             var position = this.$mdPanel.newPanelPosition()
