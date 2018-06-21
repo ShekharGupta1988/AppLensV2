@@ -123,7 +123,8 @@ module SupportCenter {
                     url: UriPaths.DiagnosticsPassThroughAPIPath(),
                     headers: {
                         'GeoRegionApiRoute': UriPaths.AnalysisResourcePath(analysisName, resourceService.resource, self.TimeParamsService.StartTime, self.TimeParamsService.EndTime, self.TimeParamsService.TimeGrain),
-                        'IsInternal': self.TimeParamsService.IsInternal
+                        'IsInternal': self.TimeParamsService.IsInternal,
+                        'GeoRegionApiMethod': resourceService.resource instanceof Site ? 'POST' : 'GET'
                     }
                 }).success((data: any) => {
 

@@ -52,7 +52,8 @@ module SupportCenter {
                 url: UriPaths.DiagnosticsPassThroughAPIPath(),
                 headers: {
                     'GeoRegionApiRoute': UriPaths.ListDetectorsPath(resource),
-                    'IsInternal': this.TimeParamsService.IsInternal
+                    'IsInternal': this.TimeParamsService.IsInternal,
+                    'GeoRegionApiMethod': 'GET'
                 }
             })
                 .success((data: any) => {
@@ -128,7 +129,8 @@ module SupportCenter {
                 url: UriPaths.DiagnosticsPassThroughAPIPath(),
                 headers: {
                     'GeoRegionApiRoute': apiRoute,
-                    'IsInternal': this.TimeParamsService.IsInternal
+                    'IsInternal': this.TimeParamsService.IsInternal,
+                    'GeoRegionApiMethod': (resource instanceof Site) ? 'POST' : 'GET'
                 }
             })
                 .success((data: any) => {

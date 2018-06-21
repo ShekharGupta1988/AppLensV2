@@ -23,15 +23,21 @@ module SupportCenter {
         private static stampClusterAPIPath = "/api/stamps/{stampName}/cluster";
 
         // Uri Paths of Geo Region Diagnostic Role APIs
-        private static baseAPIPathSites: string = "v2/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/sites/{site}/diagnostics";
-        private static baseAPIPathAse: string = "/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/troubleshoot";
+        private static baseAPIPathSites: string = "v3/subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/sites/{site}";
+        private static baseAPIPathAse: string = "subscriptions/{sub}/resourceGroups/{rg}/providers/Microsoft.Web/hostingEnvironments/{hostingEnvironmentName}/troubleshoot";
         private static commonQueryString: string = "stampName={stamp}&hostingEnvironmentName={hostingEnvironmentName}&vnetResourceGroup={vnetResourceGroup}&vnetName={vnetName}&vnetSubnetName={vnetSubnetName}&{hostnames}&startTime={start}&endTime={end}&timeGrain={grain}";
         
-        private static analysisResrouce: string = "/{analysisName}?" + UriPaths.commonQueryString;
+        private static analysisResource: string = "/diagnostics/availability/analyses/{analysisName}/execute?" + UriPaths.commonQueryString;
 
-        private static detectors: string = "/detectors";
-        private static detectorResource: string = "/detectors/{detectorName}?" + UriPaths.commonQueryString;
-        private static siteDiagnosticProperties: string = "/properties";
+        private static detectors: string = "/diagnostics/availability/detectors";
+        private static detectorResource: string = "/diagnostics/availability/detectors/{detectorName}/execute?" + UriPaths.commonQueryString;
+        private static siteDiagnosticProperties: string = "/diagnosticProperties";
+
+        private static aseAnalysisResource: string = "/{analysisName}?" + UriPaths.commonQueryString;
+
+        private static aseDetectors: string = "/detectors";
+        private static aseDetectorResource: string = "/detectors/{detectorName}?" + UriPaths.commonQueryString;
+
 
         // Uri Paths for feedback APIs
         private static caseFeedback: string = "/api/cases/{caseId}/feedback";
@@ -78,11 +84,13 @@ module SupportCenter {
         }
 
         public static AnalysisResourcePath(analysisResourceName: string, resource: Resource, startTime: string, endTime: string, timeGrain: string): string {
-            return UriPaths.CreateGeoRegionAPIPath(UriPaths.analysisResrouce.replace("{analysisName}", analysisResourceName), resource, startTime, endTime, timeGrain);
+            let analysisPath = resource instanceof Site ? UriPaths.analysisResource : UriPaths.aseAnalysisResource;
+            return UriPaths.CreateGeoRegionAPIPath(analysisPath.replace("{analysisName}", analysisResourceName), resource, startTime, endTime, timeGrain);
         }
         
         public static ListDetectorsPath(resource: Resource): string {
-            return UriPaths.CreateGeoRegionAPIPath(UriPaths.detectors, resource, '', '', '');
+            let path = resource instanceof Site ? UriPaths.detectors : UriPaths.aseDetectors;
+            return UriPaths.CreateGeoRegionAPIPath(path, resource, '', '', '');
         }
 
         public static SiteDiagnosticPropertiesPath(site: Site): string {
@@ -90,7 +98,8 @@ module SupportCenter {
         }
 
         public static DetectorResourcePath(resource: Resource, detectorName: string, startTime: string, endTime: string, timeGrain: string): string {
-            return UriPaths.CreateGeoRegionAPIPath(UriPaths.detectorResource, resource, startTime, endTime, timeGrain)
+            let path = resource instanceof Site ? UriPaths.detectorResource : UriPaths.aseDetectorResource;
+            return UriPaths.CreateGeoRegionAPIPath(path, resource, startTime, endTime, timeGrain)
                 .replace("{detectorName}", detectorName);
         }
         
@@ -150,12 +159,11 @@ module SupportCenter {
 
             } else {
                 var hostingEnvironment = resource as HostingEnvironment;
-                path =
-                    path
-                    .replace("{hostingEnvironmentName}", resource.resourceName)
-                    .replace("{vnetResourceGroup}", hostingEnvironment.VNetResourceGroup)
-                    .replace("{vnetName}", hostingEnvironment.VNetName)
-                    .replace("{vnetSubnetName}", hostingEnvironment.VNetSubnetName);
+                path = path
+                        .replace("{hostingEnvironmentName}", resource.resourceName)
+                        .replace("{vnetResourceGroup}", hostingEnvironment.VNetResourceGroup)
+                        .replace("{vnetName}", hostingEnvironment.VNetName)
+                        .replace("{vnetSubnetName}", hostingEnvironment.VNetSubnetName)
             }
 
             return path;

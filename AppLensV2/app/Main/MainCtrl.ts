@@ -157,6 +157,10 @@ module SupportCenter {
             }
         }
 
+        goToHomepage() {
+            this.$window.open('/', '_self');
+        }
+
         sendFeedback(): void {
             this.FeedbackService.sendGeneralFeedback();
         }

@@ -27,7 +27,8 @@ module SupportCenter {
                             method: "GET",
                             url: UriPaths.DiagnosticsPassThroughAPIPath(),
                             headers: {
-                                'GeoRegionApiRoute': UriPaths.SiteDiagnosticPropertiesPath(self.site)
+                                'GeoRegionApiRoute': UriPaths.SiteDiagnosticPropertiesPath(self.site),
+                                'GeoRegionApiMethod': 'POST'
                             }
                         })
                             .success((data: any) => {
