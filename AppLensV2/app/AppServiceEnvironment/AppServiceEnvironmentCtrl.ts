@@ -153,7 +153,7 @@ module SupportCenter {
         }
 
         goToHomepage() {
-            this.$state.go('homePage');
+            this.$window.open('/', '_self');
         }
 
         showAseProfile($env): void {
