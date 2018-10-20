@@ -12,6 +12,7 @@ namespace AppLensV2
         protected void Application_Start()
         {
             GlobalConfiguration.Configure(WebApiConfig.Register);
+            System.Net.ServicePointManager.SecurityProtocol = System.Net.SecurityProtocolType.Tls12;
         }
     }
 }
