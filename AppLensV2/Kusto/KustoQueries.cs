@@ -41,7 +41,7 @@ namespace AppLensV2
     public class KustoQueryTemplate
     {
         public static string SupportCenterBladeOpened =
-            @"ClientTelemetry | where TIMESTAMP >= ago(15d) and source =~ ""SupportCenter""
+            @"ClientTelemetryNew | where TIMESTAMP >= ago(15d) and source =~ ""SupportCenter""
             | parse['data'] with * ""resourceName="" resourceName ';' *
             | where resourceName =~ ""{ResourceName}"" 
             | parse['data'] with * ""ticketBladeWorkflowId="" ticketWorkflowId  ';' *
@@ -51,7 +51,7 @@ namespace AppLensV2
             | sort by TIMESTAMP desc";
 
         public static string SupportCenterUserDataForTicket =
-            @"ClientTelemetry | where TIMESTAMP >= datetime({StartTime}) and TIMESTAMP <= datetime({EndTime}) and source =~ ""SupportCenter""
+            @"ClientTelemetryNew | where TIMESTAMP >= datetime({StartTime}) and TIMESTAMP <= datetime({EndTime}) and source =~ ""SupportCenter""
             | parse['data'] with * ""ticketBladeWorkflowId="" ticketWorkflowId  ';' *
             | parse['data'] with * ""sessionId="" localSessionId  ';' *
             | where ticketWorkflowId =~ ""{TicketWorkflowId}""
@@ -59,7 +59,7 @@ namespace AppLensV2
             | sort by TIMESTAMP asc";
 
         public static string SupportCenterUserDataForSession =
-            @"ClientTelemetry | where TIMESTAMP >= datetime({StartTime}) and TIMESTAMP <= datetime({EndTime}) and source =~ ""SupportCenter""
+            @"ClientTelemetryNew | where TIMESTAMP >= datetime({StartTime}) and TIMESTAMP <= datetime({EndTime}) and source =~ ""SupportCenter""
             | parse['data'] with * ""ticketBladeWorkflowId="" ticketWorkflowId  ';' *
             | parse['data'] with * ""sessionId="" localSessionId  ';' *
             | where localSessionId =~ ""{SessionId}""
