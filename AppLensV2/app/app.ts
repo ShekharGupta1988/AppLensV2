@@ -544,11 +544,15 @@ module SupportCenter {
         });
 
     app.filter('worker', function () {
-        return function (input) {
-            return input.replace("SmallDedicatedWebWorkerRole_IN", "SDW").replace("SmallDedicatedLinuxWebWorkerRole_IN", "SDW")
+        return function (input: string) {
+            let split = input.split(":");
+            let tenant = split[0].substr(0, 2);
+            let worker = split[1].replace("SmallDedicatedWebWorkerRole_IN", "SDW").replace("SmallDedicatedLinuxWebWorkerRole_IN", "SDW")
                 .replace("MediumDedicatedWebWorkerRole_IN", "MDW").replace("MediumDedicatedLinuxWebWorkerRole_IN", "MDW")
                 .replace("LargeDedicatedWebWorkerRole_IN", "LDW").replace("LargeDedicatedLinuxWebWorkerRole_IN", "LDW")
                 .replace("WebWorkerRole_IN_", "W").replace(" - aggregated", "");
+
+            return tenant + ":" + worker;
         };
     });
 
