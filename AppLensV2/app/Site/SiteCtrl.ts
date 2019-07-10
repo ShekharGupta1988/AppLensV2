@@ -23,6 +23,8 @@ module SupportCenter {
             this.containerHeight = this.$window.innerHeight * 0.25 + 'px';
 
             this.analysisType = this.$stateParams.analysisType;
+            this.StartTime = this.$stateParams.startTime;
+            this.EndTime = this.$stateParams.endTime;
 
             if (!angular.isDefined(this.$stateParams.siteName) || this.$stateParams.siteName === '') {
                 // TODO: show error or redirect to home page.
@@ -107,6 +109,8 @@ module SupportCenter {
         avgAvailability: string;
         recentSupportCaseOpened: boolean = false;
         recentSupportCaseNumber: string;
+        StartTime: string;
+        EndTime: string;
 
         toggleSideNav(): void {
             this.$mdSidenav('left').toggle();

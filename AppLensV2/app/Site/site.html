@@ -4,6 +4,12 @@
         For <span style="font-weight:500">Dynamic Sku</span> Apps, Data presented here may be incomplete or include other function apps running on the same machines as the selected function app.
     </div>
 </div>
+<div style="height:20px;padding:10px;margin-bottom:15px;font-size:large">
+    <div style="height:100%;background-color:#ffe2cb;border-radius:5px;padding:10px">
+        <ng-md-icon icon="warning" style="fill:#ff7722" size="20"></ng-md-icon>
+        Applens V2 is retiring soon. Please start using <a target="_blank" href="https://applens.azurewebsites.net/sites/{{::main.site.name}}?startTime={{::site.StartTime}}&endTime={{::site.EndTime}}">Applens V3</a>. If you find a feature missing in ApplensV3, please provide feedback to <a target="_blank" href="https://www.surveymonkey.com/r/XRYN5QP">Applens Team.</a>
+    </div>
+</div>
 
 <div flex="25" layout="row" class="md-sticky">
     <div layout="column" flex="5"></div>
@@ -32,7 +38,6 @@
         <div flex="30" layout="row">
             <div layout="column" flex="5" layout-align="center center"></div>
             <md-card layout="column" flex="95">
-
                 <div ng-if="((site.analysisType === 'appAnalysis' || site.analysisType === 'perfAnalysis' || site.analysisType === 'memoryAnalysis') && site.dataLoading) || ( site.analysisType === 'tcpConnectionsAnalysis' && site.tcpConnectionsDataLoading )" layout="row" layout-sm="column" layout-align="space-around" ng-style="::{'height':site.containerHeight}">
                     <div layout="column" layout-align="center center">
                         <md-progress-circular md-mode="indeterminate" md-diameter="40"></md-progress-circular>
